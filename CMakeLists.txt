@@ -1,0 +1,11 @@
+cmake_minimum_required(VERSION 3.20)
+project(vfred_gate LANGUAGES C CXX)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+option(VFG_BUILD_RUNNER "Build the real llama.cpp runner" OFF)
+enable_testing()
+add_subdirectory(microbench)
+if(VFG_BUILD_RUNNER)
+  add_subdirectory(runner)
+endif()
+

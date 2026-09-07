@@ -1,0 +1,9 @@
+{
+  "version": 3,
+  "configurePresets": [
+    {"name":"host-debug","generator":"Ninja","binaryDir":"${sourceDir}/build/host-debug","cacheVariables":{"CMAKE_BUILD_TYPE":"Debug"}},
+    {"name":"host-release","generator":"Ninja","binaryDir":"${sourceDir}/build/host-release","cacheVariables":{"CMAKE_BUILD_TYPE":"Release","VFG_BUILD_RUNNER":"ON"}}
+  ],
+  "buildPresets":[{"name":"host-debug","configurePreset":"host-debug"},{"name":"host-release","configurePreset":"host-release"}]
+}
+
