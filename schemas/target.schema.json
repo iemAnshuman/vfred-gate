@@ -1,0 +1,65 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "execution_class": {
+      "enum": [
+        "host",
+        "emulator",
+        "hardware"
+      ],
+      "title": "Execution Class",
+      "type": "string"
+    },
+    "architecture": {
+      "title": "Architecture",
+      "type": "string"
+    },
+    "command_prefix": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Command Prefix",
+      "type": "array"
+    },
+    "affinity_cpu": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Affinity Cpu"
+    },
+    "require_affinity": {
+      "default": false,
+      "title": "Require Affinity",
+      "type": "boolean"
+    },
+    "description": {
+      "default": "",
+      "title": "Description",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "execution_class",
+    "architecture"
+  ],
+  "title": "Target",
+  "type": "object"
+}

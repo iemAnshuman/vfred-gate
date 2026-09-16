@@ -1,0 +1,149 @@
+{
+  "$defs": {
+    "Injection": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "tensor": {
+          "minLength": 1,
+          "title": "Tensor",
+          "type": "string"
+        },
+        "position": {
+          "minimum": 0,
+          "title": "Position",
+          "type": "integer"
+        },
+        "element": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Element",
+          "type": "integer"
+        },
+        "delta": {
+          "title": "Delta",
+          "type": "number"
+        }
+      },
+      "required": [
+        "tensor",
+        "position",
+        "delta"
+      ],
+      "title": "Injection",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "source_revision": {
+      "pattern": "^[0-9a-f]{40}$",
+      "title": "Source Revision",
+      "type": "string"
+    },
+    "source_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Digest",
+      "type": "string"
+    },
+    "binary": {
+      "title": "Binary",
+      "type": "string"
+    },
+    "binary_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Binary Sha256",
+      "type": "string"
+    },
+    "compiler": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Compiler",
+      "type": "object"
+    },
+    "flags": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Flags",
+      "type": "array"
+    },
+    "build_manifest": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Build Manifest"
+    },
+    "build_manifest_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Build Manifest Sha256"
+    },
+    "build_class": {
+      "default": "diagnostic",
+      "enum": [
+        "diagnostic",
+        "production"
+      ],
+      "title": "Build Class",
+      "type": "string"
+    },
+    "reduction_policy": {
+      "default": "native",
+      "title": "Reduction Policy",
+      "type": "string"
+    },
+    "injection": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Injection"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    }
+  },
+  "required": [
+    "id",
+    "source_revision",
+    "source_digest",
+    "binary",
+    "binary_sha256",
+    "compiler",
+    "flags"
+  ],
+  "title": "Stack",
+  "type": "object"
+}

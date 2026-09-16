@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "repository": "HuggingFaceTB/SmolLM2-360M-Instruct-GGUF",
+  "revision": "593b5a2e04c8f3e4ee880263f93e0bd2901ad47f",
+  "filename": "smollm2-360m-instruct-q8_0.gguf",
+  "sha256": "48ab3034d0dd401fbc721eb1df3217902fee7dab9078992d66431f09b7750201",
+  "quantisation": "Q8_0",
+  "size_bytes": 386404992,
+  "url": "https://huggingface.co/HuggingFaceTB/SmolLM2-360M-Instruct-GGUF/resolve/593b5a2e04c8f3e4ee880263f93e0bd2901ad47f/smollm2-360m-instruct-q8_0.gguf"
+}

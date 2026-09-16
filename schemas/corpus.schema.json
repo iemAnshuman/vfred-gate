@@ -1,0 +1,67 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "group_id": {
+      "title": "Group Id",
+      "type": "string"
+    },
+    "category": {
+      "title": "Category",
+      "type": "string"
+    },
+    "split": {
+      "enum": [
+        "exploratory",
+        "holdout"
+      ],
+      "title": "Split",
+      "type": "string"
+    },
+    "tokens": {
+      "items": {
+        "type": "integer"
+      },
+      "maxItems": 128,
+      "minItems": 1,
+      "title": "Tokens",
+      "type": "array"
+    },
+    "model_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Model Sha256",
+      "type": "string"
+    },
+    "tokenizer_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Tokenizer Sha256",
+      "type": "string"
+    },
+    "formatted_text_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Formatted Text Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "group_id",
+    "category",
+    "split",
+    "tokens",
+    "model_sha256",
+    "tokenizer_sha256",
+    "formatted_text_sha256"
+  ],
+  "title": "CorpusCase",
+  "type": "object"
+}

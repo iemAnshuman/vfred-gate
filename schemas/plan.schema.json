@@ -1,0 +1,171 @@
+{
+  "$defs": {
+    "Capture": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "mode": {
+          "default": "none",
+          "enum": [
+            "none",
+            "layer",
+            "operator",
+            "all"
+          ],
+          "title": "Mode",
+          "type": "string"
+        },
+        "match": {
+          "default": "",
+          "title": "Match",
+          "type": "string"
+        },
+        "payloads": {
+          "default": false,
+          "title": "Payloads",
+          "type": "boolean"
+        }
+      },
+      "title": "Capture",
+      "type": "object"
+    },
+    "Settings": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "context": {
+          "default": 512,
+          "maximum": 65536,
+          "minimum": 8,
+          "title": "Context",
+          "type": "integer"
+        },
+        "max_tokens": {
+          "default": 32,
+          "maximum": 1024,
+          "minimum": 1,
+          "title": "Max Tokens",
+          "type": "integer"
+        },
+        "threads": {
+          "const": 1,
+          "default": 1,
+          "title": "Threads",
+          "type": "integer"
+        },
+        "batch": {
+          "const": 1,
+          "default": 1,
+          "title": "Batch",
+          "type": "integer"
+        },
+        "microbatch": {
+          "const": 1,
+          "default": 1,
+          "title": "Microbatch",
+          "type": "integer"
+        },
+        "kv_type": {
+          "const": "f32",
+          "default": "f32",
+          "title": "Kv Type",
+          "type": "string"
+        },
+        "timeout_seconds": {
+          "default": 120,
+          "exclusiveMinimum": 0,
+          "title": "Timeout Seconds",
+          "type": "number"
+        },
+        "capture": {
+          "$ref": "#/$defs/Capture"
+        }
+      },
+      "title": "Settings",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "model": {
+      "title": "Model",
+      "type": "string"
+    },
+    "corpus": {
+      "title": "Corpus",
+      "type": "string"
+    },
+    "contract": {
+      "title": "Contract",
+      "type": "string"
+    },
+    "baseline": {
+      "title": "Baseline",
+      "type": "string"
+    },
+    "candidate": {
+      "title": "Candidate",
+      "type": "string"
+    },
+    "target": {
+      "title": "Target",
+      "type": "string"
+    },
+    "cases": {
+      "anyOf": [
+        {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Cases"
+    },
+    "allowed_stack_differences": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Allowed Stack Differences",
+      "type": "array"
+    },
+    "settings": {
+      "$ref": "#/$defs/Settings"
+    }
+  },
+  "required": [
+    "id",
+    "model",
+    "corpus",
+    "contract",
+    "baseline",
+    "candidate",
+    "target"
+  ],
+  "title": "Plan",
+  "type": "object"
+}

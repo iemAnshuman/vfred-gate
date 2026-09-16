@@ -1,0 +1,163 @@
+{
+  "$defs": {
+    "EvidenceRequirements": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "repetitions": {
+          "default": 5,
+          "minimum": 1,
+          "title": "Repetitions",
+          "type": "integer"
+        },
+        "minimum_cases": {
+          "default": 16,
+          "minimum": 1,
+          "title": "Minimum Cases",
+          "type": "integer"
+        },
+        "stability": {
+          "const": "bitwise_within_stack",
+          "default": "bitwise_within_stack",
+          "title": "Stability",
+          "type": "string"
+        },
+        "require_all_cases": {
+          "const": true,
+          "default": true,
+          "title": "Require All Cases",
+          "type": "boolean"
+        },
+        "unexpected_manifest_differences": {
+          "const": "reject",
+          "default": "reject",
+          "title": "Unexpected Manifest Differences",
+          "type": "string"
+        }
+      },
+      "title": "EvidenceRequirements",
+      "type": "object"
+    },
+    "Rule": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "metric": {
+          "enum": [
+            "bit_equal_rate",
+            "max_absolute_error",
+            "max_relative_error",
+            "max_ulp_error",
+            "argmax_agreement_rate",
+            "topk_jaccard",
+            "sequence_exact_match_rate"
+          ],
+          "title": "Metric",
+          "type": "string"
+        },
+        "alignment": {
+          "default": "free_run",
+          "enum": [
+            "free_run",
+            "teacher_forced_baseline"
+          ],
+          "title": "Alignment",
+          "type": "string"
+        },
+        "operator": {
+          "enum": [
+            "ge",
+            "le"
+          ],
+          "title": "Operator",
+          "type": "string"
+        },
+        "threshold": {
+          "title": "Threshold",
+          "type": "number"
+        },
+        "k": {
+          "default": 5,
+          "minimum": 1,
+          "title": "K",
+          "type": "integer"
+        },
+        "epsilon": {
+          "default": 1e-12,
+          "exclusiveMinimum": 0,
+          "title": "Epsilon",
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "metric",
+        "operator",
+        "threshold"
+      ],
+      "title": "Rule",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "compatibility_level": {
+      "enum": [
+        "bit",
+        "numeric",
+        "decision",
+        "sequence"
+      ],
+      "title": "Compatibility Level",
+      "type": "string"
+    },
+    "rules": {
+      "items": {
+        "$ref": "#/$defs/Rule"
+      },
+      "minItems": 1,
+      "title": "Rules",
+      "type": "array"
+    },
+    "evidence": {
+      "$ref": "#/$defs/EvidenceRequirements"
+    },
+    "on_insufficient_evidence": {
+      "const": "INCONCLUSIVE",
+      "default": "INCONCLUSIVE",
+      "title": "On Insufficient Evidence",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "compatibility_level",
+    "rules"
+  ],
+  "title": "Contract",
+  "type": "object"
+}

@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "repository": "https://github.com/ggml-org/llama.cpp",
+  "revision": "552f18f912a32ea86edf82e2b76431cb7131538d",
+  "archive_sha256": "76bf0a87e07c89695e7c002be84a9f76460ddba15d5602ef086fc61f734c98e2",
+  "archive_url": "https://codeload.github.com/ggml-org/llama.cpp/tar.gz/552f18f912a32ea86edf82e2b76431cb7131538d"
+}
