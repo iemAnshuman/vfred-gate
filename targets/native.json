@@ -1,0 +1,2 @@
+{"schema_version":1,"id":"native-cpu","execution_class":"host","architecture":"arm64","command_prefix":[],"affinity_cpu":null,"require_affinity":false,"description":"Native macOS ARM64 CPU; affinity unavailable. Not an RVV qualification target."}
+
