@@ -102,11 +102,13 @@ json run_model(const json&req,const fs::path&out){
                 if(static_cast<size_t>(n)>b.size()){b.resize(n+1);n=llama_chat_apply_template(template_text.c_str(),&message,1,true,b.data(),b.size());}
                 formatted.assign(b.data(),n);
             }
-            cases.push_back({{"id",item.at("id")},{"tokens",tokenize(vocab,formatted)},
+            cases.push_back({{"id",item.at("id")},{"tokens",tokenize(vocab,formatted)},{"formatted_text",formatted},
               {"formatted_text_sha256",digest(formatted.data(),formatted.size())}});
         }
         return {{"model",info},{"cases",cases},{"load_seconds",load_seconds}};
     }
+    for(const auto*key:{"prompt_tokens","forced_tokens"})if(req.contains(key))for(const auto&t:req.at(key))
+        if(!t.is_number_integer()||t.get<int64_t>()<0||t.get<int64_t>()>=nv)throw std::runtime_error("invalid token ID");
     auto prompt=req.at("prompt_tokens").get<std::vector<int32_t>>();
     auto forced=req.value("forced_tokens",std::vector<int32_t>{});
     bool teacher=req.value("mode","free_run")=="teacher_forced";
@@ -155,7 +157,15 @@ json run_model(const json&req,const fs::path&out){
     logits_file.close();events.close();capture.stream.close();
     if(!logits_file||!events||!capture.stream)throw std::runtime_error("output flush failed");
     if(!capture.injection.empty()&&capture.injections!=1)throw std::runtime_error("injection did not hit exactly once");
+    std::string decoded;
+    for(auto token:selected){
+        std::vector<char>piece(256);
+        int n=llama_token_to_piece(vocab,token,piece.data(),piece.size(),0,false);
+        if(n<0){piece.resize(-n);n=llama_token_to_piece(vocab,token,piece.data(),piece.size(),0,false);}
+        if(n<0)throw std::runtime_error("token decoding failed");decoded.append(piece.data(),n);
+    }
     return {{"model",info},{"case_id",req.at("case_id")},{"mode",teacher?"teacher_forced":"free_run"},
+      {"generated_text",decoded},
       {"prompt_tokens",prompt},{"forced_tokens",forced},{"selected_tokens",selected},{"stop_reason",stop},
       {"steps",steps},{"logits_file","logits.f32"},{"logits_sha256",file_digest(out/"logits.f32")},
       {"logits_shape",{steps.size(),nv}},{"injection_count",capture.injections},

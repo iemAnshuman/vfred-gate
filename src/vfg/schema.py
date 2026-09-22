@@ -6,7 +6,7 @@ Digest = Annotated[str, Field(pattern=r"^[0-9a-f]{64}$")]
 Revision = Annotated[str, Field(pattern=r"^[0-9a-f]{40}$")]
 
 class Record(BaseModel):
-    model_config = ConfigDict(extra="forbid", allow_inf_nan=False)
+    model_config = ConfigDict(extra="forbid", allow_inf_nan=False, strict=True)
     schema_version: Literal[1] = 1
 
 class Injection(Record):
@@ -162,4 +162,3 @@ class Verdict(Record):
 
 SCHEMAS={"stack":Stack, "target":Target, "model":ModelLock, "corpus":CorpusCase,
          "plan":Plan, "contract":Contract, "verdict":Verdict}
-
