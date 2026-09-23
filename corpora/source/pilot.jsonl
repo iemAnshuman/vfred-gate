@@ -1,0 +1,48 @@
+{"id": "c001", "group_id": "arithmetic-direct", "category": "arithmetic", "split": "exploratory", "text": "What is two plus two?"}
+{"id": "c002", "group_id": "arithmetic-direct", "category": "arithmetic", "split": "exploratory", "text": "Calculate 7 times 8."}
+{"id": "c003", "group_id": "arithmetic-direct", "category": "arithmetic", "split": "exploratory", "text": "What is 100 divided by 4?"}
+{"id": "c004", "group_id": "arithmetic-direct", "category": "arithmetic", "split": "exploratory", "text": "Subtract 19 from 52."}
+{"id": "c005", "group_id": "arithmetic-contextual", "category": "arithmetic", "split": "holdout", "text": "A box has 6 red and 5 blue balls. How many balls are there?"}
+{"id": "c006", "group_id": "arithmetic-contextual", "category": "arithmetic", "split": "holdout", "text": "Mira buys three pens costing 4 rupees each. What is the total cost?"}
+{"id": "c007", "group_id": "factual-direct", "category": "factual", "split": "exploratory", "text": "What is the capital of France?"}
+{"id": "c008", "group_id": "factual-direct", "category": "factual", "split": "exploratory", "text": "Name the largest planet in our solar system."}
+{"id": "c009", "group_id": "factual-direct", "category": "factual", "split": "exploratory", "text": "What gas do plants absorb during photosynthesis?"}
+{"id": "c010", "group_id": "factual-direct", "category": "factual", "split": "exploratory", "text": "How many sides does a hexagon have?"}
+{"id": "c011", "group_id": "factual-contextual", "category": "factual", "split": "holdout", "text": "Complete: water freezes at zero degrees on the ___ scale."}
+{"id": "c012", "group_id": "factual-contextual", "category": "factual", "split": "holdout", "text": "Complete: the chemical symbol for gold is ___."}
+{"id": "c013", "group_id": "formatting-direct", "category": "formatting", "split": "exploratory", "text": "Reply with exactly the word ready."}
+{"id": "c014", "group_id": "formatting-direct", "category": "formatting", "split": "exploratory", "text": "List the integers 1 to 3 separated by commas."}
+{"id": "c015", "group_id": "formatting-direct", "category": "formatting", "split": "exploratory", "text": "Return a JSON object with one key named status and value ok."}
+{"id": "c016", "group_id": "formatting-direct", "category": "formatting", "split": "exploratory", "text": "Write yes in uppercase."}
+{"id": "c017", "group_id": "formatting-contextual", "category": "formatting", "split": "holdout", "text": "Put the word blue inside square brackets."}
+{"id": "c018", "group_id": "formatting-contextual", "category": "formatting", "split": "holdout", "text": "Write two lines: first alpha then beta."}
+{"id": "c019", "group_id": "code-direct", "category": "code", "split": "exploratory", "text": "Write a Python expression that adds 3 and 5."}
+{"id": "c020", "group_id": "code-direct", "category": "code", "split": "exploratory", "text": "What does len([1, 2, 3]) return in Python?"}
+{"id": "c021", "group_id": "code-direct", "category": "code", "split": "exploratory", "text": "Complete this Python statement: for i in range(3):"}
+{"id": "c022", "group_id": "code-direct", "category": "code", "split": "exploratory", "text": "Name the C++ header for std::vector."}
+{"id": "c023", "group_id": "code-contextual", "category": "code", "split": "holdout", "text": "Explain what a loop invariant means in one sentence."}
+{"id": "c024", "group_id": "code-contextual", "category": "code", "split": "holdout", "text": "Explain integer division using a short Python example."}
+{"id": "c025", "group_id": "reasoning-direct", "category": "reasoning", "split": "exploratory", "text": "All roses are flowers. Is a rose a flower?"}
+{"id": "c026", "group_id": "reasoning-direct", "category": "reasoning", "split": "exploratory", "text": "Which comes next: 2, 4, 6, 8?"}
+{"id": "c027", "group_id": "reasoning-direct", "category": "reasoning", "split": "exploratory", "text": "Which is heavier: one kilogram of iron or one kilogram of cotton?"}
+{"id": "c028", "group_id": "reasoning-direct", "category": "reasoning", "split": "exploratory", "text": "If today is Monday, what day is tomorrow?"}
+{"id": "c029", "group_id": "reasoning-contextual", "category": "reasoning", "split": "holdout", "text": "Lea is older than Sam, and Sam is older than Jo. Who is youngest?"}
+{"id": "c030", "group_id": "reasoning-contextual", "category": "reasoning", "split": "holdout", "text": "A lamp is off. Its switch is toggled twice. Is it on or off?"}
+{"id": "c031", "group_id": "ambiguous-direct", "category": "ambiguous", "split": "exploratory", "text": "Continue: At the edge of the forest,"}
+{"id": "c032", "group_id": "ambiguous-direct", "category": "ambiguous", "split": "exploratory", "text": "Finish the sentence: The best part of the morning is"}
+{"id": "c033", "group_id": "ambiguous-direct", "category": "ambiguous", "split": "exploratory", "text": "Choose either tea or coffee and give one short reason."}
+{"id": "c034", "group_id": "ambiguous-direct", "category": "ambiguous", "split": "exploratory", "text": "Continue this story in one sentence: The door opened slowly."}
+{"id": "c035", "group_id": "ambiguous-contextual", "category": "ambiguous", "split": "holdout", "text": "Write a possible title for a story about a missing key."}
+{"id": "c036", "group_id": "ambiguous-contextual", "category": "ambiguous", "split": "holdout", "text": "Give one possible meaning of the word bank."}
+{"id": "c037", "group_id": "unicode-direct", "category": "unicode", "split": "exploratory", "text": "Repeat this punctuation exactly: ! ? ; :"}
+{"id": "c038", "group_id": "unicode-direct", "category": "unicode", "split": "exploratory", "text": "Write the word cafe with an acute accent on the final letter."}
+{"id": "c039", "group_id": "unicode-direct", "category": "unicode", "split": "exploratory", "text": "Repeat the string A-B_C exactly."}
+{"id": "c040", "group_id": "unicode-direct", "category": "unicode", "split": "exploratory", "text": "What punctuation usually ends a question?"}
+{"id": "c041", "group_id": "unicode-contextual", "category": "unicode", "split": "holdout", "text": "Explain the difference between a hyphen and a minus sign briefly."}
+{"id": "c042", "group_id": "unicode-contextual", "category": "unicode", "split": "holdout", "text": "Translate the Hindi greeting namaste into English."}
+{"id": "c043", "group_id": "conversation-direct", "category": "conversation", "split": "exploratory", "text": "Hello. Introduce yourself in one sentence."}
+{"id": "c044", "group_id": "conversation-direct", "category": "conversation", "split": "exploratory", "text": "Give one practical tip for staying focused while studying."}
+{"id": "c045", "group_id": "conversation-direct", "category": "conversation", "split": "exploratory", "text": "Suggest a simple breakfast using oats."}
+{"id": "c046", "group_id": "conversation-direct", "category": "conversation", "split": "exploratory", "text": "Explain why sleep matters in one sentence."}
+{"id": "c047", "group_id": "conversation-contextual", "category": "conversation", "split": "holdout", "text": "Write a polite request to borrow a book."}
+{"id": "c048", "group_id": "conversation-contextual", "category": "conversation", "split": "holdout", "text": "Give a short encouraging message to someone learning to code."}
