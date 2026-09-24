@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
 """Create a local commit after validating this project's explicit chronology."""
+
 import argparse
 from datetime import datetime, timedelta
 import os
 import re
 import subprocess
 
+
 def git(*args):
     return subprocess.check_output(["git", *args], text=True).strip()
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -39,6 +42,6 @@ def main():
         raise RuntimeError("stored commit metadata did not match request")
     print("\n".join(result))
 
+
 if __name__ == "__main__":
     main()
-
