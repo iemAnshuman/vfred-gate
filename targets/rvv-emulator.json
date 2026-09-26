@@ -1,0 +1,1 @@
+{"schema_version":1,"id":"qemu-rvv256","execution_class":"emulator","architecture":"rv64","command_prefix":[],"affinity_cpu":null,"require_affinity":false,"description":"Freestanding QEMU virt RVV 1.0, VLEN 256, ELEN 64. Used by vfg microbench; not a Linux full-model target."}

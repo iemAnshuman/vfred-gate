@@ -1,0 +1,1 @@
+{"baseline":"../stacks/baseline.json","candidate":"../stacks/baseline.json","cases":["c001","c007","c013","c019"],"contract":"../contracts/smoke-self-check-v1.json","corpus":"../corpora/pilot-v1.jsonl","id":"smoke","model":"../models/model.lock.json","schema_version":1,"settings":{"context":512,"max_tokens":32},"target":"../targets/native.json"}
