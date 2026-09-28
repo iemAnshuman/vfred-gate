@@ -14,16 +14,28 @@ TEMPLATE = """<!doctype html><html lang="en"><meta charset="utf-8"><meta name="v
 <section><h2>First sequence divergence</h2><table><tr><th>Case</th><th>Position</th><th>Observed baseline steps</th></tr>{% for item in divergences %}<tr><td>{{ item.case_id }}</td><td>{{ 'none observed (censored)' if item.censored else item.position }}</td><td>{{ item.observed_steps }}</td></tr>{% endfor %}</table></section>
 <section><h2>Identities and controls</h2><table><tr><th></th><th>Baseline</th><th>Candidate</th></tr>{% for field in ['id','binary_sha256','source_revision','source_digest','build_class','reduction_policy','compiler','flags','injection'] %}<tr><th>{{ field }}</th><td><code>{{ inputs.baseline[field] }}</code></td><td><code>{{ inputs.candidate[field] }}</code></td></tr>{% endfor %}</table><p>Model: <code>{{ inputs.model.sha256 }}</code></p><pre>{{ inputs.plan.settings }}</pre><pre>{{ verdict.evidence.manifest_diff }}</pre></section>
 <section><h2>Stability and margins</h2><p>{{ stable }} / {{ verdict.evidence.stability|length }} case/stack/mode groups satisfy all requested bitwise repetitions.</p><table><tr><th>Case</th><th>Minimum top-two margin</th><th>Mean margin</th></tr>{% for case,item in margins.items() %}<tr><td>{{ case }}</td><td>{{ item.minimum }}</td><td>{{ item.mean }}</td></tr>{% endfor %}</table><p>Margins are descriptive. No held-out failure prediction has been evaluated.</p></section>
+{% if localisation %}<section><h2>Injected diagnostic localisation</h2><p>Case {{ localisation.case_id }}, step {{ localisation.prediction_step }}. Earliest differing tensor <strong>{{ localisation.earliest_difference.name }}</strong>, operator <strong>{{ localisation.earliest_difference.op }}</strong>.</p><p>Matching histories: {{ localisation.history_matched }}. Baseline restored: {{ localisation.baseline_restored }}. Original discrepancy preserved: {{ localisation.original_discrepancy_preserved }}.</p><pre>{{ localisation.injection }}</pre><p>{{ localisation.mapping_limitation }}</p></section>{% endif %}
+{% if inventory %}<section><h2>Separate RVV mechanism inventory</h2><p>This static inventory comes from the freestanding probe, not the native model binary. Static presence alone does not establish execution or causality.</p><p>Binary SHA-256: <code>{{ inventory.binary_sha256 }}</code></p><table><tr><th>Instruction</th><th>Site</th><th>Mapping</th></tr>{% for site in inventory.sites %}<tr><td>{{ site.mnemonic }}</td><td><code>{{ site.site_id }}</code></td><td>{{ site.source_candidates }}</td></tr>{% endfor %}</table></section>{% endif %}
 <section><h2>Archived evidence</h2><p>Raw outputs, requests and execution metadata are covered by the bundle index. The index provides integrity, not external authentication.</p><ul>{% for name,href in links %}<li><a href="{{ href }}">{{ name }}</a></li>{% endfor %}</ul><details><summary>Per-execution result files</summary><ul>{% for name,href in joblinks %}<li><a href="{{ href }}">{{ name }}</a></li>{% endfor %}</ul></details></section>
 </html>"""
 
 
-def render_report(root, output):
+def render_report(root, output, localisation=None, inventory=None):
     import os
 
     root = Path(root).resolve()
     output = Path(output).resolve()
     derived = rederive(root)
+    if localisation is not None:
+        from ..replay.localise import verify_localisation
+
+        localisation = verify_localisation(localisation)
+        if localisation["source_bundle_sha256"] != derived["bundle_sha256"]:
+            from ..errors import VFGError
+
+            raise VFGError("localisation belongs to another qualification")
+    if inventory is not None:
+        inventory = load_document(inventory)
     inputs = load_document(root / "inputs.json")
     run = load_document(root / "run.json")
     verdict = derived["verdict"]
@@ -41,6 +53,8 @@ def render_report(root, output):
     ]
     template = Environment(autoescape=select_autoescape(default=True)).from_string(TEMPLATE)
     html = template.render(
+        localisation=localisation,
+        inventory=inventory,
         inputs=inputs,
         run=run,
         verdict=verdict,

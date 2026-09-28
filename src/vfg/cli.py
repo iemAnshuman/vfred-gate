@@ -6,7 +6,7 @@ import json
 import subprocess
 import sys
 import typer
-from .errors import VFGError
+from .errors import VFGError, InsufficientEvidence
 from .manifest import atomic_json, load_document
 
 app = typer.Typer(no_args_is_help=True, pretty_exceptions_enable=False)
@@ -22,6 +22,9 @@ def fail(exc):
 def guarded(fn, *args, **kwargs):
     try:
         return fn(*args, **kwargs)
+    except InsufficientEvidence as exc:
+        typer.echo(json.dumps({"verdict": "INCONCLUSIVE", "exit_code": 3, "reason": str(exc)}), err=True)
+        raise typer.Exit(3)
     except (VFGError, OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError) as exc:
         fail(exc)
 
@@ -119,11 +122,15 @@ def verify(run: Path = typer.Option(...)):
 
 @app.command()
 def report(
-    run: Path = typer.Option(...), output: Path = typer.Option(...), offline: bool = typer.Option(False)
+    run: Path = typer.Option(...),
+    output: Path = typer.Option(...),
+    offline: bool = typer.Option(False),
+    localisation: Optional[Path] = typer.Option(None),
+    inventory: Optional[Path] = typer.Option(None),
 ):
     from .report import render_report
 
-    typer.echo(str(guarded(render_report, run, output)))
+    typer.echo(str(guarded(render_report, run, output, localisation, inventory)))
 
 
 @app.command()
