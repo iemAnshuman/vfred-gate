@@ -81,3 +81,36 @@ def test_cli_exit_codes(evidence, tmp_path):
     runner = CliRunner()
     assert runner.invoke(app, ["verify", "--run", str(ROOT)]).exit_code == 0
     assert runner.invoke(app, ["validate", "--plan", "plans/smoke.json"]).exit_code == 0
+
+
+@pytest.mark.model
+def test_cli_inconclusive_missing_repeat(tmp_path, monkeypatch, evidence):
+    import os
+    from vfg.controller import qualification
+
+    inputs, jobs = evidence
+    counter = {"value": 0}
+
+    def fixture_executor(binary, request, output, target, timeout):
+        # Replay recorded real outputs as a controller fixture; no runtime credit.
+        counter["value"] += 1
+        output = Path(output)
+        output.mkdir(parents=True)
+        if counter["value"] == 40:
+            (output / "execution.json").write_text(json.dumps({"status": "timeout"}))
+            return
+        source = ROOT / next(j["path"] for j in jobs if j["case_id"] == request["case_id"])
+        for p in source.iterdir():
+            if p.is_dir():
+                shutil.copytree(p, output / p.name, copy_function=os.link)
+            else:
+                os.link(p, output / p.name)
+
+    monkeypatch.setattr(qualification, "execute_runner", fixture_executor)
+    result = CliRunner().invoke(
+        app, ["qualify", "--plan", "plans/smoke.json", "--output", str(tmp_path / "run")]
+    )
+    assert result.exit_code == 3, result.output
+    verdict = load_document(tmp_path / "run/verdict.json")
+    assert verdict["verdict"] == "INCONCLUSIVE"
+    assert verdict["evidence"]["completed_jobs"] == 39

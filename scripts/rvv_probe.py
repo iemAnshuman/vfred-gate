@@ -26,6 +26,8 @@ def main():
     ap.add_argument("--output", type=Path, default=ROOT / "runs/mechanism")
     args = ap.parse_args()
     out = args.output.resolve()
+    if out.exists() and any(out.iterdir()):
+        raise RuntimeError("probe output is not empty; choose a new directory")
     out.mkdir(parents=True, exist_ok=True)
     clang = tool("clang", "/opt/homebrew/opt/llvm/bin/clang")
     if Path("/opt/homebrew/opt/llvm/bin/clang").exists():

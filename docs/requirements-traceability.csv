@@ -1,0 +1,13 @@
+requirement,module,acceptance,evidence,status
+FR-001,manifest/schema/build,invalid hashes duplicate keys and real model validation,runs/validation/pytest.xml,implemented
+FR-002,execute/controller/runner,fresh process confirmation and teacher forcing,runs/self-check/bundle.json,implemented
+FR-003,scan/elf,zero one multiple aliases stripped ELF tests,runs/mechanism/inventory.json,implemented
+FR-004,compare/metrics,numeric edge cases aligned histories and actual greedy choices,runs/validation/pytest.xml,implemented
+FR-005,contracts/controller/cli,four verdicts missing repeat and corrupt evidence,runs/validation/pytest.xml,implemented
+FR-006,replay/runner,seeded operator shared history baseline restoration and strided capture,runs/seeded-operator/bundle.json,implemented through operator boundary
+FR-007,store/report,detached offline reconstruction and escaped HTML,runs/native-comparison/bundle.json,implemented
+FR-008,canary/progress,48 frozen cases disjoint groups descriptive margins and checked ledger,corpora/pilot-v1.manifest.json,implemented pilot only
+NFR-001,store/manifest,hash mismatch unsafe path atomic and malformed evidence tests,runs/validation/pytest.xml,implemented
+NFR-002,controller/runner,invalid tokens context limits output corruption and timeout,runs/validation/pytest.xml,implemented
+NFR-003,build,archive identity checked and fresh build differences explained,runs/build-reproducibility.json,implemented configuration reproducibility
+NFR-004,execute/controller,timeout process control disk budget and bounded remote discovery,runs/smoke-cost.json,implemented

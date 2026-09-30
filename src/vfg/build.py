@@ -107,6 +107,10 @@ def build_native(build_dir, stack_path=None, root=ROOT, compiler=None):
         "build_command": build,
         "binary_sha256": file_digest(binary),
         "compile_commands_sha256": file_digest(commands),
+        "effective_compile_commands": load_document(commands),
+        "effective_build_commands": subprocess.check_output(
+            ["ninja", "-C", str(build_dir), "-t", "commands", "vfg-llama-runner"], text=True
+        ),
         "cmake_cache_sha256": file_digest(build_dir / "CMakeCache.txt"),
         "source_patch_sha256": file_digest(root / "third_party/patches/0001-snapshot-version.patch"),
     }
