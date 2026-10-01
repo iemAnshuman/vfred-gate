@@ -1,5 +1,21 @@
 # Mid-semester walkthrough
 
+## Setup and smoke run
+
+Install Python 3.11+, uv, CMake, Ninja, and a C++17 compiler. RVV probes additionally need LLVM tools and QEMU.
+
+```sh
+uv sync --frozen
+uv run python scripts/bootstrap.py
+uv run vfg build --stack stacks/baseline.json
+uv run vfg qualify --plan plans/smoke.json --output runs/demo
+uv run vfg report --run runs/demo --offline --output runs/demo/report
+```
+
+Open `runs/demo/report/index.html`. Use a new output directory for each run. Bootstrap downloads and verifies the pinned source and model. Models, builds, and raw evidence are excluded from Git; rebuild locally to reproduce results.
+
+## Recorded results
+
 1. Open `docs/midterm-report.md` and explain the exact host/emulator scope and the unearned hardware/research points. The synopsis is a proposal, not completed experimental evidence.
 2. Show the source/model locks, frozen corpus split and `plans/self-check.json`. Show that the holdout IDs do not appear in the selected cases.
 3. Run `uv run vfg verify --run runs/self-check`. Open its report and point to 16 distinct cases, 160 complete executions, the bit-equality rule and the stability count.
