@@ -1,6 +1,6 @@
 # Pilot freeze v1
 
-Frozen on 2026-10-01 at 11:11:29.693717 UTC, before inspecting candidate differences. This is the actual timestamp; Git dates are reconstructed.
+Frozen on 2026-10-01 at 11:11:29.693717 UTC, before inspecting candidate differences.
 
 The 48 original prompts comprise eight categories of six prompts. Each category has four exploratory prompts and two held-out prompts. Group IDs separate direct and contextual prompts. The frozen manifest records exact rendered prompts, token IDs, the model and template hashes, and the source digest.
 

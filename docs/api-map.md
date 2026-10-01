@@ -16,8 +16,7 @@ ggml_backend_tensor_set before dependent graph computation continues. Diagnostic
 runs must observe the same nodes on both sides.
 
 The observed SmolLM2 model has 49,152 vocabulary entries and 32 transformer
-blocks. Layer output names include l_out-0 through l_out-31. These names were
-observed from the graph, not copied from the synopsis.
+blocks. The captured graph names layer outputs l_out-0 through l_out-31.
 
 CMake disables Metal, Accelerate, BLAS, CUDA, Vulkan, OpenMP, native tuning and
 compiler caching. KV values and keys are explicitly float32. One token per batch
@@ -30,4 +29,3 @@ numerical kernels. Source revision and patch hash are recorded separately.
 See runner/CMakeLists.txt and the generated build-manifest.json for the complete
 effective build information. All timing from this instrumented runner is
 diagnostic; it does not establish selective-hardening performance.
-

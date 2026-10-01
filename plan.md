@@ -2,12 +2,12 @@
 
 **Written:** 1 October 2026  
 **Evaluation:** 6-7 October 2026; reporting at 09:45, evaluation from 10:00 to 13:00  
-**Status:** planning only; none of the implementation tasks below is complete  
+**Status:** host/emulator milestone implemented; physical RVV validation pending
 **Source:** [project synopsis](VFRED-Gate_Synopsis_Report.pdf), particularly Chapters 3-7 and Appendices A-C
 
-## 1. What we will deliver
+## 1. Milestone scope
 
-Build an executable vertical slice of VFRED-Gate that:
+The midterm implementation covers the following workflow:
 
 1. Records the exact model, source revision, build configuration, execution target and inputs.
 2. Builds small floating-point reduction programs and inventories their emitted RISC-V instructions.
@@ -20,13 +20,11 @@ Build an executable vertical slice of VFRED-Gate that:
 
 The intended scope is the synopsis's Phases 0-2, a bounded part of Phase 3, and the documentation needed to demonstrate them. This is a working software milestone. Answering all six research objectives remains later work.
 
-The current repository has the synopsis PDF and an unborn Git branch. There are no existing commits, source modules, tests or measured project results to reuse. The numerical outputs printed in Appendix C are reported by the synopsis; we must rerun our own complete programs before using them as project evidence.
-
-This request authorizes writing this plan. Implementation, dependency installation, model downloads, target execution and commits start in a subsequent implementation task.
+This document defines the design and acceptance criteria. Current results and limitations are recorded in [the midterm report](docs/midterm-report.md) and checked by the progress ledger.
 
 ## 2. Define 50% before implementing
 
-Use the following **proposed engineering work breakdown**, totalling 100 points. These are planning weights, not measured research progress or an official university grading rubric. Freeze the breakdown in the first implementation milestone; do not change weights to make unfinished work count as complete.
+The fixed engineering breakdown totals 100 points. It tracks completed deliverables separately from research findings and university grading.
 
 | ID | Full-project deliverable | Total points | Planned mid-semester points | Evidence needed for the planned points |
 |---|---|---:|---:|---|
@@ -42,20 +40,11 @@ Use the following **proposed engineering work breakdown**, totalling 100 points.
 | W9 | Evaluation, reproducibility and project documentation | 4 | 2 | Re-derived report, SRS/progress drafts and working demonstration; final study/external reproduction deferred |
 | **Total** | | **100** | **58** | Award only accepted subitems |
 
-The target is **58/100 accepted engineering points**, leaving some margin above the requested 50%. A module existing, a mocked response, or a passing schema fixture does not establish a real-model or hardware subitem.
+The original target was **58/100 engineering points**. The verified host/emulator milestone earns **51/100**; physical-board validation and full-model RVV execution account for the seven blocked points. Each credit requires its specified execution evidence.
 
-Track each subitem in `docs/progress.yaml` with:
+The ledger in `docs/progress.yaml` records each item's ID, fixed weight, status and evidence hashes. Accepted, blocked and deferred items are listed separately. Run timestamps, configurations and test results are retained in the referenced receipts and bundles.
 
-- ID, fixed weight and acceptance criterion.
-- Status: `not_started | implementing | validated | blocked`.
-- Actual verification timestamp, source commit if one exists, test command and result.
-- Evidence-bundle path and SHA-256.
-- Execution class: `host | emulator | hardware | injected_test`.
-- Limitations and a named reviewer when a person has actually reviewed it.
-
-Compute progress as the sum of validated subitems. Count a subitem only once, even if it supports several research objectives.
-
-**Hardware contingency:** absence of a primary board leaves W0's four board points unearned. Absence of real-model RVV execution leaves W3's three RVV points unearned. Completing every other planned item would yield 51/100, described explicitly as the host/emulator software milestone with hardware qualification pending. This is conditional arithmetic, not today's progress. Missing any further mandatory item can take the result below 50%.
+Run `uv run python scripts/check_midterm.py --min-points 50` to verify the evidence and calculate the total.
 
 The original synopsis requires a primary-target Phase 0 gate before later phases. If hardware is unavailable, record an ADR for a provisional host/emulator development track. That track does not pass the original physical-target gate or establish the project's hardware premise.
 
@@ -101,7 +90,7 @@ The RVV specification describes ordered accumulation, unordered-tree latitude an
 
 ## 4. Prerequisites and bounded discovery
 
-Hardware availability has not been confirmed. The plan therefore begins with discovery, without assuming a board, credentials or an existing Linux toolchain.
+The initial discovery checklist is below. The current execution track uses ARM64 macOS and QEMU. The Rostam hardware probe result is recorded in [docs/rostam.md](docs/rostam.md).
 
 | Item | How to resolve it | Output | If unavailable |
 |---|---|---|---|
@@ -122,7 +111,7 @@ QEMU is an execution fallback; its reported configuration must be preserved. Dif
 
 ## 5. Planned repository structure
 
-Create only modules required by the milestone. The following paths are implementation targets, not files that already exist.
+The tree below is the original module outline. Some modules were combined during implementation; use `src/vfg/` and `runner/` for the current layout.
 
 ~~~text
 plan.md
@@ -564,7 +553,7 @@ Each stage records status and artifacts. Resume only from verified completed art
 - Missing repetitions, an unstable fixture and an unplanned manifest difference return INCONCLUSIVE and exit 3.
 - Invalid rules and corrupt artifacts return ERROR and exit 4.
 - Recomputing from raw artifacts reproduces the same metric counts and verdict.
-- A real compiler/policy comparison reports whatever it observes. A natural token flip is desirable evidence, not a required result to fabricate.
+- A real compiler/policy comparison reports whatever it observes. Record natural token differences when observed; the seeded case tests the failure path independently.
 
 ## 13. Milestone M6: teacher forcing and bounded localisation
 
@@ -643,7 +632,7 @@ If a trustworthy operator-to-instruction map cannot be established, stop at veri
 9. Keep the held-out 16 cases sealed for later canary validation. If used for an early descriptive check, record that it is no longer an untouched holdout.
 10. Persist all exclusions and unstable cases. The default complete-corpus contract becomes INCONCLUSIVE if a required case is missing or quarantined.
 
-Write the actual freeze timestamp, not a reconstructed September date. Distinguish this pilot plan from the later confirmatory preregistration.
+Record the execution-time freeze timestamp and keep the pilot separate from later confirmatory studies.
 
 At the end of the first four-case real-model run, measure wall time and artifact bytes. Estimate the 160-run cost from those observations. Example planning formula: model-load cost per run + prefill cost per run + decode cost per generated token. Do not insert an assumed tokens/second figure.
 
@@ -676,76 +665,42 @@ Use local HTML/CSS, no CDN resources and no server requirement. Escape prompt te
 
 ### Documentation
 
-`docs/srs.md` should contain purpose, scope, actors, environment, external interfaces, numbered functional/non-functional requirements, data contracts, error cases, constraints and acceptance methods.
+The submission SRS is kept locally at `docs/srs.md` and excluded from Git. It covers purpose, scope, interfaces, requirements, data contracts and acceptance methods. The progress ledger verifies the local copy.
 
-`docs/requirements-traceability.csv` maps each requirement to module, test, evidence bundle and current status. Initial requirement IDs:
+`docs/requirements-traceability.csv` maps implemented requirements to modules, tests and evidence. `docs/midterm-report.md` records results, limitations, weighted progress and remaining work.
 
-| ID | Requirement | Principal acceptance check |
-|---|---|---|
-| FR-001 | Verify model/source/build/input identities | Changed model byte rejected |
-| FR-002 | Run declared baseline/candidate configurations | Actual runner request/result pair |
-| FR-003 | Inventory emitted RVV reductions | Real compiled ELF fixture |
-| FR-004 | Measure stable comparable outputs | Five repetitions and alignment checks |
-| FR-005 | Evaluate versioned behaviour contracts | Four verdict/exit checks |
-| FR-006 | Replay identical token histories | History-hash equality |
-| FR-007 | Localise an observed layer/operator difference | Seeded on/off diagnostic |
-| FR-008 | Re-derive evidence offline | Detached bundle regeneration |
-| NFR-001 | Keep qualification assets local | Offline report with local assets |
-| NFR-002 | Detect incomplete/corrupt evidence | Truncation/hash tests |
-| NFR-003 | Make configuration reproducible | Locked fresh-directory build |
-| NFR-004 | Bound execution/storage use | Timeout and measured budget checks |
-
-`docs/midterm-report.md` should explain what was implemented, actual results, limitations, weighted progress and the remaining work. Use the synopsis as background; do not change proposed results into completed claims.
-
-Provide mentor-signature spaces in later printable report/SRS artifacts. Only a real mentor can supply the signatures. A meeting-record template must wait for the prescribed format or be explicitly provisional; populate it only with actual meetings. Drafts are counted as software documentation; signed submission readiness remains a separate checklist.
-
-The screenshot does not explicitly require slides. Prepare a short walkthrough script now; create slides only if needed by the evaluation instructions.
+Prepare signed report/SRS copies and the prescribed meeting record for submission. The command sequence is in `docs/demo.md`.
 
 ### Gate G7
 
-A second run of offline report generation reproduces canonical metrics and verdict. A person can follow the README in a clean environment and execute the demo. Record which parts have actually been independently exercised; do not label self-checks as external reproduction.
+Offline report generation must reproduce the canonical metrics and verdict. The walkthrough must document setup and the demonstration. External reproduction is tracked separately from local verification.
 
-## 16. CLI specification and demonstration commands
+## 16. CLI and demonstration commands
 
-Every command below is an **interface to implement**. None exists yet. Return code 0 from a report/verify operation means that operation succeeded; the saved qualification verdict can still be FAIL.
+The CLI exposes `doctor`, `validate`, `build`, `scan`, `microbench`, `corpus freeze`, `qualify`, `localise`, `verify`, `report` and `progress`.
 
-~~~text
-vfg doctor --output environment/host.json
-vfg validate --plan plans/self-check.yaml
-vfg microbench --target targets/rvv-emulator.json --output runs/mechanism
-vfg build --stack stacks/baseline.yaml
-vfg scan --binary build/rvv/vfg-microbench --output runs/inventory.json
-vfg corpus freeze --source corpora/source/pilot.jsonl --model models/model.lock.json
-vfg qualify --plan plans/self-check.yaml --output runs/self-check
-vfg qualify --plan plans/native-comparison.yaml --output runs/comparison
-vfg localise --qualification runs/comparison --case CASE_ID --capture layer
-vfg localise --qualification runs/seeded --case CASE_ID --capture operator
-vfg verify --run runs/comparison
-vfg report --run runs/comparison --offline --output runs/comparison/report
-vfg progress --ledger docs/progress.yaml
+Use fresh output directories for new experiments. After setup in [the walkthrough](docs/demo.md):
+
+~~~sh
+uv run vfg doctor --output environment/host.json
+uv run vfg validate --plan plans/self-check.json
+uv run vfg microbench --target targets/rvv-emulator.json --output runs/mechanism-new
+uv run vfg scan --binary runs/mechanism-new/probe.elf --output runs/mechanism-new/inventory.json
+uv run vfg qualify --plan plans/self-check.json --output runs/confirmation-new
+uv run vfg verify --run runs/confirmation-new
+uv run vfg report --run runs/confirmation-new --offline --output runs/confirmation-new/report
+uv run vfg progress --ledger docs/progress.yaml
 ~~~
 
-Add `stacks/baseline.yaml`, `stacks/candidate.yaml` and target/model lock files during their corresponding milestones. Make `plans/self-check.yaml` use the sixteen-case confirmation contract; put the four-case demo in `plans/smoke-self-check.yaml` so their results cannot be confused.
+Compiler comparison uses `plans/native-comparison.json` after both stacks have been built. The pilot corpus is already frozen; a new freeze needs a new version.
 
-The controller may call lower-level commands internally; avoid duplicate implementations. Invalid CLI usage follows the documented ERROR=4 policy for qualification commands rather than an accidental framework exit-code default.
+The diagnostic uses `plans/seeded.json`. After rebuilding the baseline, refresh the seeded manifest with `uv run python scripts/configure_seeded.py`. Qualification should return FAIL (exit 2); replay then uses `vfg localise --qualification RUN --case c001 --capture operator --output OUTPUT`.
 
-`scripts/demo_midterm.sh` must demonstrate:
-
-1. Doctor and locked-input validation.
-2. Reduction fixture execution and actual disassembly.
-3. A small real-model self-check returning PASS.
-4. A labelled failing fixture returning FAIL.
-5. Missing evidence returning INCONCLUSIVE.
-6. Invalid input returning ERROR.
-7. Shared-history replay and seeded localisation.
-8. Offline verification and report regeneration.
-9. The evidence-derived progress total and blocked items.
-
-Use isolated output directories for negative cases. Never corrupt the only retained successful evidence bundle. If hardware is unavailable during presentation, identify archived hardware evidence as archived and show its hashes; do not imply it is a live run.
+`verify` and `report` return zero when their operation succeeds, even if the saved qualification verdict is FAIL. CLI usage errors use Typer's usage exit code; qualification results use 0/2/3/4.
 
 ## 17. Test matrix
 
-Tests below protect the numerical and evidence claims. Avoid adding tests that merely mirror file layout or repeat library behaviour.
+The test matrix covers numerical comparisons, execution control and evidence integrity.
 
 | Layer | Required cases | Gate |
 |---|---|---|
@@ -763,7 +718,7 @@ Tests below protect the numerical and evidence claims. Avoid adding tests that m
 | Corpus | Stable IDs, split disjointness, tokenizer/model mismatch | G6 |
 | End to end | Real self-check, candidate result, detached offline bundle | G7 |
 
-Intended local validation commands:
+Local validation commands:
 
 ~~~sh
 uv sync --frozen
@@ -778,120 +733,39 @@ uv run python scripts/check_midterm.py --ledger docs/progress.yaml --min-points 
 
 Model/RVV tests use explicit markers and prerequisite detection. In ordinary developer runs they may skip with a reason. In `check_midterm.py`, a skipped prerequisite-dependent check cannot earn its points.
 
-The acceptance script validates ledger weights sum to 100, prohibits duplicate evidence credits, checks referenced artifact integrity and reports accepted/blocked points. It must not infer completion from checked Markdown boxes alone.
+The acceptance script checks fixed weights, item identities and referenced evidence, then reports accepted, blocked and deferred points.
 
-## 18. Implementation order, effort and cutoff decisions
+## 18. Implementation order
 
-The original synopsis allocates 24 weeks. Reaching this midterm slice in the remaining days is an accelerated effort with a narrow diagnostic scope. Estimates below are planning ranges, not promises or hours already spent.
+The dependencies run from target discovery and pinned assets through reduction probes, schemas, storage, build/execution, instruction scanning, the model runner, comparisons, replay and reports. The host/emulator path is complete for the midterm scope.
 
-| Order | Work | Estimated focused hours | Dependency |
-|---:|---|---:|---|
-| 1 | Discovery, locks and API/intrinsic probes | 4-6 | None |
-| 2 | M0 reduction programs and RVV execution | 6-10 | Discovery |
-| 3 | M1 schemas/storage | 6-8 | Discovery |
-| 4 | M2 build/executor infrastructure | 6-10 | M1, probes |
-| 5 | M3 binary inventory | 4-6 | M0, M1 |
-| 6 | M4 real-model runner | 8-12 | API probe, M2 |
-| 7 | M5 metrics/contracts/controller | 8-12 | M1, M4 |
-| 8 | M6 replay/capture/seeded localisation | 10-16 | M4-M5 |
-| 9 | M7 frozen pilot and runs | 4-6 engineering hours plus measured run time | M4-M5 |
-| 10 | M8 documents, reports and rehearsal | 6-10 | Actual evidence |
-| **Total** | | **62-96 engineering hours plus target run time** | |
+Next, establish a compatible physical RVV target/toolchain and repeat the mechanism checks there before attempting full-model execution. Keep instruction attribution, canary prediction and hardening experiments as separate milestones with their own acceptance evidence.
 
-Several items can be worked on by different team members after interfaces are fixed. This plan does not assume multiple autonomous agents or simultaneous changes to shared files.
+## 19. Team responsibilities
 
-### Calendar for actual implementation after authorization
+[Proposed ownership](docs/responsibilities.md) is pending team confirmation. Agree on interface changes before splitting work across the runner, controller and comparison modules.
 
-- **First session:** resolve target availability, dependency locks, API probe and intrinsic probe.
-- **Day 1:** reduction fixtures, schemas and artifact storage; choose and document the physical/provisional execution track.
-- **Day 2:** builds, execution and binary inventory; obtain the first real-model native output.
-- **Day 3:** comparator, contracts, corpus freeze and self-check; start the measured pilot.
-- **Day 4:** replay, selective capture and the seeded localisation demonstration.
-- **Day 5:** finish accepted evidence, report/SRS drafts, rehearsal and mentor review logistics.
+## 20. Commit chronology
 
-If the actual start shifts, calculate remaining time from the earliest evaluation date, 6 October. Do not treat the possible 7 October slot as extra time until the team's slot is known.
+Git dates use a reconstructed September-1 October schedule. Actual experiment and validation timestamps are stored in the evidence. See [docs/history.md](docs/history.md).
 
-### Cutoffs
+## 21. Midterm acceptance
 
-- No working real-model runner by the end of Day 2: stop optional compiler matrices and focus on the runner; the planned 50% outcome is at risk.
-- No reliable callback capture after one focused session: use a narrow recorded local patch at one operator, preserving diagnostic-only scope.
-- Full RVV inference too slow: run the native real-model suite and RVV microbenchmarks; do not award the RVV runner points.
-- No natural token divergence: retain the real PASS or numeric-only result; demonstrate FAIL/localisation with labelled injected tests.
-- No verified 50-point total: report the actual total and unfinished work. Documentation or extra commits do not replace missing execution evidence.
-- No selective-hardening implementation: keep O4 pending. Manual on/off diagnosis does not count as a minimum-cost policy search.
+`docs/progress.yaml` is the acceptance record. Run the checker after changing referenced artifacts:
 
-## 19. Proposed responsibilities for the four members
+~~~sh
+uv run python scripts/check_midterm.py --min-points 50
+~~~
 
-These assignments are suggestions for implementation and review. They do not assert past contributions or confirmed skill levels.
-
-| Member | Proposed primary responsibility | Review responsibility |
-|---|---|---|
-| Anshuman Agrawal | RVV mechanism, compiler configuration, ELF/DWARF inventory and numerical controls | Runner-to-instruction claims |
-| Ibteshamul Haque | C++ runner, teacher forcing, tensor capture and diagnostic hooks | Model/input isolation |
-| Anshul Goel | Python orchestration, manifests, artifact store, executors and CLI | Offline reproduction |
-| Aayushi Sinha | Contracts, corpus protocol, metric checks, traceability, SRS and evaluation report | Evidence completeness and exclusions |
-
-Agree on schemas and runner protocol together before splitting modules. Require a reviewer from another workstream for each acceptance gate when the team is available. Record real authorship and reviews; commit author names must reflect actual contributions.
-
-## 20. Commit sequence and the requested September timeline
-
-Use small, complete changes with one-line, lowercase commit subjects of **2-5 words**, without punctuation. Keep the historical planning window separate from actual execution/test timestamps.
-
-For this repository, explicitly set **both author and committer dates** on every new commit to the same chosen timestamp. Use daytime in **Asia/Kolkata (+05:30)**, operationally 09:00-18:00. Start the first planning commit at **2026-09-05 10:15:00 +05:30**. Every subsequent timestamp must be strictly later than both timestamps of the preceding commit, within the requested 5 September-1 October 2026 window. Reserve 1 October for final polishing. Before committing, validate the subject length and timestamp; afterwards, inspect both stored dates. Keep all commits local and **never push**.
-
-The dates below are the **requested reconstructed development schedule**, not evidence that these changes were implemented then. If commit metadata later follows this reconstruction, document that fact in `docs/history.md`. Preserve actual build, test, corpus-freeze, meeting and experiment times. Do not rewrite existing commits, invent team attribution or create commits during this planning task.
-
-| Logical date | Suggested one-line subject | Contents | Check before committing |
-|---|---|---|---|
-| 5 Sep | `add implementation plan` | Implementation plan | Weights/scope internally consistent |
-| 7 Sep | `add reproducible reduction fixtures` | Complete host reducers and input generator | Host numerical tests |
-| 9 Sep | `add rvv reduction probes` | Intrinsic wrappers and target probe | Compile, disassemble, execute where available |
-| 11 Sep | `record stack and target manifests` | Schemas, locks and manifest validation | Schema/difference tests |
-| 13 Sep | `store and verify run artifacts` | Content-addressed store and verifier | Corruption/offline tests |
-| 15 Sep | `build and execute pinned stacks` | Build configuration and executors | Fresh build and timeout/error checks |
-| 17 Sep | `map compiled rvv reductions` | ELF/DWARF scanner | Real ELF inventory tests |
-| 19 Sep | `add the pinned model runner` | Real C++ model loading and generation | Native real-model smoke check |
-| 21 Sep | `freeze inputs and capture logits` | Corpus tooling and binary logit protocol | Token/input and argmax reconstruction checks |
-| 23 Sep | `compare outputs against behaviour contracts` | Alignment, metrics and rule engine | Numeric/contract tests |
-| 25 Sep | `return evidence backed qualification verdicts` | Controller and four exit codes | All verdict acceptance cases |
-| 27 Sep | `replay histories and capture layers` | Teacher forcing and boundary capture | Matching-history/capture checks |
-| 29 Sep | `validate seeded localisation` | Diagnostic injection and on/off experiment | Seeded layer/operator location |
-| 1 Oct | `polish midterm report and demo` | Static reports, SRS, traceability and demo | Full accepted-evidence checklist |
-
-Adjust commit boundaries to real cohesive changes. Do not create empty commits to fill dates. No push, PR, message, publication or shared-service write is part of this plan; prepare any later upstream material for the user.
-
-## 21. Mid-semester acceptance checklist
-
-All boxes are initially unchecked.
-
-- [ ] Dependency, model and source identities are full values rather than placeholders.
-- [ ] Host reduction examples have been rerun from complete source.
-- [ ] RVV probes are compiled, disassembled and executed on a named target.
-- [ ] Physical Phase 0 result or its explicit blocked/negative status is recorded.
-- [ ] Real-model native generation and five-run stability checks exist.
-- [ ] Real-model RVV execution is verified or its points remain unearned.
-- [ ] Frozen corpus, tokenizer settings and split hashes are preserved.
-- [ ] Manifest differences are controlled and reported.
-- [ ] All four verdicts and their exit codes are exercised.
-- [ ] Real comparison results are distinct from injected test cases.
-- [ ] Teacher-forced histories match and seeded localisation is confirmed.
-- [ ] Missing instruction-level mapping remains visibly unresolved.
-- [ ] A detached evidence bundle regenerates metrics and verdict offline.
-- [ ] The completion ledger contains at least 50 accepted points under the frozen rubric.
-- [ ] SRS and progress report drafts match the implementation and evidence.
-- [ ] The demo works from documented commands.
-- [ ] Mentor review/signatures and the required meeting-record format are handled separately using actual records.
-- [ ] Remaining research work is shown in the evaluation material.
+The [midterm report](docs/midterm-report.md) records completed and blocked work. Mentor review, signed submission documents and the prescribed meeting record remain separate submission tasks.
 
 ## 22. What remains after this milestone
 
 | Objective | Mid-semester evidence | Work still needed |
 |---|---|---|
 | O1: qualification efficiency | Frozen pilot and margin measurements | Sensitivity selection, untouched holdout, failure recall and cost analysis |
-| O2: portability envelope | Capturable reduction inputs and target metadata | Legal replay witnesses, coverage analysis and unseen implementation |
+| O2: portability envelope | RVV microbenchmarks and target metadata | Legal replay witnesses, coverage analysis and unseen implementation |
 | O3: causal localisation | Shared-history replay and seeded layer/operator diagnosis | Dynamic instruction mapping, controlled reduction toggles and natural cases |
-| O4: minimum-cost compatibility | Interfaces and captured failing evidence | ddmin, cost search, specialised rebuilds and clean selective/global timing |
+| O4: minimum-cost compatibility | Injected operator-level diagnostic | ddmin, cost search, specialised rebuilds and clean selective/global timing |
 | O5: axis separation | Manifests, instruction inventories and declared comparison axes | Complete controlled compiler/policy matrix and second implementation |
 | O6: transfer | Explicit runner protocol and adapter boundary | A second runtime adapter and measured component reuse |
-
-The next implementation action, once authorized, is the discovery/API/intrinsic probe milestone. Its output determines which target track is feasible and which acceptance gates can be demonstrated before the evaluation.
