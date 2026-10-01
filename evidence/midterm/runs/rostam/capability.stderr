@@ -1,0 +1,9 @@
+The system default contains no modules
+  (env var: LMOD_SYSTEM_DEFAULT_MODULES is empty)
+  No changes in loaded modules
+
+capability.c:6:10: fatal error: riscv_vector.h: No such file or directory
+    6 | #include <riscv_vector.h>
+      |          ^~~~~~~~~~~~~~~~
+compilation terminated.
+srun: error: sven0: task 0: Exited with exit code 1

@@ -54,6 +54,10 @@ def main():
             dest.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(source, dest)
     receipt = load_document(ROOT / "runs/validation/receipt.json")
+    if not receipt.get("source_unchanged_during_validation"):
+        raise RuntimeError("validation lacks a stable source identity")
+    if any(file_digest(ROOT / name) != sha for name, sha in receipt["source_files"].items()):
+        raise RuntimeError("source changed since validation; run validation again")
     if any(x["returncode"] for x in receipt["checks"]):
         raise RuntimeError("validation has failed checks")
     xml = OUT / "runs/validation/pytest.xml"

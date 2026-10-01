@@ -1,0 +1,556 @@
+sven0.rostam.cct.lsu.edu
+Linux sven0.rostam.cct.lsu.edu 6.1.55 #1 SMP Sat Oct  7 21:05:27 CST 2023 riscv64 GNU/Linux
+Architecture:        riscv64
+Byte Order:          Little Endian
+CPU(s):              64
+On-line CPU(s) list: 0-63
+NUMA node(s):        4
+NUMA node0 CPU(s):   0-7,16-23
+NUMA node1 CPU(s):   8-15,24-31
+NUMA node2 CPU(s):   32-39,48-55
+NUMA node3 CPU(s):   40-47,56-63
+processor	: 0
+hart		: 3
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 1
+hart		: 0
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 2
+hart		: 1
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 3
+hart		: 2
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 4
+hart		: 4
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 5
+hart		: 5
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 6
+hart		: 6
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 7
+hart		: 7
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 8
+hart		: 8
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 9
+hart		: 9
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 10
+hart		: 10
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 11
+hart		: 11
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 12
+hart		: 12
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 13
+hart		: 13
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 14
+hart		: 14
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 15
+hart		: 15
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 16
+hart		: 16
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 17
+hart		: 17
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 18
+hart		: 18
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 19
+hart		: 19
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 20
+hart		: 20
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 21
+hart		: 21
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 22
+hart		: 22
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 23
+hart		: 23
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 24
+hart		: 24
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 25
+hart		: 25
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 26
+hart		: 26
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 27
+hart		: 27
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 28
+hart		: 28
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 29
+hart		: 29
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 30
+hart		: 30
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 31
+hart		: 31
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 32
+hart		: 32
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 33
+hart		: 33
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 34
+hart		: 34
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 35
+hart		: 35
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 36
+hart		: 36
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 37
+hart		: 37
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 38
+hart		: 38
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 39
+hart		: 39
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 40
+hart		: 40
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 41
+hart		: 41
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 42
+hart		: 42
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 43
+hart		: 43
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 44
+hart		: 44
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 45
+hart		: 45
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 46
+hart		: 46
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 47
+hart		: 47
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 48
+hart		: 48
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 49
+hart		: 49
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 50
+hart		: 50
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 51
+hart		: 51
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 52
+hart		: 52
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 53
+hart		: 53
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 54
+hart		: 54
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 55
+hart		: 55
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 56
+hart		: 56
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 57
+hart		: 57
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 58
+hart		: 58
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 59
+hart		: 59
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 60
+hart		: 60
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 61
+hart		: 61
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 62
+hart		: 62
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+processor	: 63
+hart		: 63
+isa		: rv64imafdcv
+mmu		: sv39
+mvendorid	: 0x5b7
+marchid		: 0x0
+mimpid		: 0x0
+
+/usr/bin/gcc
+/usr/bin/clang
+gcc (GCC) 13.2.1 20230728 (Red Hat 13.2.1-1)
+Copyright (C) 2023 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+clang version 16.0.6 (Fedora 16.0.6-3.rv64.fc38)
+Target: riscv64-redhat-linux-gnu
+Thread model: posix
+InstalledDir: /usr/bin
+/usr/bin/cmake
+/usr/bin/ninja
+               total        used        free      shared  buff/cache   available
+Mem:          128883        1538      124562           1        2782      126349
+Swap:           8191          19        8172
+real-time non-blocking time  (microseconds, -R) unlimited
+core file size              (blocks, -c) unlimited
+data seg size               (kbytes, -d) unlimited
+scheduling priority                 (-e) 0
+file size                   (blocks, -f) unlimited
+pending signals                     (-i) 514305
+max locked memory           (kbytes, -l) unlimited
+max memory size             (kbytes, -m) 262144
+open files                          (-n) 1024
+pipe size                (512 bytes, -p) 8
+POSIX message queues         (bytes, -q) 819200
+real-time priority                  (-r) 0
+stack size                  (kbytes, -s) 8192
+cpu time                   (seconds, -t) unlimited
+max user processes                  (-u) 378231
+virtual memory              (kbytes, -v) unlimited
+file locks                          (-x) unlimited

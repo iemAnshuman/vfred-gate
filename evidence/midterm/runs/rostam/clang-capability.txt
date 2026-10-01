@@ -1,0 +1,6 @@
+sven0.rostam.cct.lsu.edu
+slurm_job_id=201666 scratch=/tmp/vfg-capability-JWaTRw
+sophgo,mango
+d2ae415db3eac60eeddfe8d9c2a18dd893b6aa2f4dd930270d32aaf124e959ae  capability.c
+da46f39ad96866c25940e42b4ea7ec7d9f0f9707d78085e79f9b7f50823c68a0  capability
+{"rvv_1_0_probe":"unsupported_instruction","execution_class":"hardware"}

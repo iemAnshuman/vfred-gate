@@ -1,0 +1,3 @@
+sven0.rostam.cct.lsu.edu
+slurm_job_id=201665 scratch=/tmp/vfg-capability-TFbiOo
+sophgo,mango

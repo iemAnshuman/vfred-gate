@@ -16,3 +16,6 @@ environment/
 toolchains/local.json
 .DS_Store
 
+
+# Small, reviewed acceptance receipts are intentionally versioned.
+!evidence/midterm/**
