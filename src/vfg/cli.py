@@ -53,6 +53,9 @@ def build(
     build_dir: Path = typer.Option(Path("build/host-release")),
     compiler: Optional[Path] = typer.Option(None),
     extra_flags: Optional[str] = typer.Option(None),
+    candidate_flags: Optional[str] = typer.Option(None),
+    strict_sources: Optional[str] = typer.Option(None),
+    reduction_policy: str = typer.Option("native"),
 ):
     import shlex
     from .build import build_native
@@ -63,6 +66,9 @@ def build(
         stack,
         compiler=compiler,
         extra_flags=shlex.split(extra_flags) if extra_flags else None,
+        candidate_flags=shlex.split(candidate_flags) if candidate_flags else None,
+        strict_sources=[x for x in (strict_sources or "").split(",") if x],
+        reduction_policy=reduction_policy,
     )
     typer.echo(json.dumps({"binary_sha256": data["binary_sha256"], "stack": str(stack)}))
 

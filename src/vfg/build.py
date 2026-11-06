@@ -24,9 +24,25 @@ def apply_snapshot_patch(root):
         path.write_text(text.replace(old, new, 1))
 
 
-def build_native(build_dir, stack_path=None, root=ROOT, compiler=None, extra_flags=None):
+def build_native(
+    build_dir,
+    stack_path=None,
+    root=ROOT,
+    compiler=None,
+    extra_flags=None,
+    candidate_flags=None,
+    strict_sources=None,
+    reduction_policy="native",
+):
     root = Path(root).resolve()
     extra_flags = list(extra_flags or [])
+    candidate_flags = list(candidate_flags or [])
+    strict_sources = list(strict_sources or [])
+    if candidate_flags or strict_sources:
+        if not candidate_flags or not strict_sources:
+            raise VFGError("selective builds need both candidate flags and strict sources")
+        if extra_flags:
+            raise VFGError("selective builds use the launcher, not global extra flags")
     build_dir = Path(build_dir).resolve()
     lock = load_document(root / "third_party/llama.lock.json")
     if not (root / "third_party/llama.cpp/include/llama.h").is_file():
@@ -69,6 +85,30 @@ def build_native(build_dir, stack_path=None, root=ROOT, compiler=None, extra_fla
         configure.extend([f"-DCMAKE_CXX_COMPILER={compiler}", f"-DCMAKE_C_COMPILER={c_compiler}"])
     if extra_flags:
         configure.append("-DVFG_EXTRA_FLAGS=" + " ".join(extra_flags))
+    launcher_info = None
+    if candidate_flags or strict_sources:
+        launcher = root / "scripts/flag_filter.py"
+        config_path = build_dir / "flag-filter.json"
+        atomic_json(
+            config_path,
+            {
+                "candidate_flags": candidate_flags,
+                "strict_flags": ["-fno-fast-math", "-ffp-contract=off"],
+                "strict_sources": strict_sources,
+            },
+        )
+        launcher_info = {
+            "path": str(launcher),
+            "sha256": file_digest(launcher),
+            "config": load_document(config_path),
+            "config_sha256": file_digest(config_path),
+        }
+        configure.extend(
+            [
+                f"-DCMAKE_C_COMPILER_LAUNCHER={launcher};{config_path}",
+                f"-DCMAKE_CXX_COMPILER_LAUNCHER={launcher};{config_path}",
+            ]
+        )
     build = ["cmake", "--build", str(build_dir), "-j", "4"]
     for name, command in (("configure", configure), ("build", build)):
         p = subprocess.run(command, text=True, capture_output=True)
@@ -107,6 +147,8 @@ def build_native(build_dir, stack_path=None, root=ROOT, compiler=None, extra_fla
         "source_digest": source_hash,
         "compiler": compiler,
         "extra_flags": extra_flags,
+        "launcher": launcher_info,
+        "reduction_policy": reduction_policy,
         "configure_command": configure,
         "build_command": build,
         "binary_sha256": file_digest(binary),
@@ -124,13 +166,16 @@ def build_native(build_dir, stack_path=None, root=ROOT, compiler=None, extra_fla
     if stack_path:
         stack_path = Path(stack_path).resolve()
         stack = Stack(
-            id="baseline",
+            id="baseline" if reduction_policy == "native" else reduction_policy,
             source_revision=lock["revision"],
             source_digest=source_hash,
             binary=os.path.relpath(binary, stack_path.parent),
             binary_sha256=file_digest(binary),
             compiler=compiler,
-            flags=["-O2", "-g", "-fno-fast-math", "-ffp-contract=off"] + extra_flags,
+            flags=["-O2", "-g", "-fno-fast-math", "-ffp-contract=off"]
+            + extra_flags
+            + candidate_flags,
+            reduction_policy=reduction_policy,
             build_manifest=os.path.relpath(build_dir / "build-manifest.json", stack_path.parent),
             build_manifest_sha256=file_digest(build_dir / "build-manifest.json"),
         )

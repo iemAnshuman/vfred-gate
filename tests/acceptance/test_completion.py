@@ -58,6 +58,32 @@ def test_canary_holdout_study():
     assert file_digest(Path("runs/contractfast-holdout/bundle.json")) == study["provenance"]["holdout_bundle_sha256"]
 
 
+@pytest.mark.model
+def test_selective_hardening_evidence():
+    root = Path("runs/hardening-evidence")
+    if not (root / "manifest.json").exists():
+        pytest.skip("hardening evidence unavailable")
+    manifest = load_document(root / "manifest.json")
+    assert manifest["search"]["minimal_set"] == ["ops.cpp"]
+    assert manifest["search"]["minimal_size"] == 1
+    assert manifest["global_candidate"]["verdict"] == "FAIL"
+    assert manifest["selective_clean_build"]["verdict"] == "PASS"
+    assert manifest["selective_clean_build"]["distinct_cases"] == 32
+    assert manifest["selective_clean_build"]["completed_jobs"] == 320
+    assert manifest["selective_clean_build"]["strict_sources"] == ["ggml-cpu/ops.cpp"]
+    assert manifest["clean_rebuild"] is True
+    assert manifest["minimality"]["global_candidate_verdict"] == "FAIL"
+    from vfg.controller import rederive
+
+    result = rederive(Path("runs/selective-exploratory"))["verdict"]
+    assert result["verdict"] == "PASS"
+    assert result["evidence"]["completed_jobs"] == 320
+    cost = load_document(Path("runs/hardening-cost/cost.json"))
+    assert cost["output_matches_global_strict"]["selective_strict_ops"] is True
+    assert cost["output_matches_global_strict"]["candidate_fast"] is False
+    assert cost["summary"]["selective_strict_ops"]["runs"] == 40
+
+
 @pytest.mark.rvv
 def test_emulator_search_is_a_bounded_negative():
     root = Path("runs/mechanism-search")
