@@ -9,6 +9,8 @@ from ..compare.metrics import aligned_rows, sequence_difference
 from ..manifest import atomic_json, load_document, now
 from ..store import read_array
 
+ROOT = Path(__file__).resolve().parents[3]
+
 
 def wilson(successes, total, z=1.959963984540054):
     if total == 0:
@@ -113,7 +115,7 @@ def select_threshold(exploratory, failure_key="sequence_failure"):
     }
 
 
-def evaluate(holdout, threshold, exploratory_selected, failure_key="sequence_failure"):
+def evaluate(holdout, threshold, exploratory_selected, failure_key="sequence_failure", total_cases=None):
     if threshold is None:
         return {
             "failure_key": failure_key,
@@ -122,6 +124,7 @@ def evaluate(holdout, threshold, exploratory_selected, failure_key="sequence_fai
             "failures": len([row for row in holdout if row[failure_key]]),
             "recall": None,
             "cost_ratio": None,
+            "cost_ratio_full": None,
         }
     selected = [row for row in holdout if row["minimum_margin"] <= threshold]
     failures = [row for row in holdout if row[failure_key]]
@@ -141,23 +144,59 @@ def evaluate(holdout, threshold, exploratory_selected, failure_key="sequence_fai
         "caught_ids": [row["case_id"] for row in caught],
         "recall": len(caught) / len(failures) if failures else None,
         "recall_interval": wilson(len(caught), len(failures)) if failures else None,
+        "precision": len(caught) / len(selected) if selected else None,
         "false_positives": len(selected) - len(caught),
         "cost_ratio": len(selected) / len(holdout),
+        "cost_ratio_full": len(selected) / total_cases if total_cases else None,
         "fixed_count": {
             "selected": len(by_count),
             "caught": len(caught_by_count),
             "recall": len(caught_by_count) / len(failures) if failures else None,
             "cost_ratio": len(by_count) / len(holdout),
+            "cost_ratio_full": len(by_count) / total_cases if total_cases else None,
         },
     }
 
 
-def run_study(exploratory_root, holdout_root, output):
+def run_study(exploratory_root, holdout_root, output, total_cases=48):
+    from ..manifest import file_digest
+
     exploratory = per_case_metrics(exploratory_root)
     holdout = per_case_metrics(holdout_root)
+    exploratory_root = Path(exploratory_root)
+    holdout_root = Path(holdout_root)
+    inputs = load_document(holdout_root / "inputs.json")
+    exploratory_verdict = load_document(exploratory_root / "verdict.json")["verdict"]
+    holdout_verdict = load_document(holdout_root / "verdict.json")["verdict"]
+    provenance = {
+        "exploratory_aggregate_verdict": exploratory_verdict,
+        "holdout_aggregate_verdict": holdout_verdict,
+        "aggregate_verdict_note": (
+            "The exploratory contract requires 32 cases; the holdout has 16, so its aggregate "
+            "verdict is INCONCLUSIVE by case count. The study uses per-case labels computed "
+            "directly from archived logits, not the aggregate verdict."
+        ),
+        "exploratory_bundle_sha256": file_digest(exploratory_root / "bundle.json"),
+        "holdout_bundle_sha256": file_digest(holdout_root / "bundle.json"),
+        "exploratory_verdict_sha256": file_digest(exploratory_root / "verdict.json"),
+        "holdout_verdict_sha256": file_digest(holdout_root / "verdict.json"),
+        "candidate_id": inputs["candidate"]["id"],
+        "candidate_flags": inputs["candidate"]["flags"],
+        "candidate_binary_sha256": inputs["candidate"]["binary_sha256"],
+        "baseline_binary_sha256": inputs["baseline"]["binary_sha256"],
+        "corpus_manifest_sha256": file_digest(ROOT / "corpora/pilot-v1.manifest.json"),
+        "prereg_sha256": file_digest(ROOT / "prereg/pilot-v1-amendment.md"),
+    }
     result = {
         "schema_version": 1,
         "generated_at": now(),
+        "total_cases": total_cases,
+        "failure_definition": {
+            "sequence_failure": "free-running selected tokens or stop reason differ",
+            "bit_failure": "any aligned logit bit differs",
+            "primary": "sequence_failure",
+        },
+        "provenance": provenance,
         "exploratory": {
             "cases": len(exploratory),
             "failures_sequence": sum(row["sequence_failure"] for row in exploratory),
@@ -175,7 +214,9 @@ def run_study(exploratory_root, holdout_root, output):
         selection = select_threshold(exploratory, key)
         result["selection"][key] = {
             "rule": selection,
-            "holdout": evaluate(holdout, selection["threshold"], selection["selected"], key),
+            "holdout": evaluate(
+                holdout, selection["threshold"], selection["selected"], key, total_cases=total_cases
+            ),
         }
     if output:
         atomic_json(output, result)

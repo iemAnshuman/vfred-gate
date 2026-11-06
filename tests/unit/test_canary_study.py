@@ -31,13 +31,15 @@ def test_holdout_recall_cost_and_false_positives():
     exploratory = rows([0.1, 0.2], [True, True])
     selection = select_threshold(exploratory)
     holdout = rows([0.05, 0.15, 0.25, 0.35], [True, False, False, True])
-    result = evaluate(holdout, selection["threshold"], selection["selected"])
+    result = evaluate(holdout, selection["threshold"], selection["selected"], total_cases=8)
     assert result["selected"] == 2
     assert result["failures"] == 2
     assert result["caught"] == 1
     assert result["recall"] == 0.5
+    assert result["precision"] == 0.5
     assert result["false_positives"] == 1
     assert result["cost_ratio"] == 0.5
+    assert result["cost_ratio_full"] == 0.25
     assert result["fixed_count"]["selected"] == 2
 
 
