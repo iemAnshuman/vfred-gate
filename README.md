@@ -40,6 +40,8 @@ rebuild locally to reproduce results. Use a new output directory for every run.
 ## Evidence and walkthrough
 
 - [Final report](docs/final-report.md): results, points, limitations and unverified claims.
+- [Five-minute demo](docs/demo-script.md): PASS, FAIL and the hardened fix in three runs
+  (`bash scripts/demo.sh`).
 - [Walkthrough](docs/demo.md): complete command sequence, including envelope, canary and
   hardening evidence.
 - [Midterm report](docs/midterm-report.md): the original 51-point milestone.
