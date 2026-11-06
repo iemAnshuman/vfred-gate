@@ -44,6 +44,8 @@ The original target was **58/100 engineering points**. The verified host/emulato
 
 The ledger in `docs/progress.yaml` records each item's ID, fixed weight, status and evidence hashes. Accepted, blocked and deferred items are listed separately. Run timestamps, configurations and test results are retained in the referenced receipts and bundles.
 
+**Completion addendum (6 November 2026):** the final ledger splits W5.instruction, W7.legal and W8.hardening into the components recorded in [ADR 0002](docs/adr/0002-completion-scope.md). The W0-W9 totals and the 100-point rubric are unchanged. The split separates work that can be verified on the host and QEMU from work that needs physical RVV hardware, a second implementation or external review.
+
 Run `uv run python scripts/check_midterm.py --min-points 50` to verify the evidence and calculate the total.
 
 The original synopsis requires a primary-target Phase 0 gate before later phases. If hardware is unavailable, record an ADR for a provisional host/emulator development track. That track does not pass the original physical-target gate or establish the project's hardware premise.
