@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--ledger", type=Path, default=ROOT / "docs/progress.yaml")
-    ap.add_argument("--min-points", type=int, default=71)
+    ap.add_argument("--min-points", type=int, default=75)
     args = ap.parse_args()
     result = check_progress(args.ledger)
     checks = {"ledger": True}
@@ -61,6 +61,15 @@ def main():
     if not localisation["baseline_restored"]:
         raise SystemExit("seeded localisation did not restore the baseline")
     checks["seeded_localisation"] = True
+
+    board_path = ROOT / "evidence/completion/rostam-thead/manifest.json"
+    board = load_document(board_path)
+    if file_digest(board_path.parent / board["log"]["path"]) != board["log"]["sha256"]:
+        raise SystemExit("board log hash mismatch")
+    env = board["envelope"]
+    if board["search"]["ordered_equals_scalar"] != board["search"]["trials"] or env["inside_leaf_model"] != env["records"]:
+        raise SystemExit("board checks failed")
+    checks["board_rvv_0_7_1"] = True
 
     output = {
         "accepted_points": result["accepted_points"],

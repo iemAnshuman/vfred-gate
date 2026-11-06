@@ -63,6 +63,10 @@ def main():
         "W0.host": [tests(pytest_xml, "W0.host tests", ["test_host_reduction_mechanism"])],
         "W0.compile": [tests(pytest_xml, "W0.compile tests", ["test_real_elf_maps_both_policies"])],
         "W0.emulator": [tests(pytest_xml, "W0.emulator tests", ["test_rvv_execution_evidence"])],
+        "W0.board": [
+            tests(pytest_xml, "W0.board tests", ["test_thead_board_evidence"]),
+            file_evidence(ROOT / "evidence/completion/rostam-thead/manifest.json", "sven0 RVV 0.7.1 board mechanism evidence"),
+        ],
         "W1.schemas": [tests(pytest_xml, "W1.schemas tests", ["tests.unit.test_manifest."])],
         "W1.artifacts": [tests(pytest_xml, "W1.artifacts tests", ["tests.unit.test_store."])],
         "W1.build": [
@@ -135,7 +139,6 @@ def main():
         ],
     }
     reasons = {
-        "W0.board": "Rostam was probed safely; standard RVV probe raised SIGILL. No compatible primary-board mechanism validation.",
         "W3.rvv": "No full-model execution on a compatible RVV 1.0 target.",
         "W5.mechanism": "QEMU returned identical ordered and unordered results on 20,000 deterministic trials; the bounded negative result is reported but earns no attribution credit.",
         "W5.model": "Model-level instruction attribution requires full-model RVV execution, which is unavailable.",
@@ -143,7 +146,7 @@ def main():
         "W8.cost": "Host-only timing is recorded, but it is not RVV evidence and does not support a defensible cost conclusion.",
         "W9.study": "Final report written; external reproduction and independent review are unavailable.",
     }
-    blocked = {"W0.board", "W3.rvv", "W5.model", "W7.independent", "W8.cost"}
+    blocked = {"W3.rvv", "W5.model", "W7.independent", "W8.cost"}
     items = []
     for key, weight in WEIGHTS.items():
         if key in mapping:
