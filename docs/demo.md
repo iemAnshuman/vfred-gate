@@ -49,8 +49,8 @@ uv run vfg qualify --plan plans/native-comparison.json --output runs/native-comp
 ```
 
 Expected: the self-check is bit-equal across 160 fresh executions. The compiler comparison
-uses Apple Clang 17 and Homebrew Clang 23; both are bit-equal on the 16-case pilot. These
-runs take several minutes each (about 5 and 9 minutes on the recorded host).
+uses Apple Clang 17 and Homebrew Clang 23; both are bit-equal on the 16-case pilot. Each
+run takes several minutes (roughly 5-10 minutes on the recorded host).
 
 ## 4. RVV probe and emulator search
 

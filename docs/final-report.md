@@ -5,7 +5,7 @@
 **Baseline accepted at midterm:** 51/100  
 **Accepted at completion:** 71/100  
 **Hardware-blocked:** 7 points  
-**Deferred or still unverified:** 22 points
+**Deferred or still unverified:** 22 points (29 unearned in total)
 
 ## 1. What this report claims
 
