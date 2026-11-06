@@ -6,8 +6,12 @@ FR-004,compare/metrics,numeric edge cases aligned histories and actual greedy ch
 FR-005,contracts/controller/cli,four verdicts missing repeat and corrupt evidence,runs/validation/pytest.xml,implemented
 FR-006,replay/runner,seeded operator shared history baseline restoration and strided capture,runs/seeded-operator/bundle.json,implemented through operator boundary
 FR-007,store/report,detached offline reconstruction and escaped HTML,runs/native-comparison/bundle.json,implemented
-FR-008,canary/progress,48 frozen cases disjoint groups descriptive margins and checked ledger,corpora/pilot-v1.manifest.json,implemented pilot only
+FR-008,canary/progress,48 frozen cases disjoint groups and checked ledger,corpora/pilot-v1.manifest.json,implemented pilot and holdout study
+FR-009,legal/envelope,exact legal-tree support containment negative controls and independent sampler,runs/legal-envelope/manifest.json,implemented on QEMU only
+FR-010,canary/study,frozen threshold before holdout one-shot holdout recall precision and cost,runs/canary-study/study.json,implemented on one host candidate
+FR-011,harden/ddmin,global failure full-set pass ddmin to a 1-minimal set clean rebuild and PASS,runs/hardening-evidence/manifest.json,implemented at translation-unit granularity
 NFR-001,store/manifest,hash mismatch unsafe path atomic and malformed evidence tests,runs/validation/pytest.xml,implemented
 NFR-002,controller/runner,invalid tokens context limits output corruption and timeout,runs/validation/pytest.xml,implemented
 NFR-003,build,archive identity checked and fresh build differences explained,runs/build-reproducibility.json,implemented configuration reproducibility
 NFR-004,execute/controller,timeout process control disk budget and bounded remote discovery,runs/smoke-cost.json,implemented
+NFR-005,legal/envelope,support cap fails closed non-finite operands rejected and wrong-seed control rejected,runs/legal-envelope/envelope.json,implemented

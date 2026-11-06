@@ -268,7 +268,10 @@ def main():
         "full_exploratory_result": full_result,
         "minimal_set": minimal_names,
         "minimal_size": len(minimal_names),
-        "ddmin_trace": trace,
+        "ddmin_trace": [
+            {"sites": [site["name"] for site in row["subset"]], "size": row["size"], "passed": row["passed"]}
+            for row in trace
+        ],
         "variants": counter["value"],
         "limitation": (
             "Mixed-object screening build. The winning set is rebuilt from source in the "
