@@ -24,8 +24,9 @@ def apply_snapshot_patch(root):
         path.write_text(text.replace(old, new, 1))
 
 
-def build_native(build_dir, stack_path=None, root=ROOT, compiler=None):
+def build_native(build_dir, stack_path=None, root=ROOT, compiler=None, extra_flags=None):
     root = Path(root).resolve()
+    extra_flags = list(extra_flags or [])
     build_dir = Path(build_dir).resolve()
     lock = load_document(root / "third_party/llama.lock.json")
     if not (root / "third_party/llama.cpp/include/llama.h").is_file():
@@ -66,6 +67,8 @@ def build_native(build_dir, stack_path=None, root=ROOT, compiler=None):
         compiler = Path(compiler).absolute()
         c_compiler = compiler.with_name("clang") if "clang" in compiler.name else compiler.with_name("gcc")
         configure.extend([f"-DCMAKE_CXX_COMPILER={compiler}", f"-DCMAKE_C_COMPILER={c_compiler}"])
+    if extra_flags:
+        configure.append("-DVFG_EXTRA_FLAGS=" + " ".join(extra_flags))
     build = ["cmake", "--build", str(build_dir), "-j", "4"]
     for name, command in (("configure", configure), ("build", build)):
         p = subprocess.run(command, text=True, capture_output=True)
@@ -79,7 +82,7 @@ def build_native(build_dir, stack_path=None, root=ROOT, compiler=None):
     cc = next(
         line.split("=", 1)[1]
         for line in cache
-        if line.startswith("CMAKE_CXX_COMPILER:FILEPATH=") or line.startswith("CMAKE_CXX_COMPILER:STRING=")
+        if line.startswith("CMAKE_CXX_COMPILER:")
     )
     compiler = {
         "path": cc,
@@ -103,6 +106,7 @@ def build_native(build_dir, stack_path=None, root=ROOT, compiler=None):
         "source_files": source_files,
         "source_digest": source_hash,
         "compiler": compiler,
+        "extra_flags": extra_flags,
         "configure_command": configure,
         "build_command": build,
         "binary_sha256": file_digest(binary),
@@ -126,7 +130,7 @@ def build_native(build_dir, stack_path=None, root=ROOT, compiler=None):
             binary=os.path.relpath(binary, stack_path.parent),
             binary_sha256=file_digest(binary),
             compiler=compiler,
-            flags=["-O2", "-g", "-fno-fast-math", "-ffp-contract=off"],
+            flags=["-O2", "-g", "-fno-fast-math", "-ffp-contract=off"] + extra_flags,
             build_manifest=os.path.relpath(build_dir / "build-manifest.json", stack_path.parent),
             build_manifest_sha256=file_digest(build_dir / "build-manifest.json"),
         )

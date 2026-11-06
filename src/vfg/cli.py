@@ -52,10 +52,18 @@ def build(
     stack: Path = typer.Option(Path("stacks/baseline.json")),
     build_dir: Path = typer.Option(Path("build/host-release")),
     compiler: Optional[Path] = typer.Option(None),
+    extra_flags: Optional[str] = typer.Option(None),
 ):
+    import shlex
     from .build import build_native
 
-    data = guarded(build_native, build_dir, stack, compiler=compiler)
+    data = guarded(
+        build_native,
+        build_dir,
+        stack,
+        compiler=compiler,
+        extra_flags=shlex.split(extra_flags) if extra_flags else None,
+    )
     typer.echo(json.dumps({"binary_sha256": data["binary_sha256"], "stack": str(stack)}))
 
 
@@ -144,6 +152,18 @@ def localise(
 
     result = guarded(replay, qualification, case, capture, output)
     typer.echo(json.dumps(result, indent=2))
+
+
+@app.command()
+def canary(
+    exploratory: Path = typer.Option(...),
+    holdout: Path = typer.Option(...),
+    output: Optional[Path] = typer.Option(None),
+):
+    from .canary.study import run_study
+
+    result = guarded(run_study, exploratory, holdout, output)
+    typer.echo(json.dumps(result["selection"], indent=2))
 
 
 @app.command()
