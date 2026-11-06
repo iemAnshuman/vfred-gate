@@ -127,7 +127,7 @@ uv run python scripts/check_midterm.py --min-points 50
 uv run python scripts/verify_completion.py
 ```
 
-Expected: Ruff, the full pytest suite with no skips, native CTest, a 71/100 accepted ledger,
+Expected: Ruff, the full pytest suite with no skips, native CTest, a 75/100 accepted ledger,
 and a completion verification that names each accepted, blocked and deferred item.
 
 ## 9. Submission checks

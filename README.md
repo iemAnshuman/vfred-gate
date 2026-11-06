@@ -5,8 +5,9 @@ through replay. The research focus is RISC-V Vector (RVV) floating-point reducti
 `vfredosum.vs` is ordered, while `vfredusum.vs` may choose a legal reduction tree and
 produce a different, still conformant, number.
 
-**Status:** 71/100 engineering points verified. Seven points are blocked on physical RVV
-hardware; the remaining gaps are listed in the [final report](docs/final-report.md).
+**Status:** 75/100 engineering points verified. On Rostam's RISC-V board (RVV 0.7.1), the
+unordered reduction differs from the ordered one and stays inside the legal envelope. Three
+points stay blocked on full-model RVV execution; the remaining gaps are listed in the [final report](docs/final-report.md).
 Host and QEMU evidence are labelled separately throughout; no emulator result is presented
 as board evidence.
 

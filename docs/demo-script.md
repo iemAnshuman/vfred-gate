@@ -33,9 +33,14 @@ contract (`contracts/smoke-self-check-v1.json`).
    sums. The legal-tree envelope (`scripts/envelope_evidence.py`) computes every legal
    result, so the gate can tell a legal difference from a bug. QEMU stays inside the
    envelope on all 24 probe records.
+5. The hardware part: on Rostam's RISC-V board, the unordered sum differed from the
+   ordered sum on 13,269 of 20,000 arrays, the same in all five runs. Every checked
+   result was legal. See `docs/final-report.md` section 4.0.
 
 ## Limits to state
 
-- All runs here are on the host CPU. No physical RVV board was used.
+- The three demo runs are on the host CPU. The board result is a separate probe, not a
+  model run.
+- The board implements RVV 0.7.1, not RVV 1.0.
 - The step 3 result covers these four prompts. The 32-case run in `demo.md` section 7 is
   the stronger evidence.

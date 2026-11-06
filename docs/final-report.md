@@ -3,10 +3,10 @@
 **Submission:** 12 November 2026  
 **Branch:** `complete-project`  
 **Baseline accepted at midterm:** 51/100  
-**Accepted at completion:** 71/100  
-**Under the original rubric, without the ADR 0002 split:** 57/100 (51 + 6 for W6.prediction)  
-**Hardware-blocked:** 7 points  
-**Deferred or still unverified:** 22 points (29 unearned in total)
+**Accepted at completion:** 75/100  
+**Under the original rubric, without the ADR 0002 split:** 61/100 (51 + 6 for W6.prediction + 4 for W0.board)  
+**Hardware-blocked:** 3 points (W3.rvv)  
+**Deferred or still unverified:** 22 points (25 unearned in total)
 
 ## 1. What this report claims
 
@@ -22,9 +22,12 @@ stacks. This submission delivers:
   validated against QEMU and an independent sampler;
 - a sensitivity-ranked canary study with a frozen rule and a one-shot holdout;
 - a ddmin search for a selective hardening set, a clean selective rebuild and a host
-  cost measurement.
+  cost measurement;
+- a mechanism check on physical RISC-V hardware (Rostam `sven0`, RVV 0.7.1), where the
+  unordered reduction differs from the ordered one and every checked result lies inside
+  the legal-tree envelope (section 4.0).
 
-It does **not** claim physical RVV board validation, full-model RVV execution,
+It does **not** claim RVV 1.0 board validation, full-model RVV execution,
 instruction-level model attribution, a second conformant implementation, or external
 reproduction. Section 7 lists those gaps explicitly.
 
@@ -65,13 +68,40 @@ build, not to all code.
 
 ### 3.1 Validation
 
-The final validation receipt records Ruff, 91 pytest tests with zero skips, native CMake
+The final validation receipt records Ruff, 92 pytest tests with zero skips, native CMake
 configuration/build and CTest, all with return code 0. The completion checker re-derives
 every accepted qualification bundle and localisation bundle, hashes every new receipt,
-and reports **71 accepted / 29 unearned** points. `scripts/verify_completion.py` repeats
+and reports **75 accepted / 25 unearned** points. `scripts/verify_completion.py` repeats
 the new checks independently.
 
 ## 4. New results
+
+### 4.0 W0.board: physical hardware on Rostam `sven0`
+
+The 1 October probe failed on `sven0` because its cores do not implement RVV 1.0. The
+node reports vendor ID `0x5b7` (T-Head) and device tree `sophgo,mango`; its vector unit
+implements the pre-ratification RVV 0.7.1 (XTheadVector). No available assembler accepts
+`-march=rv64gc_xtheadvector`, so `microbench/rvv/thead/reduce.S` hand-encodes the
+vector instructions. The two reduction words are bit-identical to LLVM's encodings of
+`vfredusum.vs` and `vfredosum.vs`; the load, store and `vsetvli` words follow the 0.7.1
+format.
+
+Slurm job 220857 (1 CPU, 256 MB, 2-minute limit) ran the probe five times:
+
+- the ordered reduction equals the scalar left fold on 20,000 of 20,000 arrays, which
+  also validates the hand encoding;
+- the unordered reduction differs from the ordered one on 13,269 of 20,000 arrays
+  (lengths 1-64, VLMAX 4 at e32/m1);
+- all five repetitions produce byte-identical output;
+- on 300 dumped small arrays (lengths 2-12), 114 unordered results differ from ordered,
+  and all 300 lie inside the legal-tree envelope (maximum support 1,185 values).
+
+This satisfies the original physical-target gate in `plan.md` section 7: a reproducible
+difference between the declared policies with the instructions identified. It is
+evidence for RVV 0.7.1 silicon, not RVV 1.0. W7.independent stays blocked because the
+envelope models the RVV 1.0 rule set and this board implements an earlier version.
+Raw log and manifest: `evidence/completion/rostam-thead/`; re-derive with
+`uv run python scripts/thead_evidence.py`.
 
 ### 4.1 W5: replay, capture and the emulator negative
 
@@ -184,7 +214,7 @@ measurement is not RVV evidence and does not support a defensible O4 conclusion.
 | W0.host | 2 | accepted | host reduction tests |
 | W0.compile | 2 | accepted | real RVV ELF mapping |
 | W0.emulator | 2 | accepted | QEMU probe, 140 records |
-| W0.board | 4 | blocked | no compatible board |
+| W0.board | 4 | accepted | sven0 RVV 0.7.1 mechanism, job 220857 |
 | W1.schemas | 3 | accepted | schema/manifest tests |
 | W1.artifacts | 3 | accepted | artifact/store tests |
 | W1.build | 3 | accepted | fresh build comparison |
@@ -208,9 +238,9 @@ measurement is not RVV evidence and does not support a defensible O4 conclusion.
 | W8.cost | 4 | blocked | host timing only |
 | W9.docs | 2 | accepted | report, README, demo |
 | W9.study | 2 | deferred | no external reproduction |
-| **Total** | **100** | **71 accepted** | |
+| **Total** | **100** | **75 accepted** | |
 
-Seven points are hardware-blocked (W0.board, W3.rvv). Twenty-two more are blocked or
+Three points are hardware-blocked (W3.rvv). Twenty-two more are blocked or
 deferred by missing independent implementations, model-level RVV execution, defensible
 RVV cost measurement, or external review.
 
@@ -223,7 +253,10 @@ RVV cost measurement, or external review.
   The result shows the search and clean-rebuild machinery; it does not locate the
   responsible instruction.
 - **QEMU policy behaviour.** QEMU returned identical ordered and unordered results on
-  every tested input, so the envelope is not challenged by a differing implementation.
+  every tested input. The `sven0` board does differ, and its results stay inside the
+  envelope, but it implements RVV 0.7.1 rather than RVV 1.0.
+- **Hand-encoded instructions.** The board probe uses `.word` encodings. The ordered
+  self-check on 20,000 arrays guards against a wrong encoding.
 - **Sampled specification model.** The envelope models FP32/FP64 intermediates and RNE.
   Wider intermediates and other legal trees are outside the model.
 - **Holdout used once.** The original 16-case holdout is no longer untouched.
@@ -234,7 +267,7 @@ RVV cost measurement, or external review.
 
 ## 7. What remains unverified
 
-1. Physical-board divergence and the original Phase 0 gate.
+1. Divergence on an RVV 1.0 board (the `sven0` result is for RVV 0.7.1).
 2. Full SmolLM2 execution on RVV.
 3. A model token traced to a model instruction and confirmed by a single-site toggle.
 4. A second conformant implementation and an envelope containment rate on it.
