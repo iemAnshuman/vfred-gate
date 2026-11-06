@@ -1,6 +1,6 @@
 # ADR 0002: completion scope for the November submission
 
-Status: accepted 6 November 2026.
+Status: proposed 6 November 2026; accepted 7 November 2026 by the project owner.
 
 ## Context
 

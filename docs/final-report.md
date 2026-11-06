@@ -4,6 +4,7 @@
 **Branch:** `complete-project`  
 **Baseline accepted at midterm:** 51/100  
 **Accepted at completion:** 71/100  
+**Under the original rubric, without the ADR 0002 split:** 57/100 (51 + 6 for W6.prediction)  
 **Hardware-blocked:** 7 points  
 **Deferred or still unverified:** 22 points (29 unearned in total)
 
