@@ -58,8 +58,9 @@ receipts were regenerated before any new claim was made.
 | QEMU reduction probe | 28 fixture/length pairs | 140 | ordered = scalar; policies agree |
 
 The native compiler comparison is a genuine axis-separation result: two compilers with
-different code generation produced identical selected tokens and identical logit bits on
-the 16-case pilot. It applies to these prompts and this build, not to all code.
+different code generation produced identical selected tokens and full sequences on the
+16-case pilot under the decision-level contract. It applies to these prompts and this
+build, not to all code.
 
 ### 3.1 Validation
 
