@@ -1,0 +1,14 @@
+
+dir=/home/aagrawal/vfg-thead-N4eNtz
+clang version 16.0.6 (Fedora 16.0.6-3.rv64.fc38)
+b478ae7964244824287a38b0bc305af339a71247553a1350075eb2a4729eb615  probe.c
+9ded6c4cb5c22944981b048f4f4884494d817eaac21175177fcc58bbeacd0dbe  reduce.S
+a71a27e7b63f7b65d98ba8531ef9eb1ae534ee429904a9d7a7760691d78555ff  probe
+fixed scalar=3f800000 ordered=3f800000 unordered=00000000
+diff trial=1 n=54 ordered=430a85b6 unordered=430a85b4
+diff trial=2 n=22 ordered=c3eb56e5 unordered=c3eb56e6
+diff trial=3 n=42 ordered=c4ba0d91 unordered=c4ba0d8f
+diff trial=4 n=36 ordered=43809f3b unordered=43809f38
+diff trial=5 n=56 ordered=441d3af0 unordered=441d3af1
+trials=20000 invocations=40000 ordered_equals_scalar=20000 unordered_differs=13269
+exit=0

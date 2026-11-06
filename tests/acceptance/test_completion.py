@@ -99,3 +99,21 @@ def test_emulator_search_is_a_bounded_negative():
     assert "vfredosum.vs" in manifest["static_sites"]
     assert "vfredusum.vs" in manifest["static_sites"]
     assert manifest["physical_board_gate"] == "blocked"
+
+
+def test_thead_board_evidence():
+    root = Path("evidence/completion/rostam-thead")
+    manifest = load_document(root / "manifest.json")
+    assert manifest["execution_class"] == "hardware"
+    assert manifest["rvv_1_0"] is False
+    assert file_digest(root / manifest["log"]["path"]) == manifest["log"]["sha256"]
+    for name, digest in manifest["sources"].items():
+        assert file_digest(Path("microbench/rvv/thead") / name) == digest
+    reps = manifest["repetitions"]
+    assert reps["count"] == 5 and reps["all_exit_zero"] and reps["identical_output"] and reps["identical_dumps"]
+    search = manifest["search"]
+    assert search["ordered_equals_scalar"] == search["trials"] == 20000
+    assert search["unordered_differs"] > 0
+    env = manifest["envelope"]
+    assert env["ordered_equals_scalar"] == env["records"] == 300
+    assert env["inside_leaf_model"] == env["records"]
