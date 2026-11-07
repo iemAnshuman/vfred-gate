@@ -1,0 +1,176 @@
+{
+  "model": {
+    "vocab_size": 49152,
+    "chat_template": "{% for message in messages %}{% if loop.first and messages[0]['role'] != 'system' %}{{ '<|im_start|>system\nYou are a helpful AI assistant named SmolLM, trained by Hugging Face<|im_end|>\n' }}{% endif %}{{'<|im_start|>' + message['role'] + '\n' + message['content'] + '<|im_end|>' + '\n'}}{% endfor %}{% if add_generation_prompt %}{{ '<|im_start|>assistant\n' }}{% endif %}",
+    "chat_template_sha256": "872be49dbb638044ad01b60388f48d469ff2980e5f0dccdc22ec907db54d0788",
+    "model_sha256": "48ab3034d0dd401fbc721eb1df3217902fee7dab9078992d66431f09b7750201",
+    "backend": "cpu",
+    "diagnostic_build": true
+  },
+  "case_id": "c010",
+  "mode": "free_run",
+  "generated_text": "A hexagon is a polygon with six sides.",
+  "prompt_tokens": [
+    1,
+    4093,
+    198,
+    2020,
+    800,
+    5882,
+    1072,
+    253,
+    17967,
+    5927,
+    457,
+    47,
+    2,
+    198,
+    1,
+    520,
+    9531,
+    198
+  ],
+  "forced_tokens": [],
+  "selected_tokens": [
+    49,
+    17967,
+    5927,
+    314,
+    253,
+    34588,
+    351,
+    2976,
+    5882,
+    30,
+    2
+  ],
+  "stop_reason": "eos",
+  "steps": [
+    {
+      "step": 0,
+      "history_sha256": "d8c4109fe5dfbb330d94bd625c586c443a206af316cf3ef2e3f21b4820790e74",
+      "selected_token": 49,
+      "offset_bytes": 0,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 1,
+      "history_sha256": "0842bf87db21b9c2b62aef9f9b1e7ddaa36fc1dd67188e0e70de3790bcacb31e",
+      "selected_token": 17967,
+      "offset_bytes": 196608,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 2,
+      "history_sha256": "75b9d983964e39094054df06785f1692714db46619ac708858f252e84c1daf01",
+      "selected_token": 5927,
+      "offset_bytes": 393216,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 3,
+      "history_sha256": "6ea5ad64a9e5cf51c28c5ddd86c09c33869577625b975a5abf403d5df4006c87",
+      "selected_token": 314,
+      "offset_bytes": 589824,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 4,
+      "history_sha256": "902242aad7298552e627eaffec078167228846c74a50b6cc72f1963860d914c6",
+      "selected_token": 253,
+      "offset_bytes": 786432,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 5,
+      "history_sha256": "dc8df675dce6bb80d07abda7efc63878126ae0a1a7b09d18a732ac29e2884e83",
+      "selected_token": 34588,
+      "offset_bytes": 983040,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 6,
+      "history_sha256": "7ddff95dc86cbc6bb9c1c9cd85b7e495fec4e09ba062f35785165b1cb6710a77",
+      "selected_token": 351,
+      "offset_bytes": 1179648,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 7,
+      "history_sha256": "edd614180123ef95fe4c92294d3ea831c42928a54d51ef4a9891db5857cae4ba",
+      "selected_token": 2976,
+      "offset_bytes": 1376256,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 8,
+      "history_sha256": "686b36812cf140928bfdd1bd9780e70b619f9d7ad5ae0ac9aa96b2a440398733",
+      "selected_token": 5882,
+      "offset_bytes": 1572864,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 9,
+      "history_sha256": "c0efca7cf8454d42c5bc33b1a6d7b23fcfdc5a0f267745fd68762a6f87f64b49",
+      "selected_token": 30,
+      "offset_bytes": 1769472,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 10,
+      "history_sha256": "31550e92b8cf2d105a228478f0e6a6c5cfd10c740a8326243e034d7ee2717a62",
+      "selected_token": 2,
+      "offset_bytes": 1966080,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    }
+  ],
+  "logits_file": "logits.f32",
+  "logits_sha256": "979a4fc1427350297159a17a71e284b989a8d0cd4ee03fe8621dd32c0bd8d01d",
+  "logits_shape": [
+    11,
+    49152
+  ],
+  "injection_count": 0,
+  "load_seconds": 0.33154675,
+  "prefill_seconds": 0.189916958,
+  "generation_seconds": 0.130340042,
+  "capture_events": 0,
+  "context": 512,
+  "threads": 1,
+  "kv_type": "f32",
+  "schema_version": 1,
+  "complete": true
+}

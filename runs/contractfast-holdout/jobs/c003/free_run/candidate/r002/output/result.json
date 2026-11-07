@@ -1,0 +1,155 @@
+{
+  "model": {
+    "vocab_size": 49152,
+    "chat_template": "{% for message in messages %}{% if loop.first and messages[0]['role'] != 'system' %}{{ '<|im_start|>system\nYou are a helpful AI assistant named SmolLM, trained by Hugging Face<|im_end|>\n' }}{% endif %}{{'<|im_start|>' + message['role'] + '\n' + message['content'] + '<|im_end|>' + '\n'}}{% endfor %}{% if add_generation_prompt %}{{ '<|im_start|>assistant\n' }}{% endif %}",
+    "chat_template_sha256": "872be49dbb638044ad01b60388f48d469ff2980e5f0dccdc22ec907db54d0788",
+    "model_sha256": "48ab3034d0dd401fbc721eb1df3217902fee7dab9078992d66431f09b7750201",
+    "backend": "cpu",
+    "diagnostic_build": true
+  },
+  "case_id": "c012",
+  "mode": "free_run",
+  "generated_text": "The chemical symbol for gold is Au.",
+  "prompt_tokens": [
+    1,
+    4093,
+    198,
+    34486,
+    42,
+    260,
+    2819,
+    3573,
+    327,
+    4231,
+    314,
+    2758,
+    23626,
+    2,
+    198,
+    1,
+    520,
+    9531,
+    198
+  ],
+  "forced_tokens": [],
+  "selected_tokens": [
+    504,
+    2819,
+    3573,
+    327,
+    4231,
+    314,
+    36613,
+    30,
+    2
+  ],
+  "stop_reason": "eos",
+  "steps": [
+    {
+      "step": 0,
+      "history_sha256": "de5325a5818efb9104e39ffa79c6b1f0b0ca21f4245546af6dc710e98ea02251",
+      "selected_token": 504,
+      "offset_bytes": 0,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 1,
+      "history_sha256": "b412218f0ea346b2be0511b01699ac9fd93eb0747050b9894beabe57467f0e00",
+      "selected_token": 2819,
+      "offset_bytes": 196608,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 2,
+      "history_sha256": "0ef506930261282c50104b8789889786a2a760ca9bc13df7ca12c90feb2f0e6f",
+      "selected_token": 3573,
+      "offset_bytes": 393216,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 3,
+      "history_sha256": "b08d2627442a1b530f44a66f6a22dd114427b1fd97a4db730bc3d34168c31c85",
+      "selected_token": 327,
+      "offset_bytes": 589824,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 4,
+      "history_sha256": "387ba722008b2a8c3539e7ccadc410913efab3a658759896e3db28b5c586d776",
+      "selected_token": 4231,
+      "offset_bytes": 786432,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 5,
+      "history_sha256": "9ff1b85e904070b9a07f692bd95f1bc2052e4166747ae9821d3ce4405558931c",
+      "selected_token": 314,
+      "offset_bytes": 983040,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 6,
+      "history_sha256": "1ec8467dce6a6e297efec2999bc5162f46f43b63cbd2905bc8d7b2cba51b4099",
+      "selected_token": 36613,
+      "offset_bytes": 1179648,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 7,
+      "history_sha256": "d366dd7d5b85833a1bf4e13eeb730bb7233caed88b63f79fa358d99ee2fd0fc8",
+      "selected_token": 30,
+      "offset_bytes": 1376256,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 8,
+      "history_sha256": "fef8ac661443c0471da0e30b105c41e7cc4db24a47f9cb6d82c2e5e2bfa23c22",
+      "selected_token": 2,
+      "offset_bytes": 1572864,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    }
+  ],
+  "logits_file": "logits.f32",
+  "logits_sha256": "8c9060f2bc1af175335c9402d57472285c5a0ee35ec91fc1ff03dd62aecd66d6",
+  "logits_shape": [
+    9,
+    49152
+  ],
+  "injection_count": 0,
+  "load_seconds": 0.459519292,
+  "prefill_seconds": 0.350735584,
+  "generation_seconds": 0.140653458,
+  "capture_events": 0,
+  "context": 512,
+  "threads": 1,
+  "kv_type": "f32",
+  "schema_version": 1,
+  "complete": true
+}

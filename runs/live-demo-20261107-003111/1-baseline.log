@@ -1,0 +1,159 @@
+1/4 cases executed
+2/4 cases executed
+3/4 cases executed
+4/4 cases executed
+{
+  "schema_version": 1,
+  "verdict": "PASS",
+  "exit_code": 0,
+  "contract_sha256": "f514b7362e58ee01de819f373da3b15b824b7884237bd79d9a40551faa7cc6d2",
+  "legality_status": "not_assessed",
+  "reasons": [],
+  "rules": [
+    {
+      "id": "bits",
+      "metric": "bit_equal_rate",
+      "alignment": "free_run",
+      "value": 1.0,
+      "operator": "ge",
+      "threshold": 1.0,
+      "passed": true,
+      "numerator": 3391488.0,
+      "denominator": 3391488,
+      "first_divergences": [
+        {
+          "case_id": "c001",
+          "position": null,
+          "censored": true,
+          "observed_steps": 7
+        },
+        {
+          "case_id": "c007",
+          "position": null,
+          "censored": true,
+          "observed_steps": 8
+        },
+        {
+          "case_id": "c013",
+          "position": null,
+          "censored": true,
+          "observed_steps": 22
+        },
+        {
+          "case_id": "c019",
+          "position": null,
+          "censored": true,
+          "observed_steps": 32
+        }
+      ]
+    },
+    {
+      "id": "sequence",
+      "metric": "sequence_exact_match_rate",
+      "alignment": "free_run",
+      "value": 1.0,
+      "operator": "ge",
+      "threshold": 1.0,
+      "passed": true,
+      "numerator": 4.0,
+      "denominator": 4,
+      "first_divergences": [
+        {
+          "case_id": "c001",
+          "position": null,
+          "censored": true,
+          "observed_steps": 7
+        },
+        {
+          "case_id": "c007",
+          "position": null,
+          "censored": true,
+          "observed_steps": 8
+        },
+        {
+          "case_id": "c013",
+          "position": null,
+          "censored": true,
+          "observed_steps": 22
+        },
+        {
+          "case_id": "c019",
+          "position": null,
+          "censored": true,
+          "observed_steps": 32
+        }
+      ]
+    }
+  ],
+  "evidence": {
+    "errors": [],
+    "insufficient": [],
+    "distinct_cases": 4,
+    "required_repetitions": 5,
+    "execution_class": "host",
+    "manifest_diff": {
+      "planned": {},
+      "uncontrolled": {}
+    },
+    "completed_jobs": 40,
+    "diagnostic_injection": false,
+    "stability": [
+      {
+        "case_id": "c001",
+        "role": "baseline",
+        "mode": "free_run",
+        "stable": true,
+        "repetitions": 5
+      },
+      {
+        "case_id": "c001",
+        "role": "candidate",
+        "mode": "free_run",
+        "stable": true,
+        "repetitions": 5
+      },
+      {
+        "case_id": "c007",
+        "role": "baseline",
+        "mode": "free_run",
+        "stable": true,
+        "repetitions": 5
+      },
+      {
+        "case_id": "c007",
+        "role": "candidate",
+        "mode": "free_run",
+        "stable": true,
+        "repetitions": 5
+      },
+      {
+        "case_id": "c013",
+        "role": "baseline",
+        "mode": "free_run",
+        "stable": true,
+        "repetitions": 5
+      },
+      {
+        "case_id": "c013",
+        "role": "candidate",
+        "mode": "free_run",
+        "stable": true,
+        "repetitions": 5
+      },
+      {
+        "case_id": "c019",
+        "role": "baseline",
+        "mode": "free_run",
+        "stable": true,
+        "repetitions": 5
+      },
+      {
+        "case_id": "c019",
+        "role": "candidate",
+        "mode": "free_run",
+        "stable": true,
+        "repetitions": 5
+      }
+    ]
+  }
+}

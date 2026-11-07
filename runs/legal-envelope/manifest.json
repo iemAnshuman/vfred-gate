@@ -1,0 +1,44 @@
+{
+  "compiler_version": "Apple clang version 17.0.0 (clang-1700.0.13.5)\nTarget: arm64-apple-darwin24.6.0\nThread model: posix\nInstalledDir: /Library/Developer/CommandLineTools/usr/bin\n",
+  "execution_class": "emulator",
+  "generated_at": "2026-11-06T15:48:04.998528+00:00",
+  "outputs": {
+    "envelope.json": "40122a4cd7e860ff54e4e69492e04aef082e516382bb6c2e4d59353750759cef"
+  },
+  "physical_board_gate": "blocked",
+  "qemu_probe_manifest": "/Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/runs/mechanism/manifest.json",
+  "qemu_probe_manifest_sha256": "40c6d7f0cb81e2e4fea2a408fb306d4e3858e70ea1a56c312e4bed916362284a",
+  "sampler_build_command": [
+    "/usr/bin/c++",
+    "-O2",
+    "-std=c++17",
+    "-fno-fast-math",
+    "-ffp-contract=off",
+    "/Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/envelope/sampler.cpp",
+    "-o",
+    "/Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/runs/legal-envelope/envelope-sampler"
+  ],
+  "schema_version": 1,
+  "scope": "QEMU RVV probe values; not a model qualification and not a second board",
+  "search_records": "/Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/runs/mechanism-search/stdout.json",
+  "search_records_sha256": "4a7472a3334efa7fdb33dd8f55027967ac80f04d9516a2b189854ad86e0edba7",
+  "sources": {
+    "microbench/envelope/sampler.cpp": "80858f9eaaddc72f7e29c8111b9f62d478770ee3f882c5aeb9ed3581f6b74010",
+    "scripts/envelope_evidence.py": "062056d7f1b57d9d4e0c20701a85c559647a82a4589ce8fcfdfb4eb40fd62d22",
+    "src/vfg/legal/envelope.py": "ea0ca9cf5635eb92cc81ee13a6cfc6d5f596e3bfc4cfec0e9361d94807baa068"
+  },
+  "summary": {
+    "all_observed_contained": true,
+    "independent_equal": true,
+    "independent_records": 16,
+    "maximum_support_size": 25,
+    "ordered_matches_scalar": true,
+    "policies_agree_on_qemu": true,
+    "random_maximum_support_size": 152139,
+    "random_samples": 24,
+    "random_samples_with_multiple_results": 24,
+    "records": 24,
+    "records_with_one_legal_result": 14,
+    "records_with_other_legal_examples": 10
+  }
+}

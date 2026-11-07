@@ -1,0 +1,20 @@
+{
+	"InstallScripts" : 
+	[
+		"/Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/build/contract-release/cmake_install.cmake",
+		"/Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/build/contract-release/microbench/cmake_install.cmake",
+		"/Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/build/contract-release/runner/cmake_install.cmake",
+		"/Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/build/contract-release/llama/cmake_install.cmake",
+		"/Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/build/contract-release/llama/ggml/cmake_install.cmake",
+		"/Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/build/contract-release/llama/ggml/src/cmake_install.cmake",
+		"/Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/build/contract-release/llama/ggml/src/ggml-cpu/cmake_install.cmake",
+		"/Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/build/contract-release/llama/src/cmake_install.cmake",
+		"/Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/build/contract-release/llama/vendor/cmake_install.cmake",
+		"/Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/build/contract-release/llama/vendor/hash/cmake_install.cmake",
+		"/Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/build/contract-release/llama/vendor/miniaudio/cmake_install.cmake",
+		"/Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/build/contract-release/llama/vendor/nlohmann/cmake_install.cmake",
+		"/Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/build/contract-release/llama/vendor/sheredom/cmake_install.cmake",
+		"/Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/build/contract-release/llama/vendor/stb/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

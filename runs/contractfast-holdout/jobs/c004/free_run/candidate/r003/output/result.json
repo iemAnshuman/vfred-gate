@@ -1,0 +1,153 @@
+{
+  "model": {
+    "vocab_size": 49152,
+    "chat_template": "{% for message in messages %}{% if loop.first and messages[0]['role'] != 'system' %}{{ '<|im_start|>system\nYou are a helpful AI assistant named SmolLM, trained by Hugging Face<|im_end|>\n' }}{% endif %}{{'<|im_start|>' + message['role'] + '\n' + message['content'] + '<|im_end|>' + '\n'}}{% endfor %}{% if add_generation_prompt %}{{ '<|im_start|>assistant\n' }}{% endif %}",
+    "chat_template_sha256": "872be49dbb638044ad01b60388f48d469ff2980e5f0dccdc22ec907db54d0788",
+    "model_sha256": "48ab3034d0dd401fbc721eb1df3217902fee7dab9078992d66431f09b7750201",
+    "backend": "cpu",
+    "diagnostic_build": true
+  },
+  "case_id": "c017",
+  "mode": "free_run",
+  "generated_text": "Put the word blue inside square brackets.",
+  "prompt_tokens": [
+    1,
+    4093,
+    198,
+    22030,
+    260,
+    2229,
+    4461,
+    2972,
+    5222,
+    29949,
+    30,
+    2,
+    198,
+    1,
+    520,
+    9531,
+    198
+  ],
+  "forced_tokens": [],
+  "selected_tokens": [
+    22030,
+    260,
+    2229,
+    4461,
+    2972,
+    5222,
+    29949,
+    30,
+    2
+  ],
+  "stop_reason": "eos",
+  "steps": [
+    {
+      "step": 0,
+      "history_sha256": "730e4630816066d1834c79730039e3bc468472e8ea2c6e27378d9ceeea569220",
+      "selected_token": 22030,
+      "offset_bytes": 0,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 1,
+      "history_sha256": "01834491dc09b73212e53e54d2b9797c0b1474ac9341eaf1cadde1c0d54e06cd",
+      "selected_token": 260,
+      "offset_bytes": 196608,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 2,
+      "history_sha256": "b342c78af9ed5b0d4cf5a18816bc7204bb7fe740227f4b89f1dee66eaa3d3958",
+      "selected_token": 2229,
+      "offset_bytes": 393216,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 3,
+      "history_sha256": "c4f57d7da08d33b6398e8e6c4243858231f8c36c1afa30b77432310572c93d70",
+      "selected_token": 4461,
+      "offset_bytes": 589824,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 4,
+      "history_sha256": "c6efd52bd67f73298d880c3cf603b55532fb237d91ec4acdf2041d23be0b8ab4",
+      "selected_token": 2972,
+      "offset_bytes": 786432,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 5,
+      "history_sha256": "96f20a7889acc503598ee78d98c7d15a8862432e79f6d5a149b9958f96a779c4",
+      "selected_token": 5222,
+      "offset_bytes": 983040,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 6,
+      "history_sha256": "1ccf5fd31b527e4e5640be15855c7087721632896929666cf1032c5d16fe87ed",
+      "selected_token": 29949,
+      "offset_bytes": 1179648,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 7,
+      "history_sha256": "da1fbcad407c6f56e51100490edb4cae4fba69addb3da5c161e3ca770aa74efb",
+      "selected_token": 30,
+      "offset_bytes": 1376256,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 8,
+      "history_sha256": "730c631bfcdeb70ce36d1432ffd36bdf64bf1998c088870f10213751995c0223",
+      "selected_token": 2,
+      "offset_bytes": 1572864,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    }
+  ],
+  "logits_file": "logits.f32",
+  "logits_sha256": "fc50781f4949327a1b538cce124a1f9a02fcbbb9a7a7052cd6e27fcad826e20d",
+  "logits_shape": [
+    9,
+    49152
+  ],
+  "injection_count": 0,
+  "load_seconds": 0.441436542,
+  "prefill_seconds": 0.210331041,
+  "generation_seconds": 0.115760541,
+  "capture_events": 0,
+  "context": 512,
+  "threads": 1,
+  "kv_type": "f32",
+  "schema_version": 1,
+  "complete": true
+}

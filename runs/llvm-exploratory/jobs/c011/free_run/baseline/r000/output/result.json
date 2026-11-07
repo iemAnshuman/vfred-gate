@@ -1,0 +1,74 @@
+{
+  "model": {
+    "vocab_size": 49152,
+    "chat_template": "{% for message in messages %}{% if loop.first and messages[0]['role'] != 'system' %}{{ '<|im_start|>system\nYou are a helpful AI assistant named SmolLM, trained by Hugging Face<|im_end|>\n' }}{% endif %}{{'<|im_start|>' + message['role'] + '\n' + message['content'] + '<|im_end|>' + '\n'}}{% endfor %}{% if add_generation_prompt %}{{ '<|im_start|>assistant\n' }}{% endif %}",
+    "chat_template_sha256": "872be49dbb638044ad01b60388f48d469ff2980e5f0dccdc22ec907db54d0788",
+    "model_sha256": "48ab3034d0dd401fbc721eb1df3217902fee7dab9078992d66431f09b7750201",
+    "backend": "cpu",
+    "diagnostic_build": true
+  },
+  "case_id": "c016",
+  "mode": "free_run",
+  "generated_text": "Yes",
+  "prompt_tokens": [
+    1,
+    4093,
+    198,
+    19161,
+    9805,
+    281,
+    34692,
+    36906,
+    30,
+    2,
+    198,
+    1,
+    520,
+    9531,
+    198
+  ],
+  "forced_tokens": [],
+  "selected_tokens": [
+    10539,
+    2
+  ],
+  "stop_reason": "eos",
+  "steps": [
+    {
+      "step": 0,
+      "history_sha256": "7147ab79d01d1b2361dc819782ae4b9d2177148ea78ec64767b31221455c2323",
+      "selected_token": 10539,
+      "offset_bytes": 0,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 1,
+      "history_sha256": "31c54660523c1e196483d97a862c9d264d95a7b31c882175d88a0f3f281f2c5e",
+      "selected_token": 2,
+      "offset_bytes": 196608,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    }
+  ],
+  "logits_file": "logits.f32",
+  "logits_sha256": "b3bbae6bf9c88ea7590acc3ab7b8ac624cfd0dec18a937ffe83c3b2584af7a87",
+  "logits_shape": [
+    2,
+    49152
+  ],
+  "injection_count": 0,
+  "load_seconds": 0.501851792,
+  "prefill_seconds": 0.261955833,
+  "generation_seconds": 0.019004,
+  "capture_events": 0,
+  "context": 512,
+  "threads": 1,
+  "kv_type": "f32",
+  "schema_version": 1,
+  "complete": true
+}

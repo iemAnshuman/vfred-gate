@@ -1,0 +1,1728 @@
+
+/Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/runs/mechanism/probe.elf:	file format elf64-littleriscv
+
+Disassembly of section .text:
+
+0000000080000000 <_start>:
+; _start():
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/start.S:6
+80000000: 00002197     	auipc	gp, 0x2
+80000004: cd818193     	addi	gp, gp, -0x328
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/start.S:8
+80000008: 00021117     	auipc	sp, 0x21
+8000000c: 4d010113     	addi	sp, sp, 0x4d0
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/start.S:9
+80000010: 00001297     	auipc	t0, 0x1
+80000014: 4c828293     	addi	t0, t0, 0x4c8
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/start.S:10
+80000018: 00001317     	auipc	t1, 0x1
+8000001c: 4c030313     	addi	t1, t1, 0x4c0
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/start.S:11
+80000020: 0062f663     	bgeu	t0, t1, 0x8000002c <_start+0x2c>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/start.S:12
+80000024: 0002b023     	sd	zero, 0x0(t0)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/start.S:13
+80000028: 02a1         	addi	t0, t0, 0x8
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/start.S:14
+8000002a: bfdd         	j	0x80000020 <_start+0x20>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/start.S:15
+8000002c: 6299         	lui	t0, 0x6
+8000002e: 60028293     	addi	t0, t0, 0x600
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/start.S:16
+80000032: 3002a073     	csrs	mstatus, t0
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/start.S:17
+80000036: 00305073     	csrwi	fcsr, 0x0
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/start.S:18
+8000003a: 00000097     	auipc	ra, 0x0
+8000003e: 09a080e7     	jalr	0x9a(ra) <main>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/start.S:19
+80000042: 001002b7     	lui	t0, 0x100
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/start.S:20
+80000046: 6315         	lui	t1, 0x5
+80000048: 55530313     	addi	t1, t1, 0x555
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/start.S:21
+8000004c: 0062a023     	sw	t1, 0x0(t0)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/start.S:22
+80000050: 10500073     	wfi
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/start.S:23
+80000054: bff5         	j	0x80000050 <_start+0x50>
+
+0000000080000056 <ordered>:
+; ordered():
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:11
+80000056: cd00f057     	vsetivli	zero, 0x1, e32, m1, ta, ma
+8000005a: 42006457     	vmv.s.x	v8, zero
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:12
+8000005e: c185         	beqz	a1, 0x8000007e <ordered+0x28>
+80000060: 4601         	li	a2, 0x0
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:13
+80000062: 40c586b3     	sub	a3, a1, a2
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:14
+80000066: 00261713     	slli	a4, a2, 0x2
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:13
+8000006a: 0d06f6d7     	vsetvli	a3, a3, e32, m1, ta, ma
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:14
+8000006e: 972a         	add	a4, a4, a0
+80000070: 02076487     	vle32.v	v9, (a4)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:15
+80000074: 0e941457     	vfredosum.vs	v8, v9, v8
+80000078: 9636         	add	a2, a2, a3
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:12
+8000007a: feb664e3     	bltu	a2, a1, 0x80000062 <ordered+0xc>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:17
+8000007e: cd00f057     	vsetivli	zero, 0x1, e32, m1, ta, ma
+80000082: 42801557     	vfmv.f.s	fa0, v8
+80000086: 8082         	ret
+
+0000000080000088 <unordered>:
+; unordered():
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:20
+80000088: cd00f057     	vsetivli	zero, 0x1, e32, m1, ta, ma
+8000008c: 42006457     	vmv.s.x	v8, zero
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:21
+80000090: c185         	beqz	a1, 0x800000b0 <unordered+0x28>
+80000092: 4601         	li	a2, 0x0
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:22
+80000094: 40c586b3     	sub	a3, a1, a2
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:23
+80000098: 00261713     	slli	a4, a2, 0x2
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:22
+8000009c: 0d06f6d7     	vsetvli	a3, a3, e32, m1, ta, ma
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:23
+800000a0: 972a         	add	a4, a4, a0
+800000a2: 02076487     	vle32.v	v9, (a4)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:24
+800000a6: 06941457     	vfredusum.vs	v8, v9, v8
+800000aa: 9636         	add	a2, a2, a3
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:21
+800000ac: feb664e3     	bltu	a2, a1, 0x80000094 <unordered+0xc>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:26
+800000b0: cd00f057     	vsetivli	zero, 0x1, e32, m1, ta, ma
+800000b4: 42801557     	vfmv.f.s	fa0, v8
+800000b8: 8082         	ret
+
+00000000800000ba <scalar>:
+; scalar():
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:28
+800000ba: f0000553     	fmv.w.x	fa0, zero
+800000be: c991         	beqz	a1, 0x800000d2 <scalar+0x18>
+800000c0: 058a         	slli	a1, a1, 0x2
+800000c2: 95aa         	add	a1, a1, a0
+800000c4: 00052787     	flw	fa5, 0x0(a0)
+800000c8: 00f57553     	fadd.s	fa0, fa0, fa5
+800000cc: 0511         	addi	a0, a0, 0x4
+800000ce: feb51be3     	bne	a0, a1, 0x800000c4 <scalar+0xa>
+800000d2: 8082         	ret
+
+00000000800000d4 <main>:
+; main():
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:29
+800000d4: 7141         	addi	sp, sp, -0x1f0
+800000d6: f786         	sd	ra, 0x1e8(sp)
+800000d8: f3a2         	sd	s0, 0x1e0(sp)
+800000da: efa6         	sd	s1, 0x1d8(sp)
+800000dc: ebca         	sd	s2, 0x1d0(sp)
+800000de: e7ce         	sd	s3, 0x1c8(sp)
+800000e0: e3d2         	sd	s4, 0x1c0(sp)
+800000e2: ff56         	sd	s5, 0x1b8(sp)
+800000e4: fb5a         	sd	s6, 0x1b0(sp)
+800000e6: f75e         	sd	s7, 0x1a8(sp)
+800000e8: f362         	sd	s8, 0x1a0(sp)
+800000ea: ef66         	sd	s9, 0x198(sp)
+800000ec: eb6a         	sd	s10, 0x190(sp)
+800000ee: e76e         	sd	s11, 0x188(sp)
+800000f0: a322         	fsd	fs0, 0x180(sp)
+800000f2: bea6         	fsd	fs1, 0x178(sp)
+800000f4: baca         	fsd	fs2, 0x170(sp)
+800000f6: b6ce         	fsd	fs3, 0x168(sp)
+800000f8: b2d2         	fsd	fs4, 0x160(sp)
+800000fa: aed6         	fsd	fs5, 0x158(sp)
+800000fc: aada         	fsd	fs6, 0x150(sp)
+800000fe: 6511         	lui	a0, 0x4
+80000100: f4050513     	addi	a0, a0, -0xc0
+80000104: 40a10133     	sub	sp, sp, a0
+80000108: 4601         	li	a2, 0x0
+8000010a: 6511         	lui	a0, 0x4
+8000010c: 04050513     	addi	a0, a0, 0x40
+80000110: 00a106b3     	add	a3, sp, a0
+80000114: 100004b7     	lui	s1, 0x10000
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:30
+80000118: 0d007557     	vsetvli	a0, zero, e32, m1, ta, ma
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:31
+8000011c: c22025f3     	csrr	a1, vlenb
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:32
+80000120: 4705         	li	a4, 0x1
+80000122: fff50793     	addi	a5, a0, -0x1
+80000126: 0006b023     	sd	zero, 0x0(a3)
+8000012a: e698         	sd	a4, 0x8(a3)
+8000012c: ea9c         	sd	a5, 0x10(a3)
+8000012e: ee88         	sd	a0, 0x18(a3)
+80000130: 00151713     	slli	a4, a0, 0x1
+80000134: 00150793     	addi	a5, a0, 0x1
+80000138: 070d         	addi	a4, a4, 0x3
+8000013a: 4811         	li	a6, 0x4
+8000013c: f29c         	sd	a5, 0x20(a3)
+8000013e: f698         	sd	a4, 0x28(a3)
+80000140: 0306b823     	sd	a6, 0x30(a3)
+80000144: 07b00693     	li	a3, 0x7b
+80000148: 00001717     	auipc	a4, 0x1
+8000014c: 2ff70713     	addi	a4, a4, 0x2ff
+80000150: 03d00793     	li	a5, 0x3d
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+80000154: 0054c803     	lbu	a6, 0x5(s1)
+80000158: 02087813     	andi	a6, a6, 0x20
+8000015c: fe080ce3     	beqz	a6, 0x80000154 <main+0x80>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:6
+80000160: 0605         	addi	a2, a2, 0x1
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+80000162: 00c70833     	add	a6, a4, a2
+80000166: 00d48023     	sb	a3, 0x0(s1)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:6
+8000016a: 00084683     	lbu	a3, 0x0(a6)
+8000016e: fef613e3     	bne	a2, a5, 0x80000154 <main+0x80>
+80000172: 4601         	li	a2, 0x0
+80000174: ccccd6b7     	lui	a3, 0xccccd
+80000178: ccd68693     	addi	a3, a3, -0x333
+8000017c: 02069713     	slli	a4, a3, 0x20
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:33
+80000180: 00359793     	slli	a5, a1, 0x3
+80000184: 00e685b3     	add	a1, a3, a4
+80000188: 0094         	addi	a3, sp, 0x40
+8000018a: 4725         	li	a4, 0x9
+8000018c: 883e         	mv	a6, a5
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:7
+8000018e: 02b7b8b3     	mulhu	a7, a5, a1
+80000192: 0038d793     	srli	a5, a7, 0x3
+80000196: 0f88f893     	andi	a7, a7, 0xf8
+8000019a: 00179293     	slli	t0, a5, 0x1
+8000019e: 411808b3     	sub	a7, a6, a7
+800001a2: 02061313     	slli	t1, a2, 0x20
+800001a6: 405888b3     	sub	a7, a7, t0
+800001aa: 02035293     	srli	t0, t1, 0x20
+800001ae: 0308e893     	ori	a7, a7, 0x30
+800001b2: 92b6         	add	t0, t0, a3
+800001b4: 2605         	addiw	a2, a2, 0x1
+800001b6: 01128023     	sb	a7, 0x0(t0)
+800001ba: fd0769e3     	bltu	a4, a6, 0x8000018c <main+0xb8>
+800001be: c605         	beqz	a2, 0x800001e6 <main+0x112>
+800001c0: 02061593     	slli	a1, a2, 0x20
+800001c4: 9181         	srli	a1, a1, 0x20
+800001c6: 0090         	addi	a2, sp, 0x40
+800001c8: 100006b7     	lui	a3, 0x10000
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:7
+800001cc: 15fd         	addi	a1, a1, -0x1
+800001ce: 00b60733     	add	a4, a2, a1
+800001d2: 00074703     	lbu	a4, 0x0(a4)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+800001d6: 0054c783     	lbu	a5, 0x5(s1)
+800001da: 0207f793     	andi	a5, a5, 0x20
+800001de: dfe5         	beqz	a5, 0x800001d6 <main+0x102>
+800001e0: 00e68023     	sb	a4, 0x0(a3)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:7
+800001e4: f5e5         	bnez	a1, 0x800001cc <main+0xf8>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+800001e6: 0054c583     	lbu	a1, 0x5(s1)
+800001ea: 0205f593     	andi	a1, a1, 0x20
+800001ee: dde5         	beqz	a1, 0x800001e6 <main+0x112>
+800001f0: 100005b7     	lui	a1, 0x10000
+800001f4: 02c00613     	li	a2, 0x2c
+800001f8: 00c58023     	sb	a2, 0x0(a1)
+800001fc: 0054c583     	lbu	a1, 0x5(s1)
+80000200: 0205f593     	andi	a1, a1, 0x20
+80000204: dde5         	beqz	a1, 0x800001fc <main+0x128>
+80000206: 100005b7     	lui	a1, 0x10000
+8000020a: 02200613     	li	a2, 0x22
+8000020e: 00c58023     	sb	a2, 0x0(a1)
+80000212: 0054c583     	lbu	a1, 0x5(s1)
+80000216: 0205f593     	andi	a1, a1, 0x20
+8000021a: dde5         	beqz	a1, 0x80000212 <main+0x13e>
+8000021c: 100005b7     	lui	a1, 0x10000
+80000220: 07600613     	li	a2, 0x76
+80000224: 00c58023     	sb	a2, 0x0(a1)
+80000228: 0054c583     	lbu	a1, 0x5(s1)
+8000022c: 0205f593     	andi	a1, a1, 0x20
+80000230: dde5         	beqz	a1, 0x80000228 <main+0x154>
+80000232: 100005b7     	lui	a1, 0x10000
+80000236: 06c00613     	li	a2, 0x6c
+8000023a: 00c58023     	sb	a2, 0x0(a1)
+8000023e: 0054c583     	lbu	a1, 0x5(s1)
+80000242: 0205f593     	andi	a1, a1, 0x20
+80000246: dde5         	beqz	a1, 0x8000023e <main+0x16a>
+80000248: 100005b7     	lui	a1, 0x10000
+8000024c: 06d00613     	li	a2, 0x6d
+80000250: 00c58023     	sb	a2, 0x0(a1)
+80000254: 0054c583     	lbu	a1, 0x5(s1)
+80000258: 0205f593     	andi	a1, a1, 0x20
+8000025c: dde5         	beqz	a1, 0x80000254 <main+0x180>
+8000025e: 100005b7     	lui	a1, 0x10000
+80000262: 06100613     	li	a2, 0x61
+80000266: 00c58023     	sb	a2, 0x0(a1)
+8000026a: 0054c583     	lbu	a1, 0x5(s1)
+8000026e: 0205f593     	andi	a1, a1, 0x20
+80000272: dde5         	beqz	a1, 0x8000026a <main+0x196>
+80000274: 100005b7     	lui	a1, 0x10000
+80000278: 07800613     	li	a2, 0x78
+8000027c: 00c58023     	sb	a2, 0x0(a1)
+80000280: 0054c583     	lbu	a1, 0x5(s1)
+80000284: 0205f593     	andi	a1, a1, 0x20
+80000288: dde5         	beqz	a1, 0x80000280 <main+0x1ac>
+8000028a: 100005b7     	lui	a1, 0x10000
+8000028e: 02200613     	li	a2, 0x22
+80000292: 00c58023     	sb	a2, 0x0(a1)
+80000296: 0054c583     	lbu	a1, 0x5(s1)
+8000029a: 0205f593     	andi	a1, a1, 0x20
+8000029e: dde5         	beqz	a1, 0x80000296 <main+0x1c2>
+800002a0: 4581         	li	a1, 0x0
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+800002a2: 10000637     	lui	a2, 0x10000
+800002a6: ccccd6b7     	lui	a3, 0xccccd
+800002aa: 03a00713     	li	a4, 0x3a
+800002ae: ccd68693     	addi	a3, a3, -0x333
+800002b2: 00e60023     	sb	a4, 0x0(a2)
+800002b6: 02069613     	slli	a2, a3, 0x20
+800002ba: 9636         	add	a2, a2, a3
+800002bc: 0094         	addi	a3, sp, 0x40
+800002be: 4725         	li	a4, 0x9
+800002c0: 87aa         	mv	a5, a0
+800002c2: 883e         	mv	a6, a5
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:7
+800002c4: 02c7b8b3     	mulhu	a7, a5, a2
+800002c8: 0038d793     	srli	a5, a7, 0x3
+800002cc: 0f88f893     	andi	a7, a7, 0xf8
+800002d0: 00179293     	slli	t0, a5, 0x1
+800002d4: 411808b3     	sub	a7, a6, a7
+800002d8: 02059313     	slli	t1, a1, 0x20
+800002dc: 405888b3     	sub	a7, a7, t0
+800002e0: 02035293     	srli	t0, t1, 0x20
+800002e4: 0308e893     	ori	a7, a7, 0x30
+800002e8: 92b6         	add	t0, t0, a3
+800002ea: 2585         	addiw	a1, a1, 0x1
+800002ec: 01128023     	sb	a7, 0x0(t0)
+800002f0: fd0769e3     	bltu	a4, a6, 0x800002c2 <main+0x1ee>
+800002f4: c19d         	beqz	a1, 0x8000031a <main+0x246>
+800002f6: 1582         	slli	a1, a1, 0x20
+800002f8: 9181         	srli	a1, a1, 0x20
+800002fa: 0090         	addi	a2, sp, 0x40
+800002fc: 100006b7     	lui	a3, 0x10000
+80000300: 15fd         	addi	a1, a1, -0x1
+80000302: 00b60733     	add	a4, a2, a1
+80000306: 00074703     	lbu	a4, 0x0(a4)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+8000030a: 0054c783     	lbu	a5, 0x5(s1)
+8000030e: 0207f793     	andi	a5, a5, 0x20
+80000312: dfe5         	beqz	a5, 0x8000030a <main+0x236>
+80000314: 00e68023     	sb	a4, 0x0(a3)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:7
+80000318: f5e5         	bnez	a1, 0x80000300 <main+0x22c>
+8000031a: 4581         	li	a1, 0x0
+8000031c: 00001617     	auipc	a2, 0x1
+80000320: 02c00693     	li	a3, 0x2c
+80000324: 16960613     	addi	a2, a2, 0x169
+80000328: 10000737     	lui	a4, 0x10000
+8000032c: 04600793     	li	a5, 0x46
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+80000330: 0054c803     	lbu	a6, 0x5(s1)
+80000334: 02087813     	andi	a6, a6, 0x20
+80000338: fe080ce3     	beqz	a6, 0x80000330 <main+0x25c>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:6
+8000033c: 0585         	addi	a1, a1, 0x1
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+8000033e: 00b60833     	add	a6, a2, a1
+80000342: 00d70023     	sb	a3, 0x0(a4)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:6
+80000346: 00084683     	lbu	a3, 0x0(a6)
+8000034a: fef593e3     	bne	a1, a5, 0x80000330 <main+0x25c>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:37
+8000034e: 7fe00593     	li	a1, 0x7fe
+80000352: 00a5f563     	bgeu	a1, a0, 0x8000035c <main+0x288>
+80000356: 4505         	li	a0, 0x1
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:37
+80000358: 0920106f     	j	0x800013ea <main+0x1316>
+8000035c: 4581         	li	a1, 0x0
+8000035e: 4b01         	li	s6, 0x0
+80000360: 00001517     	auipc	a0, 0x1
+80000364: 16c50513     	addi	a0, a0, 0x16c
+80000368: e42a         	sd	a0, 0x8(sp)
+8000036a: 10000c37     	lui	s8, 0x10000
+8000036e: 02c00c93     	li	s9, 0x2c
+80000372: 02200d93     	li	s11, 0x22
+80000376: 03a00a13     	li	s4, 0x3a
+8000037a: ccccd937     	lui	s2, 0xccccd
+8000037e: ccd90913     	addi	s2, s2, -0x333
+80000382: 6511         	lui	a0, 0x4
+80000384: 07850513     	addi	a0, a0, 0x78
+80000388: 00a10bb3     	add	s7, sp, a0
+8000038c: 4d25         	li	s10, 0x9
+8000038e: 80000537     	lui	a0, 0x80000
+80000392: f0050953     	fmv.w.x	fs2, a0
+80000396: 3f800537     	lui	a0, 0x3f800
+8000039a: f00509d3     	fmv.w.x	fs3, a0
+8000039e: cb800537     	lui	a0, 0xcb800
+800003a2: f0050a53     	fmv.w.x	fs4, a0
+800003a6: 4b800537     	lui	a0, 0x4b800
+800003aa: f0050ad3     	fmv.w.x	fs5, a0
+800003ae: f0000b53     	fmv.w.x	fs6, zero
+800003b2: 4789         	li	a5, 0x2
+800003b4: 4505         	li	a0, 0x1
+800003b6: f82a         	sd	a0, 0x30(sp)
+800003b8: a809         	j	0x800003ca <main+0x2f6>
+800003ba: 7582         	ld	a1, 0x20(sp)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:38
+800003bc: 0585         	addi	a1, a1, 0x1
+800003be: 4b05         	li	s6, 0x1
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:38
+800003c0: 4511         	li	a0, 0x4
+800003c2: 00a59463     	bne	a1, a0, 0x800003ca <main+0x2f6>
+800003c6: 78d0006f     	j	0x80001352 <main+0x127e>
+800003ca: 4801         	li	a6, 0x0
+800003cc: 00259513     	slli	a0, a1, 0x2
+800003d0: f02e         	sd	a1, 0x20(sp)
+800003d2: 0305e593     	ori	a1, a1, 0x30
+800003d6: f42e         	sd	a1, 0x28(sp)
+800003d8: 65a2         	ld	a1, 0x8(sp)
+800003da: 952e         	add	a0, a0, a1
+800003dc: e82a         	sd	a0, 0x10(sp)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:39
+800003de: 00381513     	slli	a0, a6, 0x3
+800003e2: 6591         	lui	a1, 0x4
+800003e4: 04058593     	addi	a1, a1, 0x40
+800003e8: 958a         	add	a1, a1, sp
+800003ea: 952e         	add	a0, a0, a1
+800003ec: 6100         	ld	s0, 0x0(a0)
+800003ee: c005         	beqz	s0, 0x8000040e <main+0x33a>
+800003f0: 212907d3     	fmv.s	fa5, fs2
+800003f4: 7502         	ld	a0, 0x20(sp)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:41
+800003f6: 00a7e563     	bltu	a5, a0, 0x80000400 <main+0x32c>
+800003fa: 6542         	ld	a0, 0x10(sp)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:41
+800003fc: 00052787     	flw	fa5, 0x0(a0)
+80000400: 04f12027     	fsw	fa5, 0x40(sp)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:40
+80000404: 4505         	li	a0, 0x1
+80000406: 00a40463     	beq	s0, a0, 0x8000040e <main+0x33a>
+8000040a: 6f10006f     	j	0x800012fa <main+0x1226>
+8000040e: ec42         	sd	a6, 0x18(sp)
+80000410: fc02         	sd	zero, 0x38(sp)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:47
+80000412: 00105073     	fsflagsi	0x0
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:48
+80000416: 0088         	addi	a0, sp, 0x40
+80000418: 85a2         	mv	a1, s0
+8000041a: 00000097     	auipc	ra, 0x0
+8000041e: c3c080e7     	jalr	-0x3c4(ra) <ordered>
+80000422: 20a504d3     	fmv.s	fs1, fa0
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:9
+80000426: 001029f3     	frflags	s3
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:49
+8000042a: 00105073     	fsflagsi	0x0
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:50
+8000042e: 0088         	addi	a0, sp, 0x40
+80000430: 85a2         	mv	a1, s0
+80000432: 00000097     	auipc	ra, 0x0
+80000436: c56080e7     	jalr	-0x3aa(ra) <unordered>
+8000043a: 20a50453     	fmv.s	fs0, fa0
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:9
+8000043e: 00102af3     	frflags	s5
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:51
+80000442: 0088         	addi	a0, sp, 0x40
+80000444: 85a2         	mv	a1, s0
+80000446: 00000097     	auipc	ra, 0x0
+8000044a: c74080e7     	jalr	-0x38c(ra) <scalar>
+8000044e: 07b00393     	li	t2, 0x7b
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:53
+80000452: 001b7513     	andi	a0, s6, 0x1
+80000456: c901         	beqz	a0, 0x80000466 <main+0x392>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+80000458: 0054c503     	lbu	a0, 0x5(s1)
+8000045c: 02057513     	andi	a0, a0, 0x20
+80000460: dd65         	beqz	a0, 0x80000458 <main+0x384>
+80000462: 019c0023     	sb	s9, 0x0(s8)
+80000466: e0048653     	fmv.x.w	a2, fs1
+8000046a: e00505d3     	fmv.x.w	a1, fa0
+8000046e: 00b64533     	xor	a0, a2, a1
+80000472: 00a03533     	snez	a0, a0
+80000476: 357d         	addiw	a0, a0, -0x1
+80000478: 76c2         	ld	a3, 0x30(sp)
+8000047a: 8ee9         	and	a3, a3, a0
+8000047c: f836         	sd	a3, 0x30(sp)
+8000047e: 06600e13     	li	t3, 0x66
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+80000482: 0054c503     	lbu	a0, 0x5(s1)
+80000486: 02057513     	andi	a0, a0, 0x20
+8000048a: dd65         	beqz	a0, 0x80000482 <main+0x3ae>
+8000048c: 007c0023     	sb	t2, 0x0(s8)
+80000490: 04010313     	addi	t1, sp, 0x40
+80000494: 06900e93     	li	t4, 0x69
+80000498: 07400f13     	li	t5, 0x74
+8000049c: 07500f93     	li	t6, 0x75
+800004a0: 07200b13     	li	s6, 0x72
+800004a4: 06500093     	li	ra, 0x65
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+800004a8: 0054c503     	lbu	a0, 0x5(s1)
+800004ac: 02057513     	andi	a0, a0, 0x20
+800004b0: dd65         	beqz	a0, 0x800004a8 <main+0x3d4>
+800004b2: 01bc0023     	sb	s11, 0x0(s8)
+800004b6: 0054c503     	lbu	a0, 0x5(s1)
+800004ba: 02057513     	andi	a0, a0, 0x20
+800004be: dd65         	beqz	a0, 0x800004b6 <main+0x3e2>
+800004c0: 01cc0023     	sb	t3, 0x0(s8)
+800004c4: 0054c503     	lbu	a0, 0x5(s1)
+800004c8: 02057513     	andi	a0, a0, 0x20
+800004cc: dd65         	beqz	a0, 0x800004c4 <main+0x3f0>
+800004ce: 01dc0023     	sb	t4, 0x0(s8)
+800004d2: 0054c503     	lbu	a0, 0x5(s1)
+800004d6: 02057513     	andi	a0, a0, 0x20
+800004da: dd65         	beqz	a0, 0x800004d2 <main+0x3fe>
+800004dc: 07800513     	li	a0, 0x78
+800004e0: 00ac0023     	sb	a0, 0x0(s8)
+800004e4: 0054c503     	lbu	a0, 0x5(s1)
+800004e8: 02057513     	andi	a0, a0, 0x20
+800004ec: dd65         	beqz	a0, 0x800004e4 <main+0x410>
+800004ee: 01ec0023     	sb	t5, 0x0(s8)
+800004f2: 0054c503     	lbu	a0, 0x5(s1)
+800004f6: 02057513     	andi	a0, a0, 0x20
+800004fa: dd65         	beqz	a0, 0x800004f2 <main+0x41e>
+800004fc: 01fc0023     	sb	t6, 0x0(s8)
+80000500: 0054c503     	lbu	a0, 0x5(s1)
+80000504: 02057513     	andi	a0, a0, 0x20
+80000508: dd65         	beqz	a0, 0x80000500 <main+0x42c>
+8000050a: 016c0023     	sb	s6, 0x0(s8)
+8000050e: 0054c503     	lbu	a0, 0x5(s1)
+80000512: 02057513     	andi	a0, a0, 0x20
+80000516: dd65         	beqz	a0, 0x8000050e <main+0x43a>
+80000518: 001c0023     	sb	ra, 0x0(s8)
+8000051c: 0054c503     	lbu	a0, 0x5(s1)
+80000520: 02057513     	andi	a0, a0, 0x20
+80000524: dd65         	beqz	a0, 0x8000051c <main+0x448>
+80000526: 01bc0023     	sb	s11, 0x0(s8)
+8000052a: 0054c503     	lbu	a0, 0x5(s1)
+8000052e: 02057513     	andi	a0, a0, 0x20
+80000532: dd65         	beqz	a0, 0x8000052a <main+0x456>
+80000534: 014c0023     	sb	s4, 0x0(s8)
+80000538: 0054c503     	lbu	a0, 0x5(s1)
+8000053c: 02057513     	andi	a0, a0, 0x20
+80000540: dd65         	beqz	a0, 0x80000538 <main+0x464>
+80000542: 7522         	ld	a0, 0x28(sp)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+80000544: 00ac0023     	sb	a0, 0x0(s8)
+80000548: 0054c503     	lbu	a0, 0x5(s1)
+8000054c: 02057513     	andi	a0, a0, 0x20
+80000550: dd65         	beqz	a0, 0x80000548 <main+0x474>
+80000552: 019c0023     	sb	s9, 0x0(s8)
+80000556: 0054c503     	lbu	a0, 0x5(s1)
+8000055a: 02057513     	andi	a0, a0, 0x20
+8000055e: dd65         	beqz	a0, 0x80000556 <main+0x482>
+80000560: 01bc0023     	sb	s11, 0x0(s8)
+80000564: 0054c503     	lbu	a0, 0x5(s1)
+80000568: 02057513     	andi	a0, a0, 0x20
+8000056c: dd65         	beqz	a0, 0x80000564 <main+0x490>
+8000056e: 06e00513     	li	a0, 0x6e
+80000572: 00ac0023     	sb	a0, 0x0(s8)
+80000576: 0054c503     	lbu	a0, 0x5(s1)
+8000057a: 02057513     	andi	a0, a0, 0x20
+8000057e: dd65         	beqz	a0, 0x80000576 <main+0x4a2>
+80000580: 01bc0023     	sb	s11, 0x0(s8)
+80000584: 0054c503     	lbu	a0, 0x5(s1)
+80000588: 02057513     	andi	a0, a0, 0x20
+8000058c: dd65         	beqz	a0, 0x80000584 <main+0x4b0>
+8000058e: 4701         	li	a4, 0x0
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+80000590: 014c0023     	sb	s4, 0x0(s8)
+80000594: 86a2         	mv	a3, s0
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:7
+80000596: 02091513     	slli	a0, s2, 0x20
+8000059a: 87b6         	mv	a5, a3
+8000059c: 954a         	add	a0, a0, s2
+8000059e: 02a6b833     	mulhu	a6, a3, a0
+800005a2: 00385693     	srli	a3, a6, 0x3
+800005a6: 0f887813     	andi	a6, a6, 0xf8
+800005aa: 00169893     	slli	a7, a3, 0x1
+800005ae: 41078833     	sub	a6, a5, a6
+800005b2: 02071293     	slli	t0, a4, 0x20
+800005b6: 41180833     	sub	a6, a6, a7
+800005ba: 0202d893     	srli	a7, t0, 0x20
+800005be: 03086813     	ori	a6, a6, 0x30
+800005c2: 98de         	add	a7, a7, s7
+800005c4: 2705         	addiw	a4, a4, 0x1
+800005c6: 01088023     	sb	a6, 0x0(a7)
+800005ca: fcfd66e3     	bltu	s10, a5, 0x80000596 <main+0x4c2>
+800005ce: c30d         	beqz	a4, 0x800005f0 <main+0x51c>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:7
+800005d0: 02071693     	slli	a3, a4, 0x20
+800005d4: 9281         	srli	a3, a3, 0x20
+800005d6: 16fd         	addi	a3, a3, -0x1
+800005d8: 00db8733     	add	a4, s7, a3
+800005dc: 00074703     	lbu	a4, 0x0(a4)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+800005e0: 0054c783     	lbu	a5, 0x5(s1)
+800005e4: 0207f793     	andi	a5, a5, 0x20
+800005e8: dfe5         	beqz	a5, 0x800005e0 <main+0x50c>
+800005ea: 00ec0023     	sb	a4, 0x0(s8)
+800005ee: f6e5         	bnez	a3, 0x800005d6 <main+0x502>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+800005f0: 0054c683     	lbu	a3, 0x5(s1)
+800005f4: 0206f693     	andi	a3, a3, 0x20
+800005f8: dee5         	beqz	a3, 0x800005f0 <main+0x51c>
+800005fa: 019c0023     	sb	s9, 0x0(s8)
+800005fe: 0054c683     	lbu	a3, 0x5(s1)
+80000602: 0206f693     	andi	a3, a3, 0x20
+80000606: dee5         	beqz	a3, 0x800005fe <main+0x52a>
+80000608: 01bc0023     	sb	s11, 0x0(s8)
+8000060c: 0054c683     	lbu	a3, 0x5(s1)
+80000610: 0206f693     	andi	a3, a3, 0x20
+80000614: dee5         	beqz	a3, 0x8000060c <main+0x538>
+80000616: 016c0023     	sb	s6, 0x0(s8)
+8000061a: 0054c683     	lbu	a3, 0x5(s1)
+8000061e: 0206f693     	andi	a3, a3, 0x20
+80000622: dee5         	beqz	a3, 0x8000061a <main+0x546>
+80000624: 001c0023     	sb	ra, 0x0(s8)
+80000628: 0054c683     	lbu	a3, 0x5(s1)
+8000062c: 0206f693     	andi	a3, a3, 0x20
+80000630: dee5         	beqz	a3, 0x80000628 <main+0x554>
+80000632: 07000693     	li	a3, 0x70
+80000636: 00dc0023     	sb	a3, 0x0(s8)
+8000063a: 0054c683     	lbu	a3, 0x5(s1)
+8000063e: 0206f693     	andi	a3, a3, 0x20
+80000642: dee5         	beqz	a3, 0x8000063a <main+0x566>
+80000644: 001c0023     	sb	ra, 0x0(s8)
+80000648: 0054c683     	lbu	a3, 0x5(s1)
+8000064c: 0206f693     	andi	a3, a3, 0x20
+80000650: dee5         	beqz	a3, 0x80000648 <main+0x574>
+80000652: 01ec0023     	sb	t5, 0x0(s8)
+80000656: 0054c683     	lbu	a3, 0x5(s1)
+8000065a: 0206f693     	andi	a3, a3, 0x20
+8000065e: dee5         	beqz	a3, 0x80000656 <main+0x582>
+80000660: 01dc0023     	sb	t4, 0x0(s8)
+80000664: 0054c683     	lbu	a3, 0x5(s1)
+80000668: 0206f693     	andi	a3, a3, 0x20
+8000066c: dee5         	beqz	a3, 0x80000664 <main+0x590>
+8000066e: 01ec0023     	sb	t5, 0x0(s8)
+80000672: 0054c683     	lbu	a3, 0x5(s1)
+80000676: 0206f693     	andi	a3, a3, 0x20
+8000067a: dee5         	beqz	a3, 0x80000672 <main+0x59e>
+8000067c: 01dc0023     	sb	t4, 0x0(s8)
+80000680: 0054c683     	lbu	a3, 0x5(s1)
+80000684: 0206f693     	andi	a3, a3, 0x20
+80000688: dee5         	beqz	a3, 0x80000680 <main+0x5ac>
+8000068a: 06f00693     	li	a3, 0x6f
+8000068e: 00dc0023     	sb	a3, 0x0(s8)
+80000692: 0054c683     	lbu	a3, 0x5(s1)
+80000696: 0206f693     	andi	a3, a3, 0x20
+8000069a: dee5         	beqz	a3, 0x80000692 <main+0x5be>
+8000069c: 06e00693     	li	a3, 0x6e
+800006a0: 00dc0023     	sb	a3, 0x0(s8)
+800006a4: 0054c683     	lbu	a3, 0x5(s1)
+800006a8: 0206f693     	andi	a3, a3, 0x20
+800006ac: dee5         	beqz	a3, 0x800006a4 <main+0x5d0>
+800006ae: 01bc0023     	sb	s11, 0x0(s8)
+800006b2: 0054c683     	lbu	a3, 0x5(s1)
+800006b6: 0206f693     	andi	a3, a3, 0x20
+800006ba: dee5         	beqz	a3, 0x800006b2 <main+0x5de>
+800006bc: 014c0023     	sb	s4, 0x0(s8)
+800006c0: 76e2         	ld	a3, 0x38(sp)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:7
+800006c2: 0306e693     	ori	a3, a3, 0x30
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+800006c6: 0054c703     	lbu	a4, 0x5(s1)
+800006ca: 02077713     	andi	a4, a4, 0x20
+800006ce: df65         	beqz	a4, 0x800006c6 <main+0x5f2>
+800006d0: 00dc0023     	sb	a3, 0x0(s8)
+800006d4: 0054c683     	lbu	a3, 0x5(s1)
+800006d8: 0206f693     	andi	a3, a3, 0x20
+800006dc: dee5         	beqz	a3, 0x800006d4 <main+0x600>
+800006de: 019c0023     	sb	s9, 0x0(s8)
+800006e2: 0054c683     	lbu	a3, 0x5(s1)
+800006e6: 0206f693     	andi	a3, a3, 0x20
+800006ea: dee5         	beqz	a3, 0x800006e2 <main+0x60e>
+800006ec: 01bc0023     	sb	s11, 0x0(s8)
+800006f0: 0054c683     	lbu	a3, 0x5(s1)
+800006f4: 0206f693     	andi	a3, a3, 0x20
+800006f8: dee5         	beqz	a3, 0x800006f0 <main+0x61c>
+800006fa: 06f00693     	li	a3, 0x6f
+800006fe: 00dc0023     	sb	a3, 0x0(s8)
+80000702: 0054c683     	lbu	a3, 0x5(s1)
+80000706: 0206f693     	andi	a3, a3, 0x20
+8000070a: dee5         	beqz	a3, 0x80000702 <main+0x62e>
+8000070c: 016c0023     	sb	s6, 0x0(s8)
+80000710: 0054c683     	lbu	a3, 0x5(s1)
+80000714: 0206f693     	andi	a3, a3, 0x20
+80000718: dee5         	beqz	a3, 0x80000710 <main+0x63c>
+8000071a: 06400693     	li	a3, 0x64
+8000071e: 00dc0023     	sb	a3, 0x0(s8)
+80000722: 0054c683     	lbu	a3, 0x5(s1)
+80000726: 0206f693     	andi	a3, a3, 0x20
+8000072a: dee5         	beqz	a3, 0x80000722 <main+0x64e>
+8000072c: 001c0023     	sb	ra, 0x0(s8)
+80000730: 0054c683     	lbu	a3, 0x5(s1)
+80000734: 0206f693     	andi	a3, a3, 0x20
+80000738: dee5         	beqz	a3, 0x80000730 <main+0x65c>
+8000073a: 016c0023     	sb	s6, 0x0(s8)
+8000073e: 0054c683     	lbu	a3, 0x5(s1)
+80000742: 0206f693     	andi	a3, a3, 0x20
+80000746: dee5         	beqz	a3, 0x8000073e <main+0x66a>
+80000748: 001c0023     	sb	ra, 0x0(s8)
+8000074c: 0054c683     	lbu	a3, 0x5(s1)
+80000750: 0206f693     	andi	a3, a3, 0x20
+80000754: dee5         	beqz	a3, 0x8000074c <main+0x678>
+80000756: 06400693     	li	a3, 0x64
+8000075a: 00dc0023     	sb	a3, 0x0(s8)
+8000075e: 0054c683     	lbu	a3, 0x5(s1)
+80000762: 0206f693     	andi	a3, a3, 0x20
+80000766: dee5         	beqz	a3, 0x8000075e <main+0x68a>
+80000768: 05f00693     	li	a3, 0x5f
+8000076c: 00dc0023     	sb	a3, 0x0(s8)
+80000770: 0054c683     	lbu	a3, 0x5(s1)
+80000774: 0206f693     	andi	a3, a3, 0x20
+80000778: dee5         	beqz	a3, 0x80000770 <main+0x69c>
+8000077a: 06200693     	li	a3, 0x62
+8000077e: 00dc0023     	sb	a3, 0x0(s8)
+80000782: 0054c683     	lbu	a3, 0x5(s1)
+80000786: 0206f693     	andi	a3, a3, 0x20
+8000078a: dee5         	beqz	a3, 0x80000782 <main+0x6ae>
+8000078c: 01dc0023     	sb	t4, 0x0(s8)
+80000790: 0054c683     	lbu	a3, 0x5(s1)
+80000794: 0206f693     	andi	a3, a3, 0x20
+80000798: dee5         	beqz	a3, 0x80000790 <main+0x6bc>
+8000079a: 01ec0023     	sb	t5, 0x0(s8)
+8000079e: 0054c683     	lbu	a3, 0x5(s1)
+800007a2: 0206f693     	andi	a3, a3, 0x20
+800007a6: dee5         	beqz	a3, 0x8000079e <main+0x6ca>
+800007a8: 07300693     	li	a3, 0x73
+800007ac: 00dc0023     	sb	a3, 0x0(s8)
+800007b0: 0054c683     	lbu	a3, 0x5(s1)
+800007b4: 0206f693     	andi	a3, a3, 0x20
+800007b8: dee5         	beqz	a3, 0x800007b0 <main+0x6dc>
+800007ba: 01bc0023     	sb	s11, 0x0(s8)
+800007be: 0054c683     	lbu	a3, 0x5(s1)
+800007c2: 0206f693     	andi	a3, a3, 0x20
+800007c6: dee5         	beqz	a3, 0x800007be <main+0x6ea>
+800007c8: 4681         	li	a3, 0x0
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:55
+800007ca: 1602         	slli	a2, a2, 0x20
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+800007cc: 014c0023     	sb	s4, 0x0(s8)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:55
+800007d0: 9201         	srli	a2, a2, 0x20
+800007d2: 8732         	mv	a4, a2
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:7
+800007d4: 02a637b3     	mulhu	a5, a2, a0
+800007d8: 0037d613     	srli	a2, a5, 0x3
+800007dc: 0f87f793     	andi	a5, a5, 0xf8
+800007e0: 00161813     	slli	a6, a2, 0x1
+800007e4: 40f707b3     	sub	a5, a4, a5
+800007e8: 02069893     	slli	a7, a3, 0x20
+800007ec: 410787b3     	sub	a5, a5, a6
+800007f0: 0208d813     	srli	a6, a7, 0x20
+800007f4: 0307e793     	ori	a5, a5, 0x30
+800007f8: 985e         	add	a6, a6, s7
+800007fa: 2685         	addiw	a3, a3, 0x1
+800007fc: 00f80023     	sb	a5, 0x0(a6)
+80000800: fced69e3     	bltu	s10, a4, 0x800007d2 <main+0x6fe>
+80000804: c28d         	beqz	a3, 0x80000826 <main+0x752>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:7
+80000806: 02069613     	slli	a2, a3, 0x20
+8000080a: 9201         	srli	a2, a2, 0x20
+8000080c: 167d         	addi	a2, a2, -0x1
+8000080e: 00cb86b3     	add	a3, s7, a2
+80000812: 0006c683     	lbu	a3, 0x0(a3)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+80000816: 0054c703     	lbu	a4, 0x5(s1)
+8000081a: 02077713     	andi	a4, a4, 0x20
+8000081e: df65         	beqz	a4, 0x80000816 <main+0x742>
+80000820: 00dc0023     	sb	a3, 0x0(s8)
+80000824: f665         	bnez	a2, 0x8000080c <main+0x738>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+80000826: 0054c603     	lbu	a2, 0x5(s1)
+8000082a: 02067613     	andi	a2, a2, 0x20
+8000082e: de65         	beqz	a2, 0x80000826 <main+0x752>
+80000830: 019c0023     	sb	s9, 0x0(s8)
+80000834: 0054c603     	lbu	a2, 0x5(s1)
+80000838: 02067613     	andi	a2, a2, 0x20
+8000083c: de65         	beqz	a2, 0x80000834 <main+0x760>
+8000083e: 01bc0023     	sb	s11, 0x0(s8)
+80000842: 0054c603     	lbu	a2, 0x5(s1)
+80000846: 02067613     	andi	a2, a2, 0x20
+8000084a: de65         	beqz	a2, 0x80000842 <main+0x76e>
+8000084c: 01fc0023     	sb	t6, 0x0(s8)
+80000850: 0054c603     	lbu	a2, 0x5(s1)
+80000854: 02067613     	andi	a2, a2, 0x20
+80000858: de65         	beqz	a2, 0x80000850 <main+0x77c>
+8000085a: 06e00613     	li	a2, 0x6e
+8000085e: 00cc0023     	sb	a2, 0x0(s8)
+80000862: 0054c603     	lbu	a2, 0x5(s1)
+80000866: 02067613     	andi	a2, a2, 0x20
+8000086a: de65         	beqz	a2, 0x80000862 <main+0x78e>
+8000086c: 06f00613     	li	a2, 0x6f
+80000870: 00cc0023     	sb	a2, 0x0(s8)
+80000874: 0054c603     	lbu	a2, 0x5(s1)
+80000878: 02067613     	andi	a2, a2, 0x20
+8000087c: de65         	beqz	a2, 0x80000874 <main+0x7a0>
+8000087e: 016c0023     	sb	s6, 0x0(s8)
+80000882: 0054c603     	lbu	a2, 0x5(s1)
+80000886: 02067613     	andi	a2, a2, 0x20
+8000088a: de65         	beqz	a2, 0x80000882 <main+0x7ae>
+8000088c: 06400613     	li	a2, 0x64
+80000890: 00cc0023     	sb	a2, 0x0(s8)
+80000894: 0054c603     	lbu	a2, 0x5(s1)
+80000898: 02067613     	andi	a2, a2, 0x20
+8000089c: de65         	beqz	a2, 0x80000894 <main+0x7c0>
+8000089e: 001c0023     	sb	ra, 0x0(s8)
+800008a2: 0054c603     	lbu	a2, 0x5(s1)
+800008a6: 02067613     	andi	a2, a2, 0x20
+800008aa: de65         	beqz	a2, 0x800008a2 <main+0x7ce>
+800008ac: 016c0023     	sb	s6, 0x0(s8)
+800008b0: 0054c603     	lbu	a2, 0x5(s1)
+800008b4: 02067613     	andi	a2, a2, 0x20
+800008b8: de65         	beqz	a2, 0x800008b0 <main+0x7dc>
+800008ba: 001c0023     	sb	ra, 0x0(s8)
+800008be: 0054c603     	lbu	a2, 0x5(s1)
+800008c2: 02067613     	andi	a2, a2, 0x20
+800008c6: de65         	beqz	a2, 0x800008be <main+0x7ea>
+800008c8: 06400613     	li	a2, 0x64
+800008cc: 00cc0023     	sb	a2, 0x0(s8)
+800008d0: 0054c603     	lbu	a2, 0x5(s1)
+800008d4: 02067613     	andi	a2, a2, 0x20
+800008d8: de65         	beqz	a2, 0x800008d0 <main+0x7fc>
+800008da: 05f00613     	li	a2, 0x5f
+800008de: 00cc0023     	sb	a2, 0x0(s8)
+800008e2: 0054c603     	lbu	a2, 0x5(s1)
+800008e6: 02067613     	andi	a2, a2, 0x20
+800008ea: de65         	beqz	a2, 0x800008e2 <main+0x80e>
+800008ec: 06200613     	li	a2, 0x62
+800008f0: 00cc0023     	sb	a2, 0x0(s8)
+800008f4: 0054c603     	lbu	a2, 0x5(s1)
+800008f8: 02067613     	andi	a2, a2, 0x20
+800008fc: de65         	beqz	a2, 0x800008f4 <main+0x820>
+800008fe: 01dc0023     	sb	t4, 0x0(s8)
+80000902: 0054c603     	lbu	a2, 0x5(s1)
+80000906: 02067613     	andi	a2, a2, 0x20
+8000090a: de65         	beqz	a2, 0x80000902 <main+0x82e>
+8000090c: 01ec0023     	sb	t5, 0x0(s8)
+80000910: 0054c603     	lbu	a2, 0x5(s1)
+80000914: 02067613     	andi	a2, a2, 0x20
+80000918: de65         	beqz	a2, 0x80000910 <main+0x83c>
+8000091a: 07300613     	li	a2, 0x73
+8000091e: 00cc0023     	sb	a2, 0x0(s8)
+80000922: 0054c603     	lbu	a2, 0x5(s1)
+80000926: 02067613     	andi	a2, a2, 0x20
+8000092a: de65         	beqz	a2, 0x80000922 <main+0x84e>
+8000092c: 01bc0023     	sb	s11, 0x0(s8)
+80000930: 0054c603     	lbu	a2, 0x5(s1)
+80000934: 02067613     	andi	a2, a2, 0x20
+80000938: de65         	beqz	a2, 0x80000930 <main+0x85c>
+8000093a: 4681         	li	a3, 0x0
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:8
+8000093c: e0040653     	fmv.x.w	a2, fs0
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:56
+80000940: 1602         	slli	a2, a2, 0x20
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+80000942: 014c0023     	sb	s4, 0x0(s8)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:56
+80000946: 9201         	srli	a2, a2, 0x20
+80000948: 8732         	mv	a4, a2
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:7
+8000094a: 02a637b3     	mulhu	a5, a2, a0
+8000094e: 0037d613     	srli	a2, a5, 0x3
+80000952: 0f87f793     	andi	a5, a5, 0xf8
+80000956: 00161813     	slli	a6, a2, 0x1
+8000095a: 40f707b3     	sub	a5, a4, a5
+8000095e: 02069893     	slli	a7, a3, 0x20
+80000962: 410787b3     	sub	a5, a5, a6
+80000966: 0208d813     	srli	a6, a7, 0x20
+8000096a: 0307e793     	ori	a5, a5, 0x30
+8000096e: 985e         	add	a6, a6, s7
+80000970: 2685         	addiw	a3, a3, 0x1
+80000972: 00f80023     	sb	a5, 0x0(a6)
+80000976: fced69e3     	bltu	s10, a4, 0x80000948 <main+0x874>
+8000097a: c28d         	beqz	a3, 0x8000099c <main+0x8c8>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:7
+8000097c: 02069613     	slli	a2, a3, 0x20
+80000980: 9201         	srli	a2, a2, 0x20
+80000982: 167d         	addi	a2, a2, -0x1
+80000984: 00cb86b3     	add	a3, s7, a2
+80000988: 0006c683     	lbu	a3, 0x0(a3)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+8000098c: 0054c703     	lbu	a4, 0x5(s1)
+80000990: 02077713     	andi	a4, a4, 0x20
+80000994: df65         	beqz	a4, 0x8000098c <main+0x8b8>
+80000996: 00dc0023     	sb	a3, 0x0(s8)
+8000099a: f665         	bnez	a2, 0x80000982 <main+0x8ae>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+8000099c: 0054c603     	lbu	a2, 0x5(s1)
+800009a0: 02067613     	andi	a2, a2, 0x20
+800009a4: de65         	beqz	a2, 0x8000099c <main+0x8c8>
+800009a6: 019c0023     	sb	s9, 0x0(s8)
+800009aa: 0054c603     	lbu	a2, 0x5(s1)
+800009ae: 02067613     	andi	a2, a2, 0x20
+800009b2: de65         	beqz	a2, 0x800009aa <main+0x8d6>
+800009b4: 01bc0023     	sb	s11, 0x0(s8)
+800009b8: 0054c603     	lbu	a2, 0x5(s1)
+800009bc: 02067613     	andi	a2, a2, 0x20
+800009c0: de65         	beqz	a2, 0x800009b8 <main+0x8e4>
+800009c2: 07300613     	li	a2, 0x73
+800009c6: 00cc0023     	sb	a2, 0x0(s8)
+800009ca: 0054c603     	lbu	a2, 0x5(s1)
+800009ce: 02067613     	andi	a2, a2, 0x20
+800009d2: de65         	beqz	a2, 0x800009ca <main+0x8f6>
+800009d4: 06300613     	li	a2, 0x63
+800009d8: 00cc0023     	sb	a2, 0x0(s8)
+800009dc: 0054c603     	lbu	a2, 0x5(s1)
+800009e0: 02067613     	andi	a2, a2, 0x20
+800009e4: de65         	beqz	a2, 0x800009dc <main+0x908>
+800009e6: 06100613     	li	a2, 0x61
+800009ea: 00cc0023     	sb	a2, 0x0(s8)
+800009ee: 0054c603     	lbu	a2, 0x5(s1)
+800009f2: 02067613     	andi	a2, a2, 0x20
+800009f6: de65         	beqz	a2, 0x800009ee <main+0x91a>
+800009f8: 06c00613     	li	a2, 0x6c
+800009fc: 00cc0023     	sb	a2, 0x0(s8)
+80000a00: 0054c603     	lbu	a2, 0x5(s1)
+80000a04: 02067613     	andi	a2, a2, 0x20
+80000a08: de65         	beqz	a2, 0x80000a00 <main+0x92c>
+80000a0a: 06100613     	li	a2, 0x61
+80000a0e: 00cc0023     	sb	a2, 0x0(s8)
+80000a12: 0054c603     	lbu	a2, 0x5(s1)
+80000a16: 02067613     	andi	a2, a2, 0x20
+80000a1a: de65         	beqz	a2, 0x80000a12 <main+0x93e>
+80000a1c: 016c0023     	sb	s6, 0x0(s8)
+80000a20: 0054c603     	lbu	a2, 0x5(s1)
+80000a24: 02067613     	andi	a2, a2, 0x20
+80000a28: de65         	beqz	a2, 0x80000a20 <main+0x94c>
+80000a2a: 05f00613     	li	a2, 0x5f
+80000a2e: 00cc0023     	sb	a2, 0x0(s8)
+80000a32: 0054c603     	lbu	a2, 0x5(s1)
+80000a36: 02067613     	andi	a2, a2, 0x20
+80000a3a: de65         	beqz	a2, 0x80000a32 <main+0x95e>
+80000a3c: 06200613     	li	a2, 0x62
+80000a40: 00cc0023     	sb	a2, 0x0(s8)
+80000a44: 0054c603     	lbu	a2, 0x5(s1)
+80000a48: 02067613     	andi	a2, a2, 0x20
+80000a4c: de65         	beqz	a2, 0x80000a44 <main+0x970>
+80000a4e: 01dc0023     	sb	t4, 0x0(s8)
+80000a52: 0054c603     	lbu	a2, 0x5(s1)
+80000a56: 02067613     	andi	a2, a2, 0x20
+80000a5a: de65         	beqz	a2, 0x80000a52 <main+0x97e>
+80000a5c: 01ec0023     	sb	t5, 0x0(s8)
+80000a60: 0054c603     	lbu	a2, 0x5(s1)
+80000a64: 02067613     	andi	a2, a2, 0x20
+80000a68: de65         	beqz	a2, 0x80000a60 <main+0x98c>
+80000a6a: 07300613     	li	a2, 0x73
+80000a6e: 00cc0023     	sb	a2, 0x0(s8)
+80000a72: 0054c603     	lbu	a2, 0x5(s1)
+80000a76: 02067613     	andi	a2, a2, 0x20
+80000a7a: de65         	beqz	a2, 0x80000a72 <main+0x99e>
+80000a7c: 01bc0023     	sb	s11, 0x0(s8)
+80000a80: 0054c603     	lbu	a2, 0x5(s1)
+80000a84: 02067613     	andi	a2, a2, 0x20
+80000a88: de65         	beqz	a2, 0x80000a80 <main+0x9ac>
+80000a8a: 4601         	li	a2, 0x0
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:56
+80000a8c: 1582         	slli	a1, a1, 0x20
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+80000a8e: 014c0023     	sb	s4, 0x0(s8)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:56
+80000a92: 9181         	srli	a1, a1, 0x20
+80000a94: 86ae         	mv	a3, a1
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:7
+80000a96: 02a5b733     	mulhu	a4, a1, a0
+80000a9a: 00375593     	srli	a1, a4, 0x3
+80000a9e: 0f877713     	andi	a4, a4, 0xf8
+80000aa2: 00159793     	slli	a5, a1, 0x1
+80000aa6: 40e68733     	sub	a4, a3, a4
+80000aaa: 02061813     	slli	a6, a2, 0x20
+80000aae: 8f1d         	sub	a4, a4, a5
+80000ab0: 02085793     	srli	a5, a6, 0x20
+80000ab4: 03076713     	ori	a4, a4, 0x30
+80000ab8: 97de         	add	a5, a5, s7
+80000aba: 2605         	addiw	a2, a2, 0x1
+80000abc: 00e78023     	sb	a4, 0x0(a5)
+80000ac0: fcdd6ae3     	bltu	s10, a3, 0x80000a94 <main+0x9c0>
+80000ac4: c20d         	beqz	a2, 0x80000ae6 <main+0xa12>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:7
+80000ac6: 02061593     	slli	a1, a2, 0x20
+80000aca: 9181         	srli	a1, a1, 0x20
+80000acc: 15fd         	addi	a1, a1, -0x1
+80000ace: 00bb8633     	add	a2, s7, a1
+80000ad2: 00064603     	lbu	a2, 0x0(a2)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+80000ad6: 0054c683     	lbu	a3, 0x5(s1)
+80000ada: 0206f693     	andi	a3, a3, 0x20
+80000ade: dee5         	beqz	a3, 0x80000ad6 <main+0xa02>
+80000ae0: 00cc0023     	sb	a2, 0x0(s8)
+80000ae4: f5e5         	bnez	a1, 0x80000acc <main+0x9f8>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+80000ae6: 0054c583     	lbu	a1, 0x5(s1)
+80000aea: 0205f593     	andi	a1, a1, 0x20
+80000aee: dde5         	beqz	a1, 0x80000ae6 <main+0xa12>
+80000af0: 019c0023     	sb	s9, 0x0(s8)
+80000af4: 0054c583     	lbu	a1, 0x5(s1)
+80000af8: 0205f593     	andi	a1, a1, 0x20
+80000afc: dde5         	beqz	a1, 0x80000af4 <main+0xa20>
+80000afe: 01bc0023     	sb	s11, 0x0(s8)
+80000b02: 0054c583     	lbu	a1, 0x5(s1)
+80000b06: 0205f593     	andi	a1, a1, 0x20
+80000b0a: dde5         	beqz	a1, 0x80000b02 <main+0xa2e>
+80000b0c: 06f00593     	li	a1, 0x6f
+80000b10: 00bc0023     	sb	a1, 0x0(s8)
+80000b14: 0054c583     	lbu	a1, 0x5(s1)
+80000b18: 0205f593     	andi	a1, a1, 0x20
+80000b1c: dde5         	beqz	a1, 0x80000b14 <main+0xa40>
+80000b1e: 016c0023     	sb	s6, 0x0(s8)
+80000b22: 0054c583     	lbu	a1, 0x5(s1)
+80000b26: 0205f593     	andi	a1, a1, 0x20
+80000b2a: dde5         	beqz	a1, 0x80000b22 <main+0xa4e>
+80000b2c: 06400593     	li	a1, 0x64
+80000b30: 00bc0023     	sb	a1, 0x0(s8)
+80000b34: 0054c583     	lbu	a1, 0x5(s1)
+80000b38: 0205f593     	andi	a1, a1, 0x20
+80000b3c: dde5         	beqz	a1, 0x80000b34 <main+0xa60>
+80000b3e: 001c0023     	sb	ra, 0x0(s8)
+80000b42: 0054c583     	lbu	a1, 0x5(s1)
+80000b46: 0205f593     	andi	a1, a1, 0x20
+80000b4a: dde5         	beqz	a1, 0x80000b42 <main+0xa6e>
+80000b4c: 016c0023     	sb	s6, 0x0(s8)
+80000b50: 0054c583     	lbu	a1, 0x5(s1)
+80000b54: 0205f593     	andi	a1, a1, 0x20
+80000b58: dde5         	beqz	a1, 0x80000b50 <main+0xa7c>
+80000b5a: 001c0023     	sb	ra, 0x0(s8)
+80000b5e: 0054c583     	lbu	a1, 0x5(s1)
+80000b62: 0205f593     	andi	a1, a1, 0x20
+80000b66: dde5         	beqz	a1, 0x80000b5e <main+0xa8a>
+80000b68: 06400593     	li	a1, 0x64
+80000b6c: 00bc0023     	sb	a1, 0x0(s8)
+80000b70: 0054c583     	lbu	a1, 0x5(s1)
+80000b74: 0205f593     	andi	a1, a1, 0x20
+80000b78: dde5         	beqz	a1, 0x80000b70 <main+0xa9c>
+80000b7a: 05f00593     	li	a1, 0x5f
+80000b7e: 00bc0023     	sb	a1, 0x0(s8)
+80000b82: 0054c583     	lbu	a1, 0x5(s1)
+80000b86: 0205f593     	andi	a1, a1, 0x20
+80000b8a: dde5         	beqz	a1, 0x80000b82 <main+0xaae>
+80000b8c: 01cc0023     	sb	t3, 0x0(s8)
+80000b90: 0054c583     	lbu	a1, 0x5(s1)
+80000b94: 0205f593     	andi	a1, a1, 0x20
+80000b98: dde5         	beqz	a1, 0x80000b90 <main+0xabc>
+80000b9a: 01cc0023     	sb	t3, 0x0(s8)
+80000b9e: 0054c583     	lbu	a1, 0x5(s1)
+80000ba2: 0205f593     	andi	a1, a1, 0x20
+80000ba6: dde5         	beqz	a1, 0x80000b9e <main+0xaca>
+80000ba8: 06c00593     	li	a1, 0x6c
+80000bac: 00bc0023     	sb	a1, 0x0(s8)
+80000bb0: 0054c583     	lbu	a1, 0x5(s1)
+80000bb4: 0205f593     	andi	a1, a1, 0x20
+80000bb8: dde5         	beqz	a1, 0x80000bb0 <main+0xadc>
+80000bba: 06100593     	li	a1, 0x61
+80000bbe: 00bc0023     	sb	a1, 0x0(s8)
+80000bc2: 0054c583     	lbu	a1, 0x5(s1)
+80000bc6: 0205f593     	andi	a1, a1, 0x20
+80000bca: dde5         	beqz	a1, 0x80000bc2 <main+0xaee>
+80000bcc: 06700593     	li	a1, 0x67
+80000bd0: 00bc0023     	sb	a1, 0x0(s8)
+80000bd4: 0054c583     	lbu	a1, 0x5(s1)
+80000bd8: 0205f593     	andi	a1, a1, 0x20
+80000bdc: dde5         	beqz	a1, 0x80000bd4 <main+0xb00>
+80000bde: 07300593     	li	a1, 0x73
+80000be2: 00bc0023     	sb	a1, 0x0(s8)
+80000be6: 0054c583     	lbu	a1, 0x5(s1)
+80000bea: 0205f593     	andi	a1, a1, 0x20
+80000bee: dde5         	beqz	a1, 0x80000be6 <main+0xb12>
+80000bf0: 01bc0023     	sb	s11, 0x0(s8)
+80000bf4: 0054c583     	lbu	a1, 0x5(s1)
+80000bf8: 0205f593     	andi	a1, a1, 0x20
+80000bfc: dde5         	beqz	a1, 0x80000bf4 <main+0xb20>
+80000bfe: 4581         	li	a1, 0x0
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+80000c00: 014c0023     	sb	s4, 0x0(s8)
+80000c04: 864e         	mv	a2, s3
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:7
+80000c06: 02a9b6b3     	mulhu	a3, s3, a0
+80000c0a: 0036d993     	srli	s3, a3, 0x3
+80000c0e: 0f86f693     	andi	a3, a3, 0xf8
+80000c12: 00199713     	slli	a4, s3, 0x1
+80000c16: 40d606b3     	sub	a3, a2, a3
+80000c1a: 02059793     	slli	a5, a1, 0x20
+80000c1e: 8e99         	sub	a3, a3, a4
+80000c20: 9381         	srli	a5, a5, 0x20
+80000c22: 0306e693     	ori	a3, a3, 0x30
+80000c26: 97de         	add	a5, a5, s7
+80000c28: 2585         	addiw	a1, a1, 0x1
+80000c2a: 00d78023     	sb	a3, 0x0(a5)
+80000c2e: fccd6be3     	bltu	s10, a2, 0x80000c04 <main+0xb30>
+80000c32: 07000993     	li	s3, 0x70
+80000c36: c185         	beqz	a1, 0x80000c56 <main+0xb82>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:7
+80000c38: 1582         	slli	a1, a1, 0x20
+80000c3a: 9181         	srli	a1, a1, 0x20
+80000c3c: 15fd         	addi	a1, a1, -0x1
+80000c3e: 00bb8633     	add	a2, s7, a1
+80000c42: 00064603     	lbu	a2, 0x0(a2)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+80000c46: 0054c683     	lbu	a3, 0x5(s1)
+80000c4a: 0206f693     	andi	a3, a3, 0x20
+80000c4e: dee5         	beqz	a3, 0x80000c46 <main+0xb72>
+80000c50: 00cc0023     	sb	a2, 0x0(s8)
+80000c54: f5e5         	bnez	a1, 0x80000c3c <main+0xb68>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+80000c56: 0054c583     	lbu	a1, 0x5(s1)
+80000c5a: 0205f593     	andi	a1, a1, 0x20
+80000c5e: dde5         	beqz	a1, 0x80000c56 <main+0xb82>
+80000c60: 019c0023     	sb	s9, 0x0(s8)
+80000c64: 0054c583     	lbu	a1, 0x5(s1)
+80000c68: 0205f593     	andi	a1, a1, 0x20
+80000c6c: dde5         	beqz	a1, 0x80000c64 <main+0xb90>
+80000c6e: 01bc0023     	sb	s11, 0x0(s8)
+80000c72: 0054c583     	lbu	a1, 0x5(s1)
+80000c76: 0205f593     	andi	a1, a1, 0x20
+80000c7a: dde5         	beqz	a1, 0x80000c72 <main+0xb9e>
+80000c7c: 01fc0023     	sb	t6, 0x0(s8)
+80000c80: 0054c583     	lbu	a1, 0x5(s1)
+80000c84: 0205f593     	andi	a1, a1, 0x20
+80000c88: dde5         	beqz	a1, 0x80000c80 <main+0xbac>
+80000c8a: 06e00593     	li	a1, 0x6e
+80000c8e: 00bc0023     	sb	a1, 0x0(s8)
+80000c92: 0054c583     	lbu	a1, 0x5(s1)
+80000c96: 0205f593     	andi	a1, a1, 0x20
+80000c9a: dde5         	beqz	a1, 0x80000c92 <main+0xbbe>
+80000c9c: 06f00593     	li	a1, 0x6f
+80000ca0: 00bc0023     	sb	a1, 0x0(s8)
+80000ca4: 0054c583     	lbu	a1, 0x5(s1)
+80000ca8: 0205f593     	andi	a1, a1, 0x20
+80000cac: dde5         	beqz	a1, 0x80000ca4 <main+0xbd0>
+80000cae: 016c0023     	sb	s6, 0x0(s8)
+80000cb2: 0054c583     	lbu	a1, 0x5(s1)
+80000cb6: 0205f593     	andi	a1, a1, 0x20
+80000cba: dde5         	beqz	a1, 0x80000cb2 <main+0xbde>
+80000cbc: 06400593     	li	a1, 0x64
+80000cc0: 00bc0023     	sb	a1, 0x0(s8)
+80000cc4: 0054c583     	lbu	a1, 0x5(s1)
+80000cc8: 0205f593     	andi	a1, a1, 0x20
+80000ccc: dde5         	beqz	a1, 0x80000cc4 <main+0xbf0>
+80000cce: 001c0023     	sb	ra, 0x0(s8)
+80000cd2: 0054c583     	lbu	a1, 0x5(s1)
+80000cd6: 0205f593     	andi	a1, a1, 0x20
+80000cda: dde5         	beqz	a1, 0x80000cd2 <main+0xbfe>
+80000cdc: 016c0023     	sb	s6, 0x0(s8)
+80000ce0: 0054c583     	lbu	a1, 0x5(s1)
+80000ce4: 0205f593     	andi	a1, a1, 0x20
+80000ce8: dde5         	beqz	a1, 0x80000ce0 <main+0xc0c>
+80000cea: 001c0023     	sb	ra, 0x0(s8)
+80000cee: 07300b13     	li	s6, 0x73
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+80000cf2: 0054c583     	lbu	a1, 0x5(s1)
+80000cf6: 0205f593     	andi	a1, a1, 0x20
+80000cfa: dde5         	beqz	a1, 0x80000cf2 <main+0xc1e>
+80000cfc: 06400593     	li	a1, 0x64
+80000d00: 00bc0023     	sb	a1, 0x0(s8)
+80000d04: 0054c583     	lbu	a1, 0x5(s1)
+80000d08: 0205f593     	andi	a1, a1, 0x20
+80000d0c: dde5         	beqz	a1, 0x80000d04 <main+0xc30>
+80000d0e: 05f00593     	li	a1, 0x5f
+80000d12: 00bc0023     	sb	a1, 0x0(s8)
+80000d16: 0054c583     	lbu	a1, 0x5(s1)
+80000d1a: 0205f593     	andi	a1, a1, 0x20
+80000d1e: dde5         	beqz	a1, 0x80000d16 <main+0xc42>
+80000d20: 01cc0023     	sb	t3, 0x0(s8)
+80000d24: 0054c583     	lbu	a1, 0x5(s1)
+80000d28: 0205f593     	andi	a1, a1, 0x20
+80000d2c: dde5         	beqz	a1, 0x80000d24 <main+0xc50>
+80000d2e: 01cc0023     	sb	t3, 0x0(s8)
+80000d32: 0054c583     	lbu	a1, 0x5(s1)
+80000d36: 0205f593     	andi	a1, a1, 0x20
+80000d3a: dde5         	beqz	a1, 0x80000d32 <main+0xc5e>
+80000d3c: 06c00593     	li	a1, 0x6c
+80000d40: 00bc0023     	sb	a1, 0x0(s8)
+80000d44: 0054c583     	lbu	a1, 0x5(s1)
+80000d48: 0205f593     	andi	a1, a1, 0x20
+80000d4c: dde5         	beqz	a1, 0x80000d44 <main+0xc70>
+80000d4e: 06100593     	li	a1, 0x61
+80000d52: 00bc0023     	sb	a1, 0x0(s8)
+80000d56: 0054c583     	lbu	a1, 0x5(s1)
+80000d5a: 0205f593     	andi	a1, a1, 0x20
+80000d5e: dde5         	beqz	a1, 0x80000d56 <main+0xc82>
+80000d60: 06700593     	li	a1, 0x67
+80000d64: 00bc0023     	sb	a1, 0x0(s8)
+80000d68: 0054c583     	lbu	a1, 0x5(s1)
+80000d6c: 0205f593     	andi	a1, a1, 0x20
+80000d70: dde5         	beqz	a1, 0x80000d68 <main+0xc94>
+80000d72: 016c0023     	sb	s6, 0x0(s8)
+80000d76: 0054c583     	lbu	a1, 0x5(s1)
+80000d7a: 0205f593     	andi	a1, a1, 0x20
+80000d7e: dde5         	beqz	a1, 0x80000d76 <main+0xca2>
+80000d80: 01bc0023     	sb	s11, 0x0(s8)
+80000d84: 0054c583     	lbu	a1, 0x5(s1)
+80000d88: 0205f593     	andi	a1, a1, 0x20
+80000d8c: dde5         	beqz	a1, 0x80000d84 <main+0xcb0>
+80000d8e: 4581         	li	a1, 0x0
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+80000d90: 014c0023     	sb	s4, 0x0(s8)
+80000d94: 8656         	mv	a2, s5
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:7
+80000d96: 02aab6b3     	mulhu	a3, s5, a0
+80000d9a: 0036da93     	srli	s5, a3, 0x3
+80000d9e: 0f86f693     	andi	a3, a3, 0xf8
+80000da2: 001a9713     	slli	a4, s5, 0x1
+80000da6: 40d606b3     	sub	a3, a2, a3
+80000daa: 02059793     	slli	a5, a1, 0x20
+80000dae: 8e99         	sub	a3, a3, a4
+80000db0: 9381         	srli	a5, a5, 0x20
+80000db2: 0306e693     	ori	a3, a3, 0x30
+80000db6: 97de         	add	a5, a5, s7
+80000db8: 2585         	addiw	a1, a1, 0x1
+80000dba: 00d78023     	sb	a3, 0x0(a5)
+80000dbe: fccd6be3     	bltu	s10, a2, 0x80000d94 <main+0xcc0>
+80000dc2: 05b00293     	li	t0, 0x5b
+80000dc6: 05d00a93     	li	s5, 0x5d
+80000dca: c185         	beqz	a1, 0x80000dea <main+0xd16>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:7
+80000dcc: 1582         	slli	a1, a1, 0x20
+80000dce: 9181         	srli	a1, a1, 0x20
+80000dd0: 15fd         	addi	a1, a1, -0x1
+80000dd2: 00bb8633     	add	a2, s7, a1
+80000dd6: 00064603     	lbu	a2, 0x0(a2)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+80000dda: 0054c683     	lbu	a3, 0x5(s1)
+80000dde: 0206f693     	andi	a3, a3, 0x20
+80000de2: dee5         	beqz	a3, 0x80000dda <main+0xd06>
+80000de4: 00cc0023     	sb	a2, 0x0(s8)
+80000de8: f5e5         	bnez	a1, 0x80000dd0 <main+0xcfc>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+80000dea: 0054c583     	lbu	a1, 0x5(s1)
+80000dee: 0205f593     	andi	a1, a1, 0x20
+80000df2: dde5         	beqz	a1, 0x80000dea <main+0xd16>
+80000df4: 019c0023     	sb	s9, 0x0(s8)
+80000df8: 0054c583     	lbu	a1, 0x5(s1)
+80000dfc: 0205f593     	andi	a1, a1, 0x20
+80000e00: dde5         	beqz	a1, 0x80000df8 <main+0xd24>
+80000e02: 01bc0023     	sb	s11, 0x0(s8)
+80000e06: 0054c583     	lbu	a1, 0x5(s1)
+80000e0a: 0205f593     	andi	a1, a1, 0x20
+80000e0e: dde5         	beqz	a1, 0x80000e06 <main+0xd32>
+80000e10: 01dc0023     	sb	t4, 0x0(s8)
+80000e14: 0054c583     	lbu	a1, 0x5(s1)
+80000e18: 0205f593     	andi	a1, a1, 0x20
+80000e1c: dde5         	beqz	a1, 0x80000e14 <main+0xd40>
+80000e1e: 06e00593     	li	a1, 0x6e
+80000e22: 00bc0023     	sb	a1, 0x0(s8)
+80000e26: 0054c583     	lbu	a1, 0x5(s1)
+80000e2a: 0205f593     	andi	a1, a1, 0x20
+80000e2e: dde5         	beqz	a1, 0x80000e26 <main+0xd52>
+80000e30: 013c0023     	sb	s3, 0x0(s8)
+80000e34: 0054c583     	lbu	a1, 0x5(s1)
+80000e38: 0205f593     	andi	a1, a1, 0x20
+80000e3c: dde5         	beqz	a1, 0x80000e34 <main+0xd60>
+80000e3e: 01fc0023     	sb	t6, 0x0(s8)
+80000e42: 0054c583     	lbu	a1, 0x5(s1)
+80000e46: 0205f593     	andi	a1, a1, 0x20
+80000e4a: dde5         	beqz	a1, 0x80000e42 <main+0xd6e>
+80000e4c: 01ec0023     	sb	t5, 0x0(s8)
+80000e50: 0054c583     	lbu	a1, 0x5(s1)
+80000e54: 0205f593     	andi	a1, a1, 0x20
+80000e58: dde5         	beqz	a1, 0x80000e50 <main+0xd7c>
+80000e5a: 05f00593     	li	a1, 0x5f
+80000e5e: 00bc0023     	sb	a1, 0x0(s8)
+80000e62: 0054c583     	lbu	a1, 0x5(s1)
+80000e66: 0205f593     	andi	a1, a1, 0x20
+80000e6a: dde5         	beqz	a1, 0x80000e62 <main+0xd8e>
+80000e6c: 06200593     	li	a1, 0x62
+80000e70: 00bc0023     	sb	a1, 0x0(s8)
+80000e74: 0054c583     	lbu	a1, 0x5(s1)
+80000e78: 0205f593     	andi	a1, a1, 0x20
+80000e7c: dde5         	beqz	a1, 0x80000e74 <main+0xda0>
+80000e7e: 01dc0023     	sb	t4, 0x0(s8)
+80000e82: 0054c583     	lbu	a1, 0x5(s1)
+80000e86: 0205f593     	andi	a1, a1, 0x20
+80000e8a: dde5         	beqz	a1, 0x80000e82 <main+0xdae>
+80000e8c: 01ec0023     	sb	t5, 0x0(s8)
+80000e90: 06f00e93     	li	t4, 0x6f
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+80000e94: 0054c583     	lbu	a1, 0x5(s1)
+80000e98: 0205f593     	andi	a1, a1, 0x20
+80000e9c: dde5         	beqz	a1, 0x80000e94 <main+0xdc0>
+80000e9e: 016c0023     	sb	s6, 0x0(s8)
+80000ea2: 0054c583     	lbu	a1, 0x5(s1)
+80000ea6: 0205f593     	andi	a1, a1, 0x20
+80000eaa: dde5         	beqz	a1, 0x80000ea2 <main+0xdce>
+80000eac: 01bc0023     	sb	s11, 0x0(s8)
+80000eb0: 0054c583     	lbu	a1, 0x5(s1)
+80000eb4: 0205f593     	andi	a1, a1, 0x20
+80000eb8: dde5         	beqz	a1, 0x80000eb0 <main+0xddc>
+80000eba: 014c0023     	sb	s4, 0x0(s8)
+80000ebe: 0054c583     	lbu	a1, 0x5(s1)
+80000ec2: 0205f593     	andi	a1, a1, 0x20
+80000ec6: dde5         	beqz	a1, 0x80000ebe <main+0xdea>
+80000ec8: 005c0023     	sb	t0, 0x0(s8)
+80000ecc: cc3d         	beqz	s0, 0x80000f4a <main+0xe76>
+80000ece: 4581         	li	a1, 0x0
+80000ed0: a021         	j	0x80000ed8 <main+0xe04>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:58
+80000ed2: 0585         	addi	a1, a1, 0x1
+80000ed4: 06858b63     	beq	a1, s0, 0x80000f4a <main+0xe76>
+80000ed8: c981         	beqz	a1, 0x80000ee8 <main+0xe14>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+80000eda: 0054c603     	lbu	a2, 0x5(s1)
+80000ede: 02067613     	andi	a2, a2, 0x20
+80000ee2: de65         	beqz	a2, 0x80000eda <main+0xe06>
+80000ee4: 019c0023     	sb	s9, 0x0(s8)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:58
+80000ee8: 00259613     	slli	a2, a1, 0x2
+80000eec: 961a         	add	a2, a2, t1
+80000eee: 00066603     	lwu	a2, 0x0(a2)
+80000ef2: 4681         	li	a3, 0x0
+80000ef4: 8732         	mv	a4, a2
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:7
+80000ef6: 02a637b3     	mulhu	a5, a2, a0
+80000efa: 0037d613     	srli	a2, a5, 0x3
+80000efe: 0f87f793     	andi	a5, a5, 0xf8
+80000f02: 00161813     	slli	a6, a2, 0x1
+80000f06: 40f707b3     	sub	a5, a4, a5
+80000f0a: 02069893     	slli	a7, a3, 0x20
+80000f0e: 410787b3     	sub	a5, a5, a6
+80000f12: 0208d813     	srli	a6, a7, 0x20
+80000f16: 0307e793     	ori	a5, a5, 0x30
+80000f1a: 985e         	add	a6, a6, s7
+80000f1c: 2685         	addiw	a3, a3, 0x1
+80000f1e: 00f80023     	sb	a5, 0x0(a6)
+80000f22: fced69e3     	bltu	s10, a4, 0x80000ef4 <main+0xe20>
+80000f26: d6d5         	beqz	a3, 0x80000ed2 <main+0xdfe>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:7
+80000f28: 02069613     	slli	a2, a3, 0x20
+80000f2c: 9201         	srli	a2, a2, 0x20
+80000f2e: 167d         	addi	a2, a2, -0x1
+80000f30: 00cb86b3     	add	a3, s7, a2
+80000f34: 0006c683     	lbu	a3, 0x0(a3)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+80000f38: 0054c703     	lbu	a4, 0x5(s1)
+80000f3c: 02077713     	andi	a4, a4, 0x20
+80000f40: df65         	beqz	a4, 0x80000f38 <main+0xe64>
+80000f42: 00dc0023     	sb	a3, 0x0(s8)
+80000f46: f665         	bnez	a2, 0x80000f2e <main+0xe5a>
+80000f48: b769         	j	0x80000ed2 <main+0xdfe>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+80000f4a: 0054c583     	lbu	a1, 0x5(s1)
+80000f4e: 0205f593     	andi	a1, a1, 0x20
+80000f52: dde5         	beqz	a1, 0x80000f4a <main+0xe76>
+80000f54: 015c0023     	sb	s5, 0x0(s8)
+80000f58: 0054c583     	lbu	a1, 0x5(s1)
+80000f5c: 0205f593     	andi	a1, a1, 0x20
+80000f60: dde5         	beqz	a1, 0x80000f58 <main+0xe84>
+80000f62: 019c0023     	sb	s9, 0x0(s8)
+80000f66: 0054c583     	lbu	a1, 0x5(s1)
+80000f6a: 0205f593     	andi	a1, a1, 0x20
+80000f6e: dde5         	beqz	a1, 0x80000f66 <main+0xe92>
+80000f70: 01bc0023     	sb	s11, 0x0(s8)
+80000f74: 0054c583     	lbu	a1, 0x5(s1)
+80000f78: 0205f593     	andi	a1, a1, 0x20
+80000f7c: dde5         	beqz	a1, 0x80000f74 <main+0xea0>
+80000f7e: 06300593     	li	a1, 0x63
+80000f82: 00bc0023     	sb	a1, 0x0(s8)
+80000f86: 0054c583     	lbu	a1, 0x5(s1)
+80000f8a: 0205f593     	andi	a1, a1, 0x20
+80000f8e: dde5         	beqz	a1, 0x80000f86 <main+0xeb2>
+80000f90: 06800593     	li	a1, 0x68
+80000f94: 00bc0023     	sb	a1, 0x0(s8)
+80000f98: 0054c583     	lbu	a1, 0x5(s1)
+80000f9c: 0205f593     	andi	a1, a1, 0x20
+80000fa0: dde5         	beqz	a1, 0x80000f98 <main+0xec4>
+80000fa2: 01fc0023     	sb	t6, 0x0(s8)
+80000fa6: 0054c583     	lbu	a1, 0x5(s1)
+80000faa: 0205f593     	andi	a1, a1, 0x20
+80000fae: dde5         	beqz	a1, 0x80000fa6 <main+0xed2>
+80000fb0: 06e00593     	li	a1, 0x6e
+80000fb4: 00bc0023     	sb	a1, 0x0(s8)
+80000fb8: 06c00f93     	li	t6, 0x6c
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+80000fbc: 0054c583     	lbu	a1, 0x5(s1)
+80000fc0: 0205f593     	andi	a1, a1, 0x20
+80000fc4: dde5         	beqz	a1, 0x80000fbc <main+0xee8>
+80000fc6: 06b00593     	li	a1, 0x6b
+80000fca: 00bc0023     	sb	a1, 0x0(s8)
+80000fce: 0054c583     	lbu	a1, 0x5(s1)
+80000fd2: 0205f593     	andi	a1, a1, 0x20
+80000fd6: dde5         	beqz	a1, 0x80000fce <main+0xefa>
+80000fd8: 016c0023     	sb	s6, 0x0(s8)
+80000fdc: 0054c583     	lbu	a1, 0x5(s1)
+80000fe0: 0205f593     	andi	a1, a1, 0x20
+80000fe4: dde5         	beqz	a1, 0x80000fdc <main+0xf08>
+80000fe6: 01bc0023     	sb	s11, 0x0(s8)
+80000fea: 0054c583     	lbu	a1, 0x5(s1)
+80000fee: 0205f593     	andi	a1, a1, 0x20
+80000ff2: dde5         	beqz	a1, 0x80000fea <main+0xf16>
+80000ff4: 014c0023     	sb	s4, 0x0(s8)
+80000ff8: 0054c583     	lbu	a1, 0x5(s1)
+80000ffc: 0205f593     	andi	a1, a1, 0x20
+80001000: dde5         	beqz	a1, 0x80000ff8 <main+0xf24>
+80001002: 005c0023     	sb	t0, 0x0(s8)
+80001006: 2a040663     	beqz	s0, 0x800012b2 <main+0x11de>
+8000100a: 4581         	li	a1, 0x0
+8000100c: c981         	beqz	a1, 0x8000101c <main+0xf48>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+8000100e: 0054c603     	lbu	a2, 0x5(s1)
+80001012: 02067613     	andi	a2, a2, 0x20
+80001016: de65         	beqz	a2, 0x8000100e <main+0xf3a>
+80001018: 019c0023     	sb	s9, 0x0(s8)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:63
+8000101c: c2102673     	csrr	a2, vtype
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+80001020: 0054c683     	lbu	a3, 0x5(s1)
+80001024: 0206f693     	andi	a3, a3, 0x20
+80001028: dee5         	beqz	a3, 0x80001020 <main+0xf4c>
+8000102a: 007c0023     	sb	t2, 0x0(s8)
+8000102e: 0054c683     	lbu	a3, 0x5(s1)
+80001032: 0206f693     	andi	a3, a3, 0x20
+80001036: dee5         	beqz	a3, 0x8000102e <main+0xf5a>
+80001038: 01bc0023     	sb	s11, 0x0(s8)
+8000103c: 0054c683     	lbu	a3, 0x5(s1)
+80001040: 0206f693     	andi	a3, a3, 0x20
+80001044: dee5         	beqz	a3, 0x8000103c <main+0xf68>
+80001046: 01dc0023     	sb	t4, 0x0(s8)
+8000104a: 0054c683     	lbu	a3, 0x5(s1)
+8000104e: 0206f693     	andi	a3, a3, 0x20
+80001052: dee5         	beqz	a3, 0x8000104a <main+0xf76>
+80001054: 01cc0023     	sb	t3, 0x0(s8)
+80001058: 0054c683     	lbu	a3, 0x5(s1)
+8000105c: 0206f693     	andi	a3, a3, 0x20
+80001060: dee5         	beqz	a3, 0x80001058 <main+0xf84>
+80001062: 01cc0023     	sb	t3, 0x0(s8)
+80001066: 0054c683     	lbu	a3, 0x5(s1)
+8000106a: 0206f693     	andi	a3, a3, 0x20
+8000106e: dee5         	beqz	a3, 0x80001066 <main+0xf92>
+80001070: 016c0023     	sb	s6, 0x0(s8)
+80001074: 0054c683     	lbu	a3, 0x5(s1)
+80001078: 0206f693     	andi	a3, a3, 0x20
+8000107c: dee5         	beqz	a3, 0x80001074 <main+0xfa0>
+8000107e: 001c0023     	sb	ra, 0x0(s8)
+80001082: 0054c683     	lbu	a3, 0x5(s1)
+80001086: 0206f693     	andi	a3, a3, 0x20
+8000108a: dee5         	beqz	a3, 0x80001082 <main+0xfae>
+8000108c: 01ec0023     	sb	t5, 0x0(s8)
+80001090: 0054c683     	lbu	a3, 0x5(s1)
+80001094: 0206f693     	andi	a3, a3, 0x20
+80001098: dee5         	beqz	a3, 0x80001090 <main+0xfbc>
+8000109a: 01bc0023     	sb	s11, 0x0(s8)
+8000109e: 0054c683     	lbu	a3, 0x5(s1)
+800010a2: 0206f693     	andi	a3, a3, 0x20
+800010a6: dee5         	beqz	a3, 0x8000109e <main+0xfca>
+800010a8: 4701         	li	a4, 0x0
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+800010aa: 014c0023     	sb	s4, 0x0(s8)
+800010ae: 86ae         	mv	a3, a1
+800010b0: 87b6         	mv	a5, a3
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:7
+800010b2: 02a6b833     	mulhu	a6, a3, a0
+800010b6: 00385693     	srli	a3, a6, 0x3
+800010ba: 0f887813     	andi	a6, a6, 0xf8
+800010be: 00169893     	slli	a7, a3, 0x1
+800010c2: 41078833     	sub	a6, a5, a6
+800010c6: 02071293     	slli	t0, a4, 0x20
+800010ca: 41180833     	sub	a6, a6, a7
+800010ce: 0202d893     	srli	a7, t0, 0x20
+800010d2: 03086813     	ori	a6, a6, 0x30
+800010d6: 98de         	add	a7, a7, s7
+800010d8: 2705         	addiw	a4, a4, 0x1
+800010da: 01088023     	sb	a6, 0x0(a7)
+800010de: fcfd69e3     	bltu	s10, a5, 0x800010b0 <main+0xfdc>
+800010e2: c30d         	beqz	a4, 0x80001104 <main+0x1030>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:7
+800010e4: 02071693     	slli	a3, a4, 0x20
+800010e8: 9281         	srli	a3, a3, 0x20
+800010ea: 16fd         	addi	a3, a3, -0x1
+800010ec: 00db8733     	add	a4, s7, a3
+800010f0: 00074703     	lbu	a4, 0x0(a4)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+800010f4: 0054c783     	lbu	a5, 0x5(s1)
+800010f8: 0207f793     	andi	a5, a5, 0x20
+800010fc: dfe5         	beqz	a5, 0x800010f4 <main+0x1020>
+800010fe: 00ec0023     	sb	a4, 0x0(s8)
+80001102: f6e5         	bnez	a3, 0x800010ea <main+0x1016>
+80001104: 40b406b3     	sub	a3, s0, a1
+80001108: 0d06f6d7     	vsetvli	a3, a3, e32, m1, ta, ma
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+8000110c: 0054c703     	lbu	a4, 0x5(s1)
+80001110: 02077713     	andi	a4, a4, 0x20
+80001114: df65         	beqz	a4, 0x8000110c <main+0x1038>
+80001116: 019c0023     	sb	s9, 0x0(s8)
+8000111a: 0054c703     	lbu	a4, 0x5(s1)
+8000111e: 02077713     	andi	a4, a4, 0x20
+80001122: df65         	beqz	a4, 0x8000111a <main+0x1046>
+80001124: 01bc0023     	sb	s11, 0x0(s8)
+80001128: 0054c703     	lbu	a4, 0x5(s1)
+8000112c: 02077713     	andi	a4, a4, 0x20
+80001130: df65         	beqz	a4, 0x80001128 <main+0x1054>
+80001132: 07600713     	li	a4, 0x76
+80001136: 00ec0023     	sb	a4, 0x0(s8)
+8000113a: 0054c703     	lbu	a4, 0x5(s1)
+8000113e: 02077713     	andi	a4, a4, 0x20
+80001142: df65         	beqz	a4, 0x8000113a <main+0x1066>
+80001144: 01fc0023     	sb	t6, 0x0(s8)
+80001148: 0054c703     	lbu	a4, 0x5(s1)
+8000114c: 02077713     	andi	a4, a4, 0x20
+80001150: df65         	beqz	a4, 0x80001148 <main+0x1074>
+80001152: 01bc0023     	sb	s11, 0x0(s8)
+80001156: 0054c703     	lbu	a4, 0x5(s1)
+8000115a: 02077713     	andi	a4, a4, 0x20
+8000115e: df65         	beqz	a4, 0x80001156 <main+0x1082>
+80001160: 4781         	li	a5, 0x0
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+80001162: 014c0023     	sb	s4, 0x0(s8)
+80001166: 8736         	mv	a4, a3
+80001168: 883a         	mv	a6, a4
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:7
+8000116a: 02a738b3     	mulhu	a7, a4, a0
+8000116e: 0038d713     	srli	a4, a7, 0x3
+80001172: 0f88f893     	andi	a7, a7, 0xf8
+80001176: 00171293     	slli	t0, a4, 0x1
+8000117a: 411808b3     	sub	a7, a6, a7
+8000117e: 02079313     	slli	t1, a5, 0x20
+80001182: 405888b3     	sub	a7, a7, t0
+80001186: 02035293     	srli	t0, t1, 0x20
+8000118a: 0308e893     	ori	a7, a7, 0x30
+8000118e: 92de         	add	t0, t0, s7
+80001190: 2785         	addiw	a5, a5, 0x1
+80001192: 01128023     	sb	a7, 0x0(t0)
+80001196: fd0d69e3     	bltu	s10, a6, 0x80001168 <main+0x1094>
+8000119a: c395         	beqz	a5, 0x800011be <main+0x10ea>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:7
+8000119c: 02079713     	slli	a4, a5, 0x20
+800011a0: 9301         	srli	a4, a4, 0x20
+800011a2: 177d         	addi	a4, a4, -0x1
+800011a4: 00eb87b3     	add	a5, s7, a4
+800011a8: 0007c783     	lbu	a5, 0x0(a5)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+800011ac: 0054c803     	lbu	a6, 0x5(s1)
+800011b0: 02087813     	andi	a6, a6, 0x20
+800011b4: fe080ce3     	beqz	a6, 0x800011ac <main+0x10d8>
+800011b8: 00fc0023     	sb	a5, 0x0(s8)
+800011bc: f37d         	bnez	a4, 0x800011a2 <main+0x10ce>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+800011be: 0054c703     	lbu	a4, 0x5(s1)
+800011c2: 02077713     	andi	a4, a4, 0x20
+800011c6: df65         	beqz	a4, 0x800011be <main+0x10ea>
+800011c8: 019c0023     	sb	s9, 0x0(s8)
+800011cc: 0054c703     	lbu	a4, 0x5(s1)
+800011d0: 02077713     	andi	a4, a4, 0x20
+800011d4: df65         	beqz	a4, 0x800011cc <main+0x10f8>
+800011d6: 01bc0023     	sb	s11, 0x0(s8)
+800011da: 0054c703     	lbu	a4, 0x5(s1)
+800011de: 02077713     	andi	a4, a4, 0x20
+800011e2: df65         	beqz	a4, 0x800011da <main+0x1106>
+800011e4: 07600713     	li	a4, 0x76
+800011e8: 00ec0023     	sb	a4, 0x0(s8)
+800011ec: 0054c703     	lbu	a4, 0x5(s1)
+800011f0: 02077713     	andi	a4, a4, 0x20
+800011f4: df65         	beqz	a4, 0x800011ec <main+0x1118>
+800011f6: 01ec0023     	sb	t5, 0x0(s8)
+800011fa: 0054c703     	lbu	a4, 0x5(s1)
+800011fe: 02077713     	andi	a4, a4, 0x20
+80001202: df65         	beqz	a4, 0x800011fa <main+0x1126>
+80001204: 07900713     	li	a4, 0x79
+80001208: 00ec0023     	sb	a4, 0x0(s8)
+8000120c: 0054c703     	lbu	a4, 0x5(s1)
+80001210: 02077713     	andi	a4, a4, 0x20
+80001214: df65         	beqz	a4, 0x8000120c <main+0x1138>
+80001216: 013c0023     	sb	s3, 0x0(s8)
+8000121a: 0054c703     	lbu	a4, 0x5(s1)
+8000121e: 02077713     	andi	a4, a4, 0x20
+80001222: df65         	beqz	a4, 0x8000121a <main+0x1146>
+80001224: 001c0023     	sb	ra, 0x0(s8)
+80001228: 0054c703     	lbu	a4, 0x5(s1)
+8000122c: 02077713     	andi	a4, a4, 0x20
+80001230: df65         	beqz	a4, 0x80001228 <main+0x1154>
+80001232: 01bc0023     	sb	s11, 0x0(s8)
+80001236: 0054c703     	lbu	a4, 0x5(s1)
+8000123a: 02077713     	andi	a4, a4, 0x20
+8000123e: df65         	beqz	a4, 0x80001236 <main+0x1162>
+80001240: 4701         	li	a4, 0x0
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+80001242: 014c0023     	sb	s4, 0x0(s8)
+80001246: 87b2         	mv	a5, a2
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:7
+80001248: 02a63833     	mulhu	a6, a2, a0
+8000124c: 00385613     	srli	a2, a6, 0x3
+80001250: 0f887813     	andi	a6, a6, 0xf8
+80001254: 00161893     	slli	a7, a2, 0x1
+80001258: 41078833     	sub	a6, a5, a6
+8000125c: 02071293     	slli	t0, a4, 0x20
+80001260: 41180833     	sub	a6, a6, a7
+80001264: 0202d893     	srli	a7, t0, 0x20
+80001268: 03086813     	ori	a6, a6, 0x30
+8000126c: 98de         	add	a7, a7, s7
+8000126e: 2705         	addiw	a4, a4, 0x1
+80001270: 01088023     	sb	a6, 0x0(a7)
+80001274: fcfd69e3     	bltu	s10, a5, 0x80001246 <main+0x1172>
+80001278: c30d         	beqz	a4, 0x8000129a <main+0x11c6>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:7
+8000127a: 02071613     	slli	a2, a4, 0x20
+8000127e: 9201         	srli	a2, a2, 0x20
+80001280: 167d         	addi	a2, a2, -0x1
+80001282: 00cb8733     	add	a4, s7, a2
+80001286: 00074703     	lbu	a4, 0x0(a4)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+8000128a: 0054c783     	lbu	a5, 0x5(s1)
+8000128e: 0207f793     	andi	a5, a5, 0x20
+80001292: dfe5         	beqz	a5, 0x8000128a <main+0x11b6>
+80001294: 00ec0023     	sb	a4, 0x0(s8)
+80001298: f665         	bnez	a2, 0x80001280 <main+0x11ac>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+8000129a: 0054c603     	lbu	a2, 0x5(s1)
+8000129e: 02067613     	andi	a2, a2, 0x20
+800012a2: de65         	beqz	a2, 0x8000129a <main+0x11c6>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:65
+800012a4: 95b6         	add	a1, a1, a3
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+800012a6: 07d00613     	li	a2, 0x7d
+800012aa: 00cc0023     	sb	a2, 0x0(s8)
+800012ae: d485efe3     	bltu	a1, s0, 0x8000100c <main+0xf38>
+800012b2: 0054c503     	lbu	a0, 0x5(s1)
+800012b6: 02057513     	andi	a0, a0, 0x20
+800012ba: dd65         	beqz	a0, 0x800012b2 <main+0x11de>
+800012bc: 015c0023     	sb	s5, 0x0(s8)
+800012c0: 0054c503     	lbu	a0, 0x5(s1)
+800012c4: 02057513     	andi	a0, a0, 0x20
+800012c8: dd65         	beqz	a0, 0x800012c0 <main+0x11ec>
+800012ca: 75e2         	ld	a1, 0x38(sp)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:46
+800012cc: 0585         	addi	a1, a1, 0x1
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+800012ce: 07d00513     	li	a0, 0x7d
+800012d2: 00ac0023     	sb	a0, 0x0(s8)
+800012d6: 4b05         	li	s6, 0x1
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:46
+800012d8: 4515         	li	a0, 0x5
+800012da: fc2e         	sd	a1, 0x38(sp)
+800012dc: 00a58463     	beq	a1, a0, 0x800012e4 <main+0x1210>
+800012e0: 932ff06f     	j	0x80000412 <main+0x33e>
+800012e4: 6862         	ld	a6, 0x18(sp)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:38
+800012e6: 0805         	addi	a6, a6, 0x1
+800012e8: 4b05         	li	s6, 0x1
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:38
+800012ea: 451d         	li	a0, 0x7
+800012ec: 4789         	li	a5, 0x2
+800012ee: 00a80463     	beq	a6, a0, 0x800012f6 <main+0x1222>
+800012f2: 8ecff06f     	j	0x800003de <main+0x30a>
+800012f6: 8c4ff06f     	j	0x800003ba <main+0x2e6>
+800012fa: 4585         	li	a1, 0x1
+800012fc: 00c8         	addi	a0, sp, 0x44
+800012fe: a811         	j	0x80001312 <main+0x123e>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:41
+80001300: d035f7d3     	fcvt.s.lu	fa5, a1
+80001304: 00f52027     	fsw	fa5, 0x0(a0)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:40
+80001308: 0511         	addi	a0, a0, 0x4
+8000130a: 00b41463     	bne	s0, a1, 0x80001312 <main+0x123e>
+8000130e: 900ff06f     	j	0x8000040e <main+0x33a>
+80001312: 862e         	mv	a2, a1
+80001314: 0585         	addi	a1, a1, 0x1
+80001316: 7682         	ld	a3, 0x20(sp)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:41
+80001318: 02f68063     	beq	a3, a5, 0x80001338 <main+0x1264>
+8000131c: 213987d3     	fmv.s	fa5, fs3
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:41
+80001320: 4705         	li	a4, 0x1
+80001322: fee681e3     	beq	a3, a4, 0x80001304 <main+0x1230>
+80001326: 7682         	ld	a3, 0x20(sp)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:41
+80001328: dee1         	beqz	a3, 0x80001300 <main+0x122c>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:44
+8000132a: 8a05         	andi	a2, a2, 0x1
+8000132c: 212907d3     	fmv.s	fa5, fs2
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:44
+80001330: da71         	beqz	a2, 0x80001304 <main+0x1230>
+80001332: 216b07d3     	fmv.s	fa5, fs6
+80001336: b7f9         	j	0x80001304 <main+0x1230>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:43
+80001338: 8a0d         	andi	a2, a2, 0x3
+8000133a: 214a0753     	fmv.s	fa4, fs4
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:43
+8000133e: 00f60463     	beq	a2, a5, 0x80001346 <main+0x1272>
+80001342: 21398753     	fmv.s	fa4, fs3
+80001346: 215a87d3     	fmv.s	fa5, fs5
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:43
+8000134a: de4d         	beqz	a2, 0x80001304 <main+0x1230>
+8000134c: 20e707d3     	fmv.s	fa5, fa4
+80001350: bf55         	j	0x80001304 <main+0x1230>
+80001352: 4501         	li	a0, 0x0
+80001354: 00000597     	auipc	a1, 0x0
+80001358: 05d00613     	li	a2, 0x5d
+8000135c: 0d258593     	addi	a1, a1, 0xd2
+80001360: 100006b7     	lui	a3, 0x10000
+80001364: 476d         	li	a4, 0x1b
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+80001366: 0054c783     	lbu	a5, 0x5(s1)
+8000136a: 0207f793     	andi	a5, a5, 0x20
+8000136e: dfe5         	beqz	a5, 0x80001366 <main+0x1292>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:6
+80001370: 0505         	addi	a0, a0, 0x1
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+80001372: 00a587b3     	add	a5, a1, a0
+80001376: 00c68023     	sb	a2, 0x0(a3)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:6
+8000137a: 0007c603     	lbu	a2, 0x0(a5)
+8000137e: fee514e3     	bne	a0, a4, 0x80001366 <main+0x1292>
+80001382: 7542         	ld	a0, 0x30(sp)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:70
+80001384: c909         	beqz	a0, 0x80001396 <main+0x12c2>
+80001386: 00000517     	auipc	a0, 0x0
+8000138a: 0bc50513     	addi	a0, a0, 0xbc
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:6
+8000138e: 00054583     	lbu	a1, 0x0(a0)
+80001392: e989         	bnez	a1, 0x800013a4 <main+0x12d0>
+80001394: a02d         	j	0x800013be <main+0x12ea>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:70
+80001396: 00000517     	auipc	a0, 0x0
+8000139a: 08a50513     	addi	a0, a0, 0x8a
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:6
+8000139e: 00054583     	lbu	a1, 0x0(a0)
+800013a2: cd91         	beqz	a1, 0x800013be <main+0x12ea>
+800013a4: 10000637     	lui	a2, 0x10000
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+800013a8: 0054c683     	lbu	a3, 0x5(s1)
+800013ac: 0206f693     	andi	a3, a3, 0x20
+800013b0: dee5         	beqz	a3, 0x800013a8 <main+0x12d4>
+800013b2: 00b60023     	sb	a1, 0x0(a2)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:6
+800013b6: 00154583     	lbu	a1, 0x1(a0)
+800013ba: 0505         	addi	a0, a0, 0x1
+800013bc: f5f5         	bnez	a1, 0x800013a8 <main+0x12d4>
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+800013be: 0054c503     	lbu	a0, 0x5(s1)
+800013c2: 02057513     	andi	a0, a0, 0x20
+800013c6: dd65         	beqz	a0, 0x800013be <main+0x12ea>
+800013c8: 10000537     	lui	a0, 0x10000
+800013cc: 07d00593     	li	a1, 0x7d
+800013d0: 00b50023     	sb	a1, 0x0(a0)
+800013d4: 0054c503     	lbu	a0, 0x5(s1)
+800013d8: 02057513     	andi	a0, a0, 0x20
+800013dc: dd65         	beqz	a0, 0x800013d4 <main+0x1300>
+800013de: 4501         	li	a0, 0x0
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:5
+800013e0: 100005b7     	lui	a1, 0x10000
+800013e4: 4629         	li	a2, 0xa
+800013e6: 00c58023     	sb	a2, 0x0(a1)
+; /Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/microbench/rvv/probe.c:72
+800013ea: 6591         	lui	a1, 0x4
+800013ec: f4058593     	addi	a1, a1, -0xc0
+800013f0: 912e         	add	sp, sp, a1
+800013f2: 70be         	ld	ra, 0x1e8(sp)
+800013f4: 741e         	ld	s0, 0x1e0(sp)
+800013f6: 64fe         	ld	s1, 0x1d8(sp)
+800013f8: 695e         	ld	s2, 0x1d0(sp)
+800013fa: 69be         	ld	s3, 0x1c8(sp)
+800013fc: 6a1e         	ld	s4, 0x1c0(sp)
+800013fe: 7afa         	ld	s5, 0x1b8(sp)
+80001400: 7b5a         	ld	s6, 0x1b0(sp)
+80001402: 7bba         	ld	s7, 0x1a8(sp)
+80001404: 7c1a         	ld	s8, 0x1a0(sp)
+80001406: 6cfa         	ld	s9, 0x198(sp)
+80001408: 6d5a         	ld	s10, 0x190(sp)
+8000140a: 6dba         	ld	s11, 0x188(sp)
+8000140c: 241a         	fld	fs0, 0x180(sp)
+8000140e: 34f6         	fld	fs1, 0x178(sp)
+80001410: 3956         	fld	fs2, 0x170(sp)
+80001412: 39b6         	fld	fs3, 0x168(sp)
+80001414: 3a16         	fld	fs4, 0x160(sp)
+80001416: 2af6         	fld	fs5, 0x158(sp)
+80001418: 2b56         	fld	fs6, 0x150(sp)
+8000141a: 617d         	addi	sp, sp, 0x1f0
+8000141c: 8082         	ret

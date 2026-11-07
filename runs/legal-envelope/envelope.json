@@ -1,0 +1,3895 @@
+{
+  "controls": [
+    {
+      "control": "wrong scalar seed",
+      "expected": false,
+      "observed_bits": 1266679808,
+      "observed_in_wrong_seed_envelope": false
+    },
+    {
+      "control": "next float above the legal interval",
+      "expected": false,
+      "inside": false,
+      "value": 16777224.000000004
+    }
+  ],
+  "generated_at": "2026-11-06T15:48:04.996265+00:00",
+  "independent_sampler": [
+    {
+      "cpp_sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712",
+      "cpp_size": 1,
+      "equal": true,
+      "fixture": 0,
+      "n": 1,
+      "python_sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712",
+      "python_size": 1
+    },
+    {
+      "cpp_sha256": "9b207d6cf9e8ddb69ad41fe460d60774a590556539ef743c72fcc6a833418dd1",
+      "cpp_size": 1,
+      "equal": true,
+      "fixture": 0,
+      "n": 7,
+      "python_sha256": "9b207d6cf9e8ddb69ad41fe460d60774a590556539ef743c72fcc6a833418dd1",
+      "python_size": 1
+    },
+    {
+      "cpp_sha256": "4864ddb8367cfd3249f59295b4c1318049013b029865812cbbf8cace9dadffb9",
+      "cpp_size": 1,
+      "equal": true,
+      "fixture": 0,
+      "n": 8,
+      "python_sha256": "4864ddb8367cfd3249f59295b4c1318049013b029865812cbbf8cace9dadffb9",
+      "python_size": 1
+    },
+    {
+      "cpp_sha256": "24b1f4ef66b650ff816e519b01742ff1753733d36e1b4c3e3b52743168915b1f",
+      "cpp_size": 1,
+      "equal": true,
+      "fixture": 0,
+      "n": 4,
+      "python_sha256": "24b1f4ef66b650ff816e519b01742ff1753733d36e1b4c3e3b52743168915b1f",
+      "python_size": 1
+    },
+    {
+      "cpp_sha256": "44a8eadb82842d33f5cf0bc65f2bb5f845c6b6870c758f389d3d136c2530bf43",
+      "cpp_size": 1,
+      "equal": true,
+      "fixture": 1,
+      "n": 1,
+      "python_sha256": "44a8eadb82842d33f5cf0bc65f2bb5f845c6b6870c758f389d3d136c2530bf43",
+      "python_size": 1
+    },
+    {
+      "cpp_sha256": "52a42a5f9790fb94bcf11db54d9f193b7d8e4efd8f0ee4414062ad5646e2cb40",
+      "cpp_size": 9,
+      "equal": true,
+      "fixture": 1,
+      "n": 7,
+      "python_sha256": "52a42a5f9790fb94bcf11db54d9f193b7d8e4efd8f0ee4414062ad5646e2cb40",
+      "python_size": 9
+    },
+    {
+      "cpp_sha256": "e42bdfcb7aa97655e569f8ce66a58e90b6347f1e04f8ce22e1cc2f3123980c6b",
+      "cpp_size": 10,
+      "equal": true,
+      "fixture": 1,
+      "n": 8,
+      "python_sha256": "e42bdfcb7aa97655e569f8ce66a58e90b6347f1e04f8ce22e1cc2f3123980c6b",
+      "python_size": 10
+    },
+    {
+      "cpp_sha256": "91f5b70b89f4d8828dec8b8227bbb0d21e7b478224a5d83ef03f7becd1438a28",
+      "cpp_size": 5,
+      "equal": true,
+      "fixture": 1,
+      "n": 4,
+      "python_sha256": "91f5b70b89f4d8828dec8b8227bbb0d21e7b478224a5d83ef03f7becd1438a28",
+      "python_size": 5
+    },
+    {
+      "cpp_sha256": "44a8eadb82842d33f5cf0bc65f2bb5f845c6b6870c758f389d3d136c2530bf43",
+      "cpp_size": 1,
+      "equal": true,
+      "fixture": 2,
+      "n": 1,
+      "python_sha256": "44a8eadb82842d33f5cf0bc65f2bb5f845c6b6870c758f389d3d136c2530bf43",
+      "python_size": 1
+    },
+    {
+      "cpp_sha256": "2e56f28a9e0f9491c2f7ffc69fd6c86c97beee31c999aaf30be359591cc24b6f",
+      "cpp_size": 5,
+      "equal": true,
+      "fixture": 2,
+      "n": 7,
+      "python_sha256": "2e56f28a9e0f9491c2f7ffc69fd6c86c97beee31c999aaf30be359591cc24b6f",
+      "python_size": 5
+    },
+    {
+      "cpp_sha256": "6e7e65f121d43ef964a485243ab2aecb44aeef35ba0f29d726e89b78061f307c",
+      "cpp_size": 5,
+      "equal": true,
+      "fixture": 2,
+      "n": 8,
+      "python_sha256": "6e7e65f121d43ef964a485243ab2aecb44aeef35ba0f29d726e89b78061f307c",
+      "python_size": 5
+    },
+    {
+      "cpp_sha256": "dc91ce9a50ddc828740aa26743716897fdb2bb64f1db662fe263a59be56145ae",
+      "cpp_size": 2,
+      "equal": true,
+      "fixture": 2,
+      "n": 4,
+      "python_sha256": "dc91ce9a50ddc828740aa26743716897fdb2bb64f1db662fe263a59be56145ae",
+      "python_size": 2
+    },
+    {
+      "cpp_sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+      "cpp_size": 1,
+      "equal": true,
+      "fixture": 3,
+      "n": 1,
+      "python_sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+      "python_size": 1
+    },
+    {
+      "cpp_sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+      "cpp_size": 1,
+      "equal": true,
+      "fixture": 3,
+      "n": 7,
+      "python_sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+      "python_size": 1
+    },
+    {
+      "cpp_sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+      "cpp_size": 1,
+      "equal": true,
+      "fixture": 3,
+      "n": 8,
+      "python_sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+      "python_size": 1
+    },
+    {
+      "cpp_sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+      "cpp_size": 1,
+      "equal": true,
+      "fixture": 3,
+      "n": 4,
+      "python_sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+      "python_size": 1
+    }
+  ],
+  "limitations": [
+    "Sampling a model of the specification is not a proof of every permitted result.",
+    "Only binary32 and binary64 intermediate rounding are modelled.",
+    "Only round-to-nearest, ties-to-even is modelled.",
+    "QEMU returned the same bits for both policies on every recorded case, so no second implementation's value is exercised.",
+    "The independent sampler shares the mathematical model; it is an implementation check, not a second hardware implementation."
+  ],
+  "model": {
+    "chunking": "fixed by vl and VLMAX; the scalar accumulator carries across chunks",
+    "conservative": "seed added once at the root",
+    "leaves": "scalar seed plus active elements",
+    "name": "rve-1.0-unordered-sum",
+    "precision_set": [
+      32,
+      64
+    ],
+    "primary": "seed and elements are leaves",
+    "rounding": "round-to-nearest, ties-to-even"
+  },
+  "random_samples": [
+    {
+      "contained": true,
+      "interval": {
+        "maximum": -42.62828821409494,
+        "maximum_bits": 3257566046,
+        "minimum": -42.628299713134766,
+        "minimum_bits": 3257566049
+      },
+      "n": 10,
+      "other_legal_examples": [
+        {
+          "bits": 3257566049,
+          "value": -42.628299713134766
+        },
+        {
+          "bits": 3257566049,
+          "value": -42.62829839205369
+        },
+        {
+          "bits": 3257566049,
+          "value": -42.62829833710566
+        }
+      ],
+      "policies_agree": true,
+      "support_size": 181,
+      "trial": 0
+    },
+    {
+      "contained": true,
+      "interval": {
+        "maximum": -983.3378047943115,
+        "maximum_bits": 3296056735,
+        "minimum": -983.3380737304688,
+        "minimum_bits": 3296056739
+      },
+      "n": 15,
+      "other_legal_examples": [
+        {
+          "bits": 3296056739,
+          "value": -983.3380737304688
+        },
+        {
+          "bits": 3296056739,
+          "value": -983.3380489349365
+        },
+        {
+          "bits": 3296056738,
+          "value": -983.3380296826363
+        }
+      ],
+      "policies_agree": true,
+      "support_size": 2716,
+      "trial": 1
+    },
+    {
+      "contained": true,
+      "interval": {
+        "maximum": 1.5736105740070343,
+        "maximum_bits": 1070165010,
+        "minimum": 1.5735633373260498,
+        "minimum_bits": 1070164614
+      },
+      "n": 19,
+      "other_legal_examples": [
+        {
+          "bits": 1070164614,
+          "value": 1.5735633373260498
+        },
+        {
+          "bits": 1070164614,
+          "value": 1.5735633671283722
+        },
+        {
+          "bits": 1070164615,
+          "value": 1.5735634118318558
+        }
+      ],
+      "policies_agree": true,
+      "support_size": 4658,
+      "trial": 2
+    },
+    {
+      "contained": true,
+      "interval": {
+        "maximum": 102.5409928560257,
+        "maximum_bits": 1120736509,
+        "minimum": 102.54088592529297,
+        "minimum_bits": 1120736495
+      },
+      "n": 25,
+      "other_legal_examples": [
+        {
+          "bits": 1120736495,
+          "value": 102.54088592529297
+        },
+        {
+          "bits": 1120736495,
+          "value": 102.54088834300637
+        },
+        {
+          "bits": 1120736496,
+          "value": 102.54089057445526
+        }
+      ],
+      "policies_agree": true,
+      "support_size": 22878,
+      "trial": 3
+    },
+    {
+      "contained": true,
+      "interval": {
+        "maximum": 36.30843734741211,
+        "maximum_bits": 1108425687,
+        "minimum": 36.30843663215637,
+        "minimum_bits": 1108425687
+      },
+      "n": 9,
+      "other_legal_examples": [
+        {
+          "bits": 1108425687,
+          "value": 36.30843663215637
+        },
+        {
+          "bits": 1108425687,
+          "value": 36.30843675136566
+        },
+        {
+          "bits": 1108425687,
+          "value": 36.30843677930534
+        }
+      ],
+      "policies_agree": true,
+      "support_size": 70,
+      "trial": 4
+    },
+    {
+      "contained": true,
+      "interval": {
+        "maximum": -218.18487548828125,
+        "maximum_bits": 3277467476,
+        "minimum": -218.18499755859375,
+        "minimum_bits": 3277467484
+      },
+      "n": 10,
+      "other_legal_examples": [
+        {
+          "bits": 3277467484,
+          "value": -218.18499755859375
+        },
+        {
+          "bits": 3277467483,
+          "value": -218.18498519435525
+        },
+        {
+          "bits": 3277467483,
+          "value": -218.18498424068093
+        }
+      ],
+      "policies_agree": true,
+      "support_size": 262,
+      "trial": 5
+    },
+    {
+      "contained": true,
+      "interval": {
+        "maximum": -180.25144755840302,
+        "maximum_bits": 3274981471,
+        "minimum": -180.2516326904297,
+        "minimum_bits": 3274981483
+      },
+      "n": 26,
+      "other_legal_examples": [
+        {
+          "bits": 3274981483,
+          "value": -180.2516326904297
+        },
+        {
+          "bits": 3274981483,
+          "value": -180.25163252465427
+        },
+        {
+          "bits": 3274981483,
+          "value": -180.25163066387177
+        }
+      ],
+      "policies_agree": true,
+      "support_size": 152139,
+      "trial": 6
+    },
+    {
+      "contained": true,
+      "interval": {
+        "maximum": -1120.7820587158203,
+        "maximum_bits": 3297515783,
+        "minimum": -1120.7822265625,
+        "minimum_bits": 3297515784
+      },
+      "n": 18,
+      "other_legal_examples": [
+        {
+          "bits": 3297515784,
+          "value": -1120.7822164297104
+        },
+        {
+          "bits": 3297515784,
+          "value": -1120.7822126746178
+        },
+        {
+          "bits": 3297515784,
+          "value": -1120.782211303711
+        }
+      ],
+      "policies_agree": true,
+      "support_size": 14962,
+      "trial": 7
+    },
+    {
+      "contained": true,
+      "interval": {
+        "maximum": 9.020360298454762,
+        "maximum_bits": 1091588965,
+        "minimum": 9.020359992980957,
+        "minimum_bits": 1091588965
+      },
+      "n": 2,
+      "other_legal_examples": [
+        {
+          "bits": 1091588965,
+          "value": 9.020360298454762
+        }
+      ],
+      "policies_agree": true,
+      "support_size": 2,
+      "trial": 8
+    },
+    {
+      "contained": true,
+      "interval": {
+        "maximum": -736.8192749023438,
+        "maximum_bits": 3292017775,
+        "minimum": -736.8195190429688,
+        "minimum_bits": 3292017779
+      },
+      "n": 24,
+      "other_legal_examples": [
+        {
+          "bits": 3292017779,
+          "value": -736.8195190429688
+        },
+        {
+          "bits": 3292017779,
+          "value": -736.819501876831
+        },
+        {
+          "bits": 3292017779,
+          "value": -736.8194904327393
+        }
+      ],
+      "policies_agree": true,
+      "support_size": 47357,
+      "trial": 9
+    },
+    {
+      "contained": true,
+      "interval": {
+        "maximum": 404.407990783453,
+        "maximum_bits": 1137325113,
+        "minimum": 404.40782886743546,
+        "minimum_bits": 1137325108
+      },
+      "n": 26,
+      "other_legal_examples": [
+        {
+          "bits": 1137325108,
+          "value": 404.40782886743546
+        },
+        {
+          "bits": 1137325108,
+          "value": 404.40782887116075
+        },
+        {
+          "bits": 1137325108,
+          "value": 404.4078369140625
+        }
+      ],
+      "policies_agree": true,
+      "support_size": 52748,
+      "trial": 10
+    },
+    {
+      "contained": true,
+      "interval": {
+        "maximum": -105.81983619369566,
+        "maximum_bits": 3268649922,
+        "minimum": -105.81985485553741,
+        "minimum_bits": 3268649924
+      },
+      "n": 8,
+      "other_legal_examples": [
+        {
+          "bits": 3268649924,
+          "value": -105.81985485553741
+        },
+        {
+          "bits": 3268649924,
+          "value": -105.81985473632812
+        },
+        {
+          "bits": 3268649924,
+          "value": -105.819853246212
+        }
+      ],
+      "policies_agree": true,
+      "support_size": 104,
+      "trial": 11
+    },
+    {
+      "contained": true,
+      "interval": {
+        "maximum": 133.3607635498047,
+        "maximum_bits": 1124424795,
+        "minimum": 133.36050415039062,
+        "minimum_bits": 1124424778
+      },
+      "n": 25,
+      "other_legal_examples": [
+        {
+          "bits": 1124424778,
+          "value": 133.36050415039062
+        },
+        {
+          "bits": 1124424778,
+          "value": 133.3605079650879
+        },
+        {
+          "bits": 1124424778,
+          "value": 133.3605093038641
+        }
+      ],
+      "policies_agree": true,
+      "support_size": 72820,
+      "trial": 12
+    },
+    {
+      "contained": true,
+      "interval": {
+        "maximum": 96.74372863769531,
+        "maximum_bits": 1119976650,
+        "minimum": 96.7436752319336,
+        "minimum_bits": 1119976643
+      },
+      "n": 19,
+      "other_legal_examples": [
+        {
+          "bits": 1119976643,
+          "value": 96.7436752319336
+        },
+        {
+          "bits": 1119976643,
+          "value": 96.74367678165436
+        },
+        {
+          "bits": 1119976643,
+          "value": 96.74367696046829
+        }
+      ],
+      "policies_agree": true,
+      "support_size": 24260,
+      "trial": 13
+    },
+    {
+      "contained": true,
+      "interval": {
+        "maximum": 614.291015625,
+        "maximum_bits": 1142526624,
+        "minimum": 614.29075229913,
+        "minimum_bits": 1142526620
+      },
+      "n": 19,
+      "other_legal_examples": [
+        {
+          "bits": 1142526620,
+          "value": 614.29075229913
+        },
+        {
+          "bits": 1142526620,
+          "value": 614.2907640561461
+        },
+        {
+          "bits": 1142526620,
+          "value": 614.290771484375
+        }
+      ],
+      "policies_agree": true,
+      "support_size": 39642,
+      "trial": 14
+    },
+    {
+      "contained": true,
+      "interval": {
+        "maximum": 29.25349235534668,
+        "maximum_bits": 1105856295,
+        "minimum": 29.253480434417725,
+        "minimum_bits": 1105856289
+      },
+      "n": 10,
+      "other_legal_examples": [
+        {
+          "bits": 1105856289,
+          "value": 29.253480434417725
+        },
+        {
+          "bits": 1105856289,
+          "value": 29.253480568062514
+        },
+        {
+          "bits": 1105856289,
+          "value": 29.253480911254883
+        }
+      ],
+      "policies_agree": true,
+      "support_size": 246,
+      "trial": 15
+    },
+    {
+      "contained": true,
+      "interval": {
+        "maximum": 209.90377807617188,
+        "maximum_bits": 1129441118,
+        "minimum": 209.90363597869873,
+        "minimum_bits": 1129441109
+      },
+      "n": 28,
+      "other_legal_examples": [
+        {
+          "bits": 1129441109,
+          "value": 209.90363597869873
+        },
+        {
+          "bits": 1129441109,
+          "value": 209.90363693237305
+        },
+        {
+          "bits": 1129441109,
+          "value": 209.90363739989698
+        }
+      ],
+      "policies_agree": true,
+      "support_size": 113791,
+      "trial": 16
+    },
+    {
+      "contained": true,
+      "interval": {
+        "maximum": -421.10103327035904,
+        "maximum_bits": 3285355759,
+        "minimum": -421.1011428833008,
+        "minimum_bits": 3285355762
+      },
+      "n": 23,
+      "other_legal_examples": [
+        {
+          "bits": 3285355762,
+          "value": -421.1011428833008
+        },
+        {
+          "bits": 3285355762,
+          "value": -421.10114151239395
+        },
+        {
+          "bits": 3285355762,
+          "value": -421.1011412739754
+        }
+      ],
+      "policies_agree": true,
+      "support_size": 21009,
+      "trial": 17
+    },
+    {
+      "contained": true,
+      "interval": {
+        "maximum": 114.25406074523926,
+        "maximum_bits": 1122271764,
+        "minimum": 114.25388717651367,
+        "minimum_bits": 1122271742
+      },
+      "n": 30,
+      "other_legal_examples": [
+        {
+          "bits": 1122271742,
+          "value": 114.25388717651367
+        },
+        {
+          "bits": 1122271742,
+          "value": 114.25388789176941
+        },
+        {
+          "bits": 1122271742,
+          "value": 114.25389099121094
+        }
+      ],
+      "policies_agree": true,
+      "support_size": 107650,
+      "trial": 18
+    },
+    {
+      "contained": true,
+      "interval": {
+        "maximum": -58.06914806365967,
+        "maximum_bits": 3261613775,
+        "minimum": -58.06914973258972,
+        "minimum_bits": 3261613775
+      },
+      "n": 3,
+      "other_legal_examples": [
+        {
+          "bits": 3261613775,
+          "value": -58.06914973258972
+        },
+        {
+          "bits": 3261613775,
+          "value": -58.06914806365967
+        }
+      ],
+      "policies_agree": true,
+      "support_size": 3,
+      "trial": 19
+    },
+    {
+      "contained": true,
+      "interval": {
+        "maximum": 77.39776025060564,
+        "maximum_bits": 1117440935,
+        "minimum": 77.39775848388672,
+        "minimum_bits": 1117440935
+      },
+      "n": 2,
+      "other_legal_examples": [
+        {
+          "bits": 1117440935,
+          "value": 77.39776025060564
+        }
+      ],
+      "policies_agree": true,
+      "support_size": 2,
+      "trial": 20
+    },
+    {
+      "contained": true,
+      "interval": {
+        "maximum": -136.3546142578125,
+        "maximum_bits": 3272104648,
+        "minimum": -136.3546600341797,
+        "minimum_bits": 3272104651
+      },
+      "n": 12,
+      "other_legal_examples": [
+        {
+          "bits": 3272104651,
+          "value": -136.3546600341797
+        },
+        {
+          "bits": 3272104651,
+          "value": -136.3546574320644
+        },
+        {
+          "bits": 3272104651,
+          "value": -136.35465621948242
+        }
+      ],
+      "policies_agree": true,
+      "support_size": 753,
+      "trial": 21
+    },
+    {
+      "contained": true,
+      "interval": {
+        "maximum": 15.345616340637207,
+        "maximum_bits": 1098221477,
+        "minimum": 15.34561538696289,
+        "minimum_bits": 1098221476
+      },
+      "n": 4,
+      "other_legal_examples": [
+        {
+          "bits": 1098221476,
+          "value": 15.34561550617218
+        },
+        {
+          "bits": 1098221477,
+          "value": 15.345616340637207
+        }
+      ],
+      "policies_agree": true,
+      "support_size": 3,
+      "trial": 22
+    },
+    {
+      "contained": true,
+      "interval": {
+        "maximum": -527.0530872344971,
+        "maximum_bits": 3288580966,
+        "minimum": -527.05322265625,
+        "minimum_bits": 3288580968
+      },
+      "n": 15,
+      "other_legal_examples": [
+        {
+          "bits": 3288580968,
+          "value": -527.05322265625
+        },
+        {
+          "bits": 3288580968,
+          "value": -527.0532093048096
+        },
+        {
+          "bits": 3288580967,
+          "value": -527.0531913340092
+        }
+      ],
+      "policies_agree": true,
+      "support_size": 2444,
+      "trial": 23
+    }
+  ],
+  "records": [
+    {
+      "chunks": [
+        {
+          "offset": 0,
+          "vl": 1,
+          "vtype": 208
+        }
+      ],
+      "conservative": {
+        "ordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 1.0,
+            "maximum_bits": 1065353216,
+            "minimum": 1.0,
+            "minimum_bits": 1065353216
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 1065353216,
+          "observed_value": 1.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        },
+        "unordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 1.0,
+            "maximum_bits": 1065353216,
+            "minimum": 1.0,
+            "minimum_bits": 1065353216
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 1065353216,
+          "observed_value": 1.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        }
+      },
+      "fixture": 0,
+      "input_sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c",
+      "n": 1,
+      "observed": {
+        "ordered_bits": 1065353216,
+        "ordered_matches_scalar": true,
+        "ordered_value": 1.0,
+        "policies_agree": true,
+        "scalar_bits": 1065353216,
+        "unordered_bits": 1065353216,
+        "unordered_value": 1.0
+      },
+      "primary": {
+        "ordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 1.0,
+            "maximum_bits": 1065353216,
+            "minimum": 1.0,
+            "minimum_bits": 1065353216
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 1065353216,
+          "observed_value": 1.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        },
+        "unordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 1.0,
+            "maximum_bits": 1065353216,
+            "minimum": 1.0,
+            "minimum_bits": 1065353216
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 1065353216,
+          "observed_value": 1.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        }
+      }
+    },
+    {
+      "chunks": [
+        {
+          "offset": 0,
+          "vl": 7,
+          "vtype": 208
+        }
+      ],
+      "conservative": {
+        "ordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 28.0,
+            "maximum_bits": 1105199104,
+            "minimum": 28.0,
+            "minimum_bits": 1105199104
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 1105199104,
+          "observed_value": 28.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        },
+        "unordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 28.0,
+            "maximum_bits": 1105199104,
+            "minimum": 28.0,
+            "minimum_bits": 1105199104
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 1105199104,
+          "observed_value": 28.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        }
+      },
+      "fixture": 0,
+      "input_sha256": "81d04e55f282ee72ac60f77fc4a6773e346affab2f403935c3a785efdf990f47",
+      "n": 7,
+      "observed": {
+        "ordered_bits": 1105199104,
+        "ordered_matches_scalar": true,
+        "ordered_value": 28.0,
+        "policies_agree": true,
+        "scalar_bits": 1105199104,
+        "unordered_bits": 1105199104,
+        "unordered_value": 28.0
+      },
+      "primary": {
+        "ordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 28.0,
+            "maximum_bits": 1105199104,
+            "minimum": 28.0,
+            "minimum_bits": 1105199104
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 1105199104,
+          "observed_value": 28.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        },
+        "unordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 28.0,
+            "maximum_bits": 1105199104,
+            "minimum": 28.0,
+            "minimum_bits": 1105199104
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 1105199104,
+          "observed_value": 28.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        }
+      }
+    },
+    {
+      "chunks": [
+        {
+          "offset": 0,
+          "vl": 8,
+          "vtype": 208
+        }
+      ],
+      "conservative": {
+        "ordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 36.0,
+            "maximum_bits": 1108344832,
+            "minimum": 36.0,
+            "minimum_bits": 1108344832
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 1108344832,
+          "observed_value": 36.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        },
+        "unordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 36.0,
+            "maximum_bits": 1108344832,
+            "minimum": 36.0,
+            "minimum_bits": 1108344832
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 1108344832,
+          "observed_value": 36.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        }
+      },
+      "fixture": 0,
+      "input_sha256": "af7de0621354bafceb193edf0fcf5d421cf21de7146580062fff53c7907f54e5",
+      "n": 8,
+      "observed": {
+        "ordered_bits": 1108344832,
+        "ordered_matches_scalar": true,
+        "ordered_value": 36.0,
+        "policies_agree": true,
+        "scalar_bits": 1108344832,
+        "unordered_bits": 1108344832,
+        "unordered_value": 36.0
+      },
+      "primary": {
+        "ordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 36.0,
+            "maximum_bits": 1108344832,
+            "minimum": 36.0,
+            "minimum_bits": 1108344832
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 1108344832,
+          "observed_value": 36.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        },
+        "unordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 36.0,
+            "maximum_bits": 1108344832,
+            "minimum": 36.0,
+            "minimum_bits": 1108344832
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 1108344832,
+          "observed_value": 36.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        }
+      }
+    },
+    {
+      "chunks": [
+        {
+          "offset": 0,
+          "vl": 8,
+          "vtype": 208
+        },
+        {
+          "offset": 8,
+          "vl": 1,
+          "vtype": 208
+        }
+      ],
+      "conservative": {
+        "ordered": {
+          "chunks": 2,
+          "contained": true,
+          "interval": {
+            "maximum": 45.0,
+            "maximum_bits": 1110704128,
+            "minimum": 45.0,
+            "minimum_bits": 1110704128
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 1110704128,
+          "observed_value": 45.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 2,
+          "support_size": 1
+        },
+        "unordered": {
+          "chunks": 2,
+          "contained": true,
+          "interval": {
+            "maximum": 45.0,
+            "maximum_bits": 1110704128,
+            "minimum": 45.0,
+            "minimum_bits": 1110704128
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 1110704128,
+          "observed_value": 45.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 2,
+          "support_size": 1
+        }
+      },
+      "fixture": 0,
+      "input_sha256": "ab9c5f1bce35b274a63270b32bf471bb21a5a4932470107379bbb43a2240b428",
+      "n": 9,
+      "observed": {
+        "ordered_bits": 1110704128,
+        "ordered_matches_scalar": true,
+        "ordered_value": 45.0,
+        "policies_agree": true,
+        "scalar_bits": 1110704128,
+        "unordered_bits": 1110704128,
+        "unordered_value": 45.0
+      },
+      "primary": {
+        "ordered": {
+          "chunks": 2,
+          "contained": true,
+          "interval": {
+            "maximum": 45.0,
+            "maximum_bits": 1110704128,
+            "minimum": 45.0,
+            "minimum_bits": 1110704128
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 1110704128,
+          "observed_value": 45.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 2,
+          "support_size": 1
+        },
+        "unordered": {
+          "chunks": 2,
+          "contained": true,
+          "interval": {
+            "maximum": 45.0,
+            "maximum_bits": 1110704128,
+            "minimum": 45.0,
+            "minimum_bits": 1110704128
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 1110704128,
+          "observed_value": 45.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 2,
+          "support_size": 1
+        }
+      }
+    },
+    {
+      "chunks": [
+        {
+          "offset": 0,
+          "vl": 8,
+          "vtype": 208
+        },
+        {
+          "offset": 8,
+          "vl": 8,
+          "vtype": 208
+        },
+        {
+          "offset": 16,
+          "vl": 3,
+          "vtype": 208
+        }
+      ],
+      "conservative": {
+        "ordered": {
+          "chunks": 3,
+          "contained": true,
+          "interval": {
+            "maximum": 190.0,
+            "maximum_bits": 1128136704,
+            "minimum": 190.0,
+            "minimum_bits": 1128136704
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 1128136704,
+          "observed_value": 190.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 3,
+          "support_size": 1
+        },
+        "unordered": {
+          "chunks": 3,
+          "contained": true,
+          "interval": {
+            "maximum": 190.0,
+            "maximum_bits": 1128136704,
+            "minimum": 190.0,
+            "minimum_bits": 1128136704
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 1128136704,
+          "observed_value": 190.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 3,
+          "support_size": 1
+        }
+      },
+      "fixture": 0,
+      "input_sha256": "72aec0e3e910c6b7d7bde30e7cbe0048158dbcebe72aa508d2b865acacf7a44b",
+      "n": 19,
+      "observed": {
+        "ordered_bits": 1128136704,
+        "ordered_matches_scalar": true,
+        "ordered_value": 190.0,
+        "policies_agree": true,
+        "scalar_bits": 1128136704,
+        "unordered_bits": 1128136704,
+        "unordered_value": 190.0
+      },
+      "primary": {
+        "ordered": {
+          "chunks": 3,
+          "contained": true,
+          "interval": {
+            "maximum": 190.0,
+            "maximum_bits": 1128136704,
+            "minimum": 190.0,
+            "minimum_bits": 1128136704
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 1128136704,
+          "observed_value": 190.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 3,
+          "support_size": 1
+        },
+        "unordered": {
+          "chunks": 3,
+          "contained": true,
+          "interval": {
+            "maximum": 190.0,
+            "maximum_bits": 1128136704,
+            "minimum": 190.0,
+            "minimum_bits": 1128136704
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 1128136704,
+          "observed_value": 190.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 3,
+          "support_size": 1
+        }
+      }
+    },
+    {
+      "chunks": [
+        {
+          "offset": 0,
+          "vl": 4,
+          "vtype": 208
+        }
+      ],
+      "conservative": {
+        "ordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 10.0,
+            "maximum_bits": 1092616192,
+            "minimum": 10.0,
+            "minimum_bits": 1092616192
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 1092616192,
+          "observed_value": 10.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        },
+        "unordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 10.0,
+            "maximum_bits": 1092616192,
+            "minimum": 10.0,
+            "minimum_bits": 1092616192
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 1092616192,
+          "observed_value": 10.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        }
+      },
+      "fixture": 0,
+      "input_sha256": "ad73b9acd6e4a74b2f5bb5386658ce3bb146cd040a1867646ab3b973fb6632b1",
+      "n": 4,
+      "observed": {
+        "ordered_bits": 1092616192,
+        "ordered_matches_scalar": true,
+        "ordered_value": 10.0,
+        "policies_agree": true,
+        "scalar_bits": 1092616192,
+        "unordered_bits": 1092616192,
+        "unordered_value": 10.0
+      },
+      "primary": {
+        "ordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 10.0,
+            "maximum_bits": 1092616192,
+            "minimum": 10.0,
+            "minimum_bits": 1092616192
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 1092616192,
+          "observed_value": 10.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        },
+        "unordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 10.0,
+            "maximum_bits": 1092616192,
+            "minimum": 10.0,
+            "minimum_bits": 1092616192
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 1092616192,
+          "observed_value": 10.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        }
+      }
+    },
+    {
+      "chunks": [
+        {
+          "offset": 0,
+          "vl": 1,
+          "vtype": 208
+        }
+      ],
+      "conservative": {
+        "ordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 16777216.0,
+            "maximum_bits": 1266679808,
+            "minimum": 16777216.0,
+            "minimum_bits": 1266679808
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 1266679808,
+          "observed_value": 16777216.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        },
+        "unordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 16777216.0,
+            "maximum_bits": 1266679808,
+            "minimum": 16777216.0,
+            "minimum_bits": 1266679808
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 1266679808,
+          "observed_value": 16777216.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        }
+      },
+      "fixture": 1,
+      "input_sha256": "fdbdff69a87c80149eb3176e69181738d867f219f497f3298d013844cb10ae63",
+      "n": 1,
+      "observed": {
+        "ordered_bits": 1266679808,
+        "ordered_matches_scalar": true,
+        "ordered_value": 16777216.0,
+        "policies_agree": true,
+        "scalar_bits": 1266679808,
+        "unordered_bits": 1266679808,
+        "unordered_value": 16777216.0
+      },
+      "primary": {
+        "ordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 16777216.0,
+            "maximum_bits": 1266679808,
+            "minimum": 16777216.0,
+            "minimum_bits": 1266679808
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 1266679808,
+          "observed_value": 16777216.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        },
+        "unordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 16777216.0,
+            "maximum_bits": 1266679808,
+            "minimum": 16777216.0,
+            "minimum_bits": 1266679808
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 1266679808,
+          "observed_value": 16777216.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        }
+      }
+    },
+    {
+      "chunks": [
+        {
+          "offset": 0,
+          "vl": 7,
+          "vtype": 208
+        }
+      ],
+      "conservative": {
+        "ordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 16777224.0,
+            "maximum_bits": 1266679812,
+            "minimum": 16777216.0,
+            "minimum_bits": 1266679808
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 1266679808,
+          "observed_value": 16777216.0,
+          "other_legal_examples": [
+            {
+              "bits": 1266679808,
+              "value": 16777217.0
+            },
+            {
+              "bits": 1266679809,
+              "value": 16777218.0
+            },
+            {
+              "bits": 1266679810,
+              "value": 16777219.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 9
+        },
+        "unordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 16777224.0,
+            "maximum_bits": 1266679812,
+            "minimum": 16777216.0,
+            "minimum_bits": 1266679808
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 1266679808,
+          "observed_value": 16777216.0,
+          "other_legal_examples": [
+            {
+              "bits": 1266679808,
+              "value": 16777217.0
+            },
+            {
+              "bits": 1266679809,
+              "value": 16777218.0
+            },
+            {
+              "bits": 1266679810,
+              "value": 16777219.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 9
+        }
+      },
+      "fixture": 1,
+      "input_sha256": "ea4d193b5d64e8603881b99febb14f9b02ad15ffdb2d68e4ddad8dde8900193d",
+      "n": 7,
+      "observed": {
+        "ordered_bits": 1266679808,
+        "ordered_matches_scalar": true,
+        "ordered_value": 16777216.0,
+        "policies_agree": true,
+        "scalar_bits": 1266679808,
+        "unordered_bits": 1266679808,
+        "unordered_value": 16777216.0
+      },
+      "primary": {
+        "ordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 16777224.0,
+            "maximum_bits": 1266679812,
+            "minimum": 16777216.0,
+            "minimum_bits": 1266679808
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 1266679808,
+          "observed_value": 16777216.0,
+          "other_legal_examples": [
+            {
+              "bits": 1266679808,
+              "value": 16777217.0
+            },
+            {
+              "bits": 1266679809,
+              "value": 16777218.0
+            },
+            {
+              "bits": 1266679810,
+              "value": 16777219.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 9
+        },
+        "unordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 16777224.0,
+            "maximum_bits": 1266679812,
+            "minimum": 16777216.0,
+            "minimum_bits": 1266679808
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 1266679808,
+          "observed_value": 16777216.0,
+          "other_legal_examples": [
+            {
+              "bits": 1266679808,
+              "value": 16777217.0
+            },
+            {
+              "bits": 1266679809,
+              "value": 16777218.0
+            },
+            {
+              "bits": 1266679810,
+              "value": 16777219.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 9
+        }
+      }
+    },
+    {
+      "chunks": [
+        {
+          "offset": 0,
+          "vl": 8,
+          "vtype": 208
+        }
+      ],
+      "conservative": {
+        "ordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 16777225.0,
+            "maximum_bits": 1266679812,
+            "minimum": 16777216.0,
+            "minimum_bits": 1266679808
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 1266679808,
+          "observed_value": 16777216.0,
+          "other_legal_examples": [
+            {
+              "bits": 1266679808,
+              "value": 16777217.0
+            },
+            {
+              "bits": 1266679809,
+              "value": 16777218.0
+            },
+            {
+              "bits": 1266679810,
+              "value": 16777219.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 10
+        },
+        "unordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 16777225.0,
+            "maximum_bits": 1266679812,
+            "minimum": 16777216.0,
+            "minimum_bits": 1266679808
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 1266679808,
+          "observed_value": 16777216.0,
+          "other_legal_examples": [
+            {
+              "bits": 1266679808,
+              "value": 16777217.0
+            },
+            {
+              "bits": 1266679809,
+              "value": 16777218.0
+            },
+            {
+              "bits": 1266679810,
+              "value": 16777219.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 10
+        }
+      },
+      "fixture": 1,
+      "input_sha256": "ba38de68d8b71f8cd953da512f72a2e24f26a81cf1ebffe2376ea161ec717f9a",
+      "n": 8,
+      "observed": {
+        "ordered_bits": 1266679808,
+        "ordered_matches_scalar": true,
+        "ordered_value": 16777216.0,
+        "policies_agree": true,
+        "scalar_bits": 1266679808,
+        "unordered_bits": 1266679808,
+        "unordered_value": 16777216.0
+      },
+      "primary": {
+        "ordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 16777225.0,
+            "maximum_bits": 1266679812,
+            "minimum": 16777216.0,
+            "minimum_bits": 1266679808
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 1266679808,
+          "observed_value": 16777216.0,
+          "other_legal_examples": [
+            {
+              "bits": 1266679808,
+              "value": 16777217.0
+            },
+            {
+              "bits": 1266679809,
+              "value": 16777218.0
+            },
+            {
+              "bits": 1266679810,
+              "value": 16777219.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 10
+        },
+        "unordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 16777225.0,
+            "maximum_bits": 1266679812,
+            "minimum": 16777216.0,
+            "minimum_bits": 1266679808
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 1266679808,
+          "observed_value": 16777216.0,
+          "other_legal_examples": [
+            {
+              "bits": 1266679808,
+              "value": 16777217.0
+            },
+            {
+              "bits": 1266679809,
+              "value": 16777218.0
+            },
+            {
+              "bits": 1266679810,
+              "value": 16777219.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 10
+        }
+      }
+    },
+    {
+      "chunks": [
+        {
+          "offset": 0,
+          "vl": 8,
+          "vtype": 208
+        },
+        {
+          "offset": 8,
+          "vl": 1,
+          "vtype": 208
+        }
+      ],
+      "conservative": {
+        "ordered": {
+          "chunks": 2,
+          "contained": true,
+          "interval": {
+            "maximum": 16777226.0,
+            "maximum_bits": 1266679813,
+            "minimum": 16777216.0,
+            "minimum_bits": 1266679808
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 1266679808,
+          "observed_value": 16777216.0,
+          "other_legal_examples": [
+            {
+              "bits": 1266679808,
+              "value": 16777217.0
+            },
+            {
+              "bits": 1266679809,
+              "value": 16777218.0
+            },
+            {
+              "bits": 1266679810,
+              "value": 16777219.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 2,
+          "support_size": 11
+        },
+        "unordered": {
+          "chunks": 2,
+          "contained": true,
+          "interval": {
+            "maximum": 16777226.0,
+            "maximum_bits": 1266679813,
+            "minimum": 16777216.0,
+            "minimum_bits": 1266679808
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 1266679808,
+          "observed_value": 16777216.0,
+          "other_legal_examples": [
+            {
+              "bits": 1266679808,
+              "value": 16777217.0
+            },
+            {
+              "bits": 1266679809,
+              "value": 16777218.0
+            },
+            {
+              "bits": 1266679810,
+              "value": 16777219.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 2,
+          "support_size": 11
+        }
+      },
+      "fixture": 1,
+      "input_sha256": "be3ff96f5181e0901cb7f6e07018020a7c78d8c9330a2352f2d84291f2f5d700",
+      "n": 9,
+      "observed": {
+        "ordered_bits": 1266679808,
+        "ordered_matches_scalar": true,
+        "ordered_value": 16777216.0,
+        "policies_agree": true,
+        "scalar_bits": 1266679808,
+        "unordered_bits": 1266679808,
+        "unordered_value": 16777216.0
+      },
+      "primary": {
+        "ordered": {
+          "chunks": 2,
+          "contained": true,
+          "interval": {
+            "maximum": 16777226.0,
+            "maximum_bits": 1266679813,
+            "minimum": 16777216.0,
+            "minimum_bits": 1266679808
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 1266679808,
+          "observed_value": 16777216.0,
+          "other_legal_examples": [
+            {
+              "bits": 1266679808,
+              "value": 16777217.0
+            },
+            {
+              "bits": 1266679809,
+              "value": 16777218.0
+            },
+            {
+              "bits": 1266679810,
+              "value": 16777219.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 11,
+          "support_size": 11
+        },
+        "unordered": {
+          "chunks": 2,
+          "contained": true,
+          "interval": {
+            "maximum": 16777226.0,
+            "maximum_bits": 1266679813,
+            "minimum": 16777216.0,
+            "minimum_bits": 1266679808
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 1266679808,
+          "observed_value": 16777216.0,
+          "other_legal_examples": [
+            {
+              "bits": 1266679808,
+              "value": 16777217.0
+            },
+            {
+              "bits": 1266679809,
+              "value": 16777218.0
+            },
+            {
+              "bits": 1266679810,
+              "value": 16777219.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 11,
+          "support_size": 11
+        }
+      }
+    },
+    {
+      "chunks": [
+        {
+          "offset": 0,
+          "vl": 8,
+          "vtype": 208
+        },
+        {
+          "offset": 8,
+          "vl": 8,
+          "vtype": 208
+        },
+        {
+          "offset": 16,
+          "vl": 3,
+          "vtype": 208
+        }
+      ],
+      "conservative": {
+        "ordered": {
+          "chunks": 3,
+          "contained": false,
+          "interval": {
+            "maximum": 16777236.0,
+            "maximum_bits": 1266679818,
+            "minimum": 16777227.0,
+            "minimum_bits": 1266679814
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 1266679808,
+          "observed_value": 16777216.0,
+          "other_legal_examples": [
+            {
+              "bits": 1266679814,
+              "value": 16777227.0
+            },
+            {
+              "bits": 1266679814,
+              "value": 16777228.0
+            },
+            {
+              "bits": 1266679814,
+              "value": 16777229.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 3,
+          "support_size": 10
+        },
+        "unordered": {
+          "chunks": 3,
+          "contained": false,
+          "interval": {
+            "maximum": 16777236.0,
+            "maximum_bits": 1266679818,
+            "minimum": 16777227.0,
+            "minimum_bits": 1266679814
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 1266679808,
+          "observed_value": 16777216.0,
+          "other_legal_examples": [
+            {
+              "bits": 1266679814,
+              "value": 16777227.0
+            },
+            {
+              "bits": 1266679814,
+              "value": 16777228.0
+            },
+            {
+              "bits": 1266679814,
+              "value": 16777229.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 3,
+          "support_size": 10
+        }
+      },
+      "fixture": 1,
+      "input_sha256": "8ee04734ca85a82ee9f4bbe4072edec936ebbd615b9fcd260d70a2f5a0e3917e",
+      "n": 19,
+      "observed": {
+        "ordered_bits": 1266679808,
+        "ordered_matches_scalar": true,
+        "ordered_value": 16777216.0,
+        "policies_agree": true,
+        "scalar_bits": 1266679808,
+        "unordered_bits": 1266679808,
+        "unordered_value": 16777216.0
+      },
+      "primary": {
+        "ordered": {
+          "chunks": 3,
+          "contained": true,
+          "interval": {
+            "maximum": 16777240.0,
+            "maximum_bits": 1266679820,
+            "minimum": 16777216.0,
+            "minimum_bits": 1266679808
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 1266679808,
+          "observed_value": 16777216.0,
+          "other_legal_examples": [
+            {
+              "bits": 1266679808,
+              "value": 16777217.0
+            },
+            {
+              "bits": 1266679809,
+              "value": 16777218.0
+            },
+            {
+              "bits": 1266679810,
+              "value": 16777219.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 32,
+          "support_size": 25
+        },
+        "unordered": {
+          "chunks": 3,
+          "contained": true,
+          "interval": {
+            "maximum": 16777240.0,
+            "maximum_bits": 1266679820,
+            "minimum": 16777216.0,
+            "minimum_bits": 1266679808
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 1266679808,
+          "observed_value": 16777216.0,
+          "other_legal_examples": [
+            {
+              "bits": 1266679808,
+              "value": 16777217.0
+            },
+            {
+              "bits": 1266679809,
+              "value": 16777218.0
+            },
+            {
+              "bits": 1266679810,
+              "value": 16777219.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 32,
+          "support_size": 25
+        }
+      }
+    },
+    {
+      "chunks": [
+        {
+          "offset": 0,
+          "vl": 4,
+          "vtype": 208
+        }
+      ],
+      "conservative": {
+        "ordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 16777220.0,
+            "maximum_bits": 1266679810,
+            "minimum": 16777216.0,
+            "minimum_bits": 1266679808
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 1266679808,
+          "observed_value": 16777216.0,
+          "other_legal_examples": [
+            {
+              "bits": 1266679808,
+              "value": 16777217.0
+            },
+            {
+              "bits": 1266679809,
+              "value": 16777218.0
+            },
+            {
+              "bits": 1266679810,
+              "value": 16777219.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 5
+        },
+        "unordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 16777220.0,
+            "maximum_bits": 1266679810,
+            "minimum": 16777216.0,
+            "minimum_bits": 1266679808
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 1266679808,
+          "observed_value": 16777216.0,
+          "other_legal_examples": [
+            {
+              "bits": 1266679808,
+              "value": 16777217.0
+            },
+            {
+              "bits": 1266679809,
+              "value": 16777218.0
+            },
+            {
+              "bits": 1266679810,
+              "value": 16777219.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 5
+        }
+      },
+      "fixture": 1,
+      "input_sha256": "bfb3645569183183c1ac78b2fd9c6b84e3519eba4cc92a332ee3b617684c105a",
+      "n": 4,
+      "observed": {
+        "ordered_bits": 1266679808,
+        "ordered_matches_scalar": true,
+        "ordered_value": 16777216.0,
+        "policies_agree": true,
+        "scalar_bits": 1266679808,
+        "unordered_bits": 1266679808,
+        "unordered_value": 16777216.0
+      },
+      "primary": {
+        "ordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 16777220.0,
+            "maximum_bits": 1266679810,
+            "minimum": 16777216.0,
+            "minimum_bits": 1266679808
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 1266679808,
+          "observed_value": 16777216.0,
+          "other_legal_examples": [
+            {
+              "bits": 1266679808,
+              "value": 16777217.0
+            },
+            {
+              "bits": 1266679809,
+              "value": 16777218.0
+            },
+            {
+              "bits": 1266679810,
+              "value": 16777219.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 5
+        },
+        "unordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 16777220.0,
+            "maximum_bits": 1266679810,
+            "minimum": 16777216.0,
+            "minimum_bits": 1266679808
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 1266679808,
+          "observed_value": 16777216.0,
+          "other_legal_examples": [
+            {
+              "bits": 1266679808,
+              "value": 16777217.0
+            },
+            {
+              "bits": 1266679809,
+              "value": 16777218.0
+            },
+            {
+              "bits": 1266679810,
+              "value": 16777219.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 5
+        }
+      }
+    },
+    {
+      "chunks": [
+        {
+          "offset": 0,
+          "vl": 1,
+          "vtype": 208
+        }
+      ],
+      "conservative": {
+        "ordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 16777216.0,
+            "maximum_bits": 1266679808,
+            "minimum": 16777216.0,
+            "minimum_bits": 1266679808
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 1266679808,
+          "observed_value": 16777216.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        },
+        "unordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 16777216.0,
+            "maximum_bits": 1266679808,
+            "minimum": 16777216.0,
+            "minimum_bits": 1266679808
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 1266679808,
+          "observed_value": 16777216.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        }
+      },
+      "fixture": 2,
+      "input_sha256": "fdbdff69a87c80149eb3176e69181738d867f219f497f3298d013844cb10ae63",
+      "n": 1,
+      "observed": {
+        "ordered_bits": 1266679808,
+        "ordered_matches_scalar": true,
+        "ordered_value": 16777216.0,
+        "policies_agree": true,
+        "scalar_bits": 1266679808,
+        "unordered_bits": 1266679808,
+        "unordered_value": 16777216.0
+      },
+      "primary": {
+        "ordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 16777216.0,
+            "maximum_bits": 1266679808,
+            "minimum": 16777216.0,
+            "minimum_bits": 1266679808
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 1266679808,
+          "observed_value": 16777216.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        },
+        "unordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 16777216.0,
+            "maximum_bits": 1266679808,
+            "minimum": 16777216.0,
+            "minimum_bits": 1266679808
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 1266679808,
+          "observed_value": 16777216.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        }
+      }
+    },
+    {
+      "chunks": [
+        {
+          "offset": 0,
+          "vl": 7,
+          "vtype": 208
+        }
+      ],
+      "conservative": {
+        "ordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 4.0,
+            "maximum_bits": 1082130432,
+            "minimum": 0.0,
+            "minimum_bits": 0
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 0,
+          "observed_value": 0.0,
+          "other_legal_examples": [
+            {
+              "bits": 1065353216,
+              "value": 1.0
+            },
+            {
+              "bits": 1073741824,
+              "value": 2.0
+            },
+            {
+              "bits": 1077936128,
+              "value": 3.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 5
+        },
+        "unordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 4.0,
+            "maximum_bits": 1082130432,
+            "minimum": 0.0,
+            "minimum_bits": 0
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 0,
+          "observed_value": 0.0,
+          "other_legal_examples": [
+            {
+              "bits": 1065353216,
+              "value": 1.0
+            },
+            {
+              "bits": 1073741824,
+              "value": 2.0
+            },
+            {
+              "bits": 1077936128,
+              "value": 3.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 5
+        }
+      },
+      "fixture": 2,
+      "input_sha256": "e8733c91fb4b13d50aaa4f4bfc264a7da4a19cb6393df2284991e7e5581b0c9d",
+      "n": 7,
+      "observed": {
+        "ordered_bits": 0,
+        "ordered_matches_scalar": true,
+        "ordered_value": 0.0,
+        "policies_agree": true,
+        "scalar_bits": 0,
+        "unordered_bits": 0,
+        "unordered_value": 0.0
+      },
+      "primary": {
+        "ordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 4.0,
+            "maximum_bits": 1082130432,
+            "minimum": 0.0,
+            "minimum_bits": 0
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 0,
+          "observed_value": 0.0,
+          "other_legal_examples": [
+            {
+              "bits": 1065353216,
+              "value": 1.0
+            },
+            {
+              "bits": 1073741824,
+              "value": 2.0
+            },
+            {
+              "bits": 1077936128,
+              "value": 3.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 5
+        },
+        "unordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 4.0,
+            "maximum_bits": 1082130432,
+            "minimum": 0.0,
+            "minimum_bits": 0
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 0,
+          "observed_value": 0.0,
+          "other_legal_examples": [
+            {
+              "bits": 1065353216,
+              "value": 1.0
+            },
+            {
+              "bits": 1073741824,
+              "value": 2.0
+            },
+            {
+              "bits": 1077936128,
+              "value": 3.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 5
+        }
+      }
+    },
+    {
+      "chunks": [
+        {
+          "offset": 0,
+          "vl": 8,
+          "vtype": 208
+        }
+      ],
+      "conservative": {
+        "ordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 5.0,
+            "maximum_bits": 1084227584,
+            "minimum": 1.0,
+            "minimum_bits": 1065353216
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 1065353216,
+          "observed_value": 1.0,
+          "other_legal_examples": [
+            {
+              "bits": 1073741824,
+              "value": 2.0
+            },
+            {
+              "bits": 1077936128,
+              "value": 3.0
+            },
+            {
+              "bits": 1082130432,
+              "value": 4.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 5
+        },
+        "unordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 5.0,
+            "maximum_bits": 1084227584,
+            "minimum": 1.0,
+            "minimum_bits": 1065353216
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 1065353216,
+          "observed_value": 1.0,
+          "other_legal_examples": [
+            {
+              "bits": 1073741824,
+              "value": 2.0
+            },
+            {
+              "bits": 1077936128,
+              "value": 3.0
+            },
+            {
+              "bits": 1082130432,
+              "value": 4.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 5
+        }
+      },
+      "fixture": 2,
+      "input_sha256": "8ee2e66ebea70566b80e89112fc2b9a9feac1c237023325fb2ebb0baa9942c33",
+      "n": 8,
+      "observed": {
+        "ordered_bits": 1065353216,
+        "ordered_matches_scalar": true,
+        "ordered_value": 1.0,
+        "policies_agree": true,
+        "scalar_bits": 1065353216,
+        "unordered_bits": 1065353216,
+        "unordered_value": 1.0
+      },
+      "primary": {
+        "ordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 5.0,
+            "maximum_bits": 1084227584,
+            "minimum": 1.0,
+            "minimum_bits": 1065353216
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 1065353216,
+          "observed_value": 1.0,
+          "other_legal_examples": [
+            {
+              "bits": 1073741824,
+              "value": 2.0
+            },
+            {
+              "bits": 1077936128,
+              "value": 3.0
+            },
+            {
+              "bits": 1082130432,
+              "value": 4.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 5
+        },
+        "unordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 5.0,
+            "maximum_bits": 1084227584,
+            "minimum": 1.0,
+            "minimum_bits": 1065353216
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 1065353216,
+          "observed_value": 1.0,
+          "other_legal_examples": [
+            {
+              "bits": 1073741824,
+              "value": 2.0
+            },
+            {
+              "bits": 1077936128,
+              "value": 3.0
+            },
+            {
+              "bits": 1082130432,
+              "value": 4.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 5
+        }
+      }
+    },
+    {
+      "chunks": [
+        {
+          "offset": 0,
+          "vl": 8,
+          "vtype": 208
+        },
+        {
+          "offset": 8,
+          "vl": 1,
+          "vtype": 208
+        }
+      ],
+      "conservative": {
+        "ordered": {
+          "chunks": 2,
+          "contained": true,
+          "interval": {
+            "maximum": 16777221.0,
+            "maximum_bits": 1266679810,
+            "minimum": 16777216.0,
+            "minimum_bits": 1266679808
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 1266679808,
+          "observed_value": 16777216.0,
+          "other_legal_examples": [
+            {
+              "bits": 1266679808,
+              "value": 16777217.0
+            },
+            {
+              "bits": 1266679809,
+              "value": 16777218.0
+            },
+            {
+              "bits": 1266679810,
+              "value": 16777219.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 2,
+          "support_size": 6
+        },
+        "unordered": {
+          "chunks": 2,
+          "contained": true,
+          "interval": {
+            "maximum": 16777221.0,
+            "maximum_bits": 1266679810,
+            "minimum": 16777216.0,
+            "minimum_bits": 1266679808
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 1266679808,
+          "observed_value": 16777216.0,
+          "other_legal_examples": [
+            {
+              "bits": 1266679808,
+              "value": 16777217.0
+            },
+            {
+              "bits": 1266679809,
+              "value": 16777218.0
+            },
+            {
+              "bits": 1266679810,
+              "value": 16777219.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 2,
+          "support_size": 6
+        }
+      },
+      "fixture": 2,
+      "input_sha256": "75e584ce6b0a66ec8f876b2175cc26752ad518e7b4b33ae374047af145b8cd1c",
+      "n": 9,
+      "observed": {
+        "ordered_bits": 1266679808,
+        "ordered_matches_scalar": true,
+        "ordered_value": 16777216.0,
+        "policies_agree": true,
+        "scalar_bits": 1266679808,
+        "unordered_bits": 1266679808,
+        "unordered_value": 16777216.0
+      },
+      "primary": {
+        "ordered": {
+          "chunks": 2,
+          "contained": true,
+          "interval": {
+            "maximum": 16777221.0,
+            "maximum_bits": 1266679810,
+            "minimum": 16777216.0,
+            "minimum_bits": 1266679808
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 1266679808,
+          "observed_value": 16777216.0,
+          "other_legal_examples": [
+            {
+              "bits": 1266679808,
+              "value": 16777217.0
+            },
+            {
+              "bits": 1266679809,
+              "value": 16777218.0
+            },
+            {
+              "bits": 1266679810,
+              "value": 16777219.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 6,
+          "support_size": 6
+        },
+        "unordered": {
+          "chunks": 2,
+          "contained": true,
+          "interval": {
+            "maximum": 16777221.0,
+            "maximum_bits": 1266679810,
+            "minimum": 16777216.0,
+            "minimum_bits": 1266679808
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 1266679808,
+          "observed_value": 16777216.0,
+          "other_legal_examples": [
+            {
+              "bits": 1266679808,
+              "value": 16777217.0
+            },
+            {
+              "bits": 1266679809,
+              "value": 16777218.0
+            },
+            {
+              "bits": 1266679810,
+              "value": 16777219.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 6,
+          "support_size": 6
+        }
+      }
+    },
+    {
+      "chunks": [
+        {
+          "offset": 0,
+          "vl": 8,
+          "vtype": 208
+        },
+        {
+          "offset": 8,
+          "vl": 8,
+          "vtype": 208
+        },
+        {
+          "offset": 16,
+          "vl": 3,
+          "vtype": 208
+        }
+      ],
+      "conservative": {
+        "ordered": {
+          "chunks": 3,
+          "contained": false,
+          "interval": {
+            "maximum": 11.0,
+            "maximum_bits": 1093664768,
+            "minimum": 2.0,
+            "minimum_bits": 1073741824
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 0,
+          "observed_value": 0.0,
+          "other_legal_examples": [
+            {
+              "bits": 1073741824,
+              "value": 2.0
+            },
+            {
+              "bits": 1077936128,
+              "value": 3.0
+            },
+            {
+              "bits": 1082130432,
+              "value": 4.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 3,
+          "support_size": 10
+        },
+        "unordered": {
+          "chunks": 3,
+          "contained": false,
+          "interval": {
+            "maximum": 11.0,
+            "maximum_bits": 1093664768,
+            "minimum": 2.0,
+            "minimum_bits": 1073741824
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 0,
+          "observed_value": 0.0,
+          "other_legal_examples": [
+            {
+              "bits": 1073741824,
+              "value": 2.0
+            },
+            {
+              "bits": 1077936128,
+              "value": 3.0
+            },
+            {
+              "bits": 1082130432,
+              "value": 4.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 3,
+          "support_size": 10
+        }
+      },
+      "fixture": 2,
+      "input_sha256": "4a565c778fa9ccc6375130e16706d4fd7bdaa62659e6ce17c314d18f2ee3ac88",
+      "n": 19,
+      "observed": {
+        "ordered_bits": 0,
+        "ordered_matches_scalar": true,
+        "ordered_value": 0.0,
+        "policies_agree": true,
+        "scalar_bits": 0,
+        "unordered_bits": 0,
+        "unordered_value": 0.0
+      },
+      "primary": {
+        "ordered": {
+          "chunks": 3,
+          "contained": true,
+          "interval": {
+            "maximum": 12.0,
+            "maximum_bits": 1094713344,
+            "minimum": 0.0,
+            "minimum_bits": 0
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 0,
+          "observed_value": 0.0,
+          "other_legal_examples": [
+            {
+              "bits": 1065353216,
+              "value": 1.0
+            },
+            {
+              "bits": 1073741824,
+              "value": 2.0
+            },
+            {
+              "bits": 1077936128,
+              "value": 3.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 16,
+          "support_size": 13
+        },
+        "unordered": {
+          "chunks": 3,
+          "contained": true,
+          "interval": {
+            "maximum": 12.0,
+            "maximum_bits": 1094713344,
+            "minimum": 0.0,
+            "minimum_bits": 0
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 0,
+          "observed_value": 0.0,
+          "other_legal_examples": [
+            {
+              "bits": 1065353216,
+              "value": 1.0
+            },
+            {
+              "bits": 1073741824,
+              "value": 2.0
+            },
+            {
+              "bits": 1077936128,
+              "value": 3.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 16,
+          "support_size": 13
+        }
+      }
+    },
+    {
+      "chunks": [
+        {
+          "offset": 0,
+          "vl": 4,
+          "vtype": 208
+        }
+      ],
+      "conservative": {
+        "ordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 2.0,
+            "maximum_bits": 1073741824,
+            "minimum": 1.0,
+            "minimum_bits": 1065353216
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 1065353216,
+          "observed_value": 1.0,
+          "other_legal_examples": [
+            {
+              "bits": 1073741824,
+              "value": 2.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 2
+        },
+        "unordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 2.0,
+            "maximum_bits": 1073741824,
+            "minimum": 1.0,
+            "minimum_bits": 1065353216
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 1065353216,
+          "observed_value": 1.0,
+          "other_legal_examples": [
+            {
+              "bits": 1073741824,
+              "value": 2.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 2
+        }
+      },
+      "fixture": 2,
+      "input_sha256": "100dff465c62071776db65cedece869667cc4c31b6a0328af892d693c9c7697b",
+      "n": 4,
+      "observed": {
+        "ordered_bits": 1065353216,
+        "ordered_matches_scalar": true,
+        "ordered_value": 1.0,
+        "policies_agree": true,
+        "scalar_bits": 1065353216,
+        "unordered_bits": 1065353216,
+        "unordered_value": 1.0
+      },
+      "primary": {
+        "ordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 2.0,
+            "maximum_bits": 1073741824,
+            "minimum": 1.0,
+            "minimum_bits": 1065353216
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 1065353216,
+          "observed_value": 1.0,
+          "other_legal_examples": [
+            {
+              "bits": 1073741824,
+              "value": 2.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 2
+        },
+        "unordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 2.0,
+            "maximum_bits": 1073741824,
+            "minimum": 1.0,
+            "minimum_bits": 1065353216
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 1065353216,
+          "observed_value": 1.0,
+          "other_legal_examples": [
+            {
+              "bits": 1073741824,
+              "value": 2.0
+            }
+          ],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 2
+        }
+      }
+    },
+    {
+      "chunks": [
+        {
+          "offset": 0,
+          "vl": 1,
+          "vtype": 208
+        }
+      ],
+      "conservative": {
+        "ordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 0.0,
+            "maximum_bits": 0,
+            "minimum": 0.0,
+            "minimum_bits": 0
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 0,
+          "observed_value": 0.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        },
+        "unordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 0.0,
+            "maximum_bits": 0,
+            "minimum": 0.0,
+            "minimum_bits": 0
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 0,
+          "observed_value": 0.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        }
+      },
+      "fixture": 3,
+      "input_sha256": "6d58692645c9d1cfaf13541cbd258f86193ef63c2f1d38f6bbca9617372d7bd6",
+      "n": 1,
+      "observed": {
+        "ordered_bits": 0,
+        "ordered_matches_scalar": true,
+        "ordered_value": 0.0,
+        "policies_agree": true,
+        "scalar_bits": 0,
+        "unordered_bits": 0,
+        "unordered_value": 0.0
+      },
+      "primary": {
+        "ordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 0.0,
+            "maximum_bits": 0,
+            "minimum": 0.0,
+            "minimum_bits": 0
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 0,
+          "observed_value": 0.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        },
+        "unordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 0.0,
+            "maximum_bits": 0,
+            "minimum": 0.0,
+            "minimum_bits": 0
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 0,
+          "observed_value": 0.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        }
+      }
+    },
+    {
+      "chunks": [
+        {
+          "offset": 0,
+          "vl": 7,
+          "vtype": 208
+        }
+      ],
+      "conservative": {
+        "ordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 0.0,
+            "maximum_bits": 0,
+            "minimum": 0.0,
+            "minimum_bits": 0
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 0,
+          "observed_value": 0.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        },
+        "unordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 0.0,
+            "maximum_bits": 0,
+            "minimum": 0.0,
+            "minimum_bits": 0
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 0,
+          "observed_value": 0.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        }
+      },
+      "fixture": 3,
+      "input_sha256": "d5ca6e1642c089c61917e10427a9c7a8653ba9cb768450d10627d9d380fa6b62",
+      "n": 7,
+      "observed": {
+        "ordered_bits": 0,
+        "ordered_matches_scalar": true,
+        "ordered_value": 0.0,
+        "policies_agree": true,
+        "scalar_bits": 0,
+        "unordered_bits": 0,
+        "unordered_value": 0.0
+      },
+      "primary": {
+        "ordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 0.0,
+            "maximum_bits": 0,
+            "minimum": 0.0,
+            "minimum_bits": 0
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 0,
+          "observed_value": 0.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        },
+        "unordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 0.0,
+            "maximum_bits": 0,
+            "minimum": 0.0,
+            "minimum_bits": 0
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 0,
+          "observed_value": 0.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        }
+      }
+    },
+    {
+      "chunks": [
+        {
+          "offset": 0,
+          "vl": 8,
+          "vtype": 208
+        }
+      ],
+      "conservative": {
+        "ordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 0.0,
+            "maximum_bits": 0,
+            "minimum": 0.0,
+            "minimum_bits": 0
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 0,
+          "observed_value": 0.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        },
+        "unordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 0.0,
+            "maximum_bits": 0,
+            "minimum": 0.0,
+            "minimum_bits": 0
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 0,
+          "observed_value": 0.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        }
+      },
+      "fixture": 3,
+      "input_sha256": "a81519b21839ef569d2bf3d1ead2ed1c050f2fd9843fe0322672ea23135bd926",
+      "n": 8,
+      "observed": {
+        "ordered_bits": 0,
+        "ordered_matches_scalar": true,
+        "ordered_value": 0.0,
+        "policies_agree": true,
+        "scalar_bits": 0,
+        "unordered_bits": 0,
+        "unordered_value": 0.0
+      },
+      "primary": {
+        "ordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 0.0,
+            "maximum_bits": 0,
+            "minimum": 0.0,
+            "minimum_bits": 0
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 0,
+          "observed_value": 0.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        },
+        "unordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 0.0,
+            "maximum_bits": 0,
+            "minimum": 0.0,
+            "minimum_bits": 0
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 0,
+          "observed_value": 0.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        }
+      }
+    },
+    {
+      "chunks": [
+        {
+          "offset": 0,
+          "vl": 8,
+          "vtype": 208
+        },
+        {
+          "offset": 8,
+          "vl": 1,
+          "vtype": 208
+        }
+      ],
+      "conservative": {
+        "ordered": {
+          "chunks": 2,
+          "contained": true,
+          "interval": {
+            "maximum": 0.0,
+            "maximum_bits": 0,
+            "minimum": 0.0,
+            "minimum_bits": 0
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 0,
+          "observed_value": 0.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 2,
+          "support_size": 1
+        },
+        "unordered": {
+          "chunks": 2,
+          "contained": true,
+          "interval": {
+            "maximum": 0.0,
+            "maximum_bits": 0,
+            "minimum": 0.0,
+            "minimum_bits": 0
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 0,
+          "observed_value": 0.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 2,
+          "support_size": 1
+        }
+      },
+      "fixture": 3,
+      "input_sha256": "549643f72761f2bdbec6c9b0104224978a5c8605a3f83dce8b2e813d5da136ad",
+      "n": 9,
+      "observed": {
+        "ordered_bits": 0,
+        "ordered_matches_scalar": true,
+        "ordered_value": 0.0,
+        "policies_agree": true,
+        "scalar_bits": 0,
+        "unordered_bits": 0,
+        "unordered_value": 0.0
+      },
+      "primary": {
+        "ordered": {
+          "chunks": 2,
+          "contained": true,
+          "interval": {
+            "maximum": 0.0,
+            "maximum_bits": 0,
+            "minimum": 0.0,
+            "minimum_bits": 0
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 0,
+          "observed_value": 0.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 2,
+          "support_size": 1
+        },
+        "unordered": {
+          "chunks": 2,
+          "contained": true,
+          "interval": {
+            "maximum": 0.0,
+            "maximum_bits": 0,
+            "minimum": 0.0,
+            "minimum_bits": 0
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 0,
+          "observed_value": 0.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 2,
+          "support_size": 1
+        }
+      }
+    },
+    {
+      "chunks": [
+        {
+          "offset": 0,
+          "vl": 8,
+          "vtype": 208
+        },
+        {
+          "offset": 8,
+          "vl": 8,
+          "vtype": 208
+        },
+        {
+          "offset": 16,
+          "vl": 3,
+          "vtype": 208
+        }
+      ],
+      "conservative": {
+        "ordered": {
+          "chunks": 3,
+          "contained": true,
+          "interval": {
+            "maximum": 0.0,
+            "maximum_bits": 0,
+            "minimum": 0.0,
+            "minimum_bits": 0
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 0,
+          "observed_value": 0.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 3,
+          "support_size": 1
+        },
+        "unordered": {
+          "chunks": 3,
+          "contained": true,
+          "interval": {
+            "maximum": 0.0,
+            "maximum_bits": 0,
+            "minimum": 0.0,
+            "minimum_bits": 0
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 0,
+          "observed_value": 0.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 3,
+          "support_size": 1
+        }
+      },
+      "fixture": 3,
+      "input_sha256": "44028278e75c7affc352d31bb85077981d3b3cab4567af2c17592f11219add78",
+      "n": 19,
+      "observed": {
+        "ordered_bits": 0,
+        "ordered_matches_scalar": true,
+        "ordered_value": 0.0,
+        "policies_agree": true,
+        "scalar_bits": 0,
+        "unordered_bits": 0,
+        "unordered_value": 0.0
+      },
+      "primary": {
+        "ordered": {
+          "chunks": 3,
+          "contained": true,
+          "interval": {
+            "maximum": 0.0,
+            "maximum_bits": 0,
+            "minimum": 0.0,
+            "minimum_bits": 0
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 0,
+          "observed_value": 0.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 3,
+          "support_size": 1
+        },
+        "unordered": {
+          "chunks": 3,
+          "contained": true,
+          "interval": {
+            "maximum": 0.0,
+            "maximum_bits": 0,
+            "minimum": 0.0,
+            "minimum_bits": 0
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 0,
+          "observed_value": 0.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 3,
+          "support_size": 1
+        }
+      }
+    },
+    {
+      "chunks": [
+        {
+          "offset": 0,
+          "vl": 4,
+          "vtype": 208
+        }
+      ],
+      "conservative": {
+        "ordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 0.0,
+            "maximum_bits": 0,
+            "minimum": 0.0,
+            "minimum_bits": 0
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 0,
+          "observed_value": 0.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        },
+        "unordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 0.0,
+            "maximum_bits": 0,
+            "minimum": 0.0,
+            "minimum_bits": 0
+          },
+          "model": "seed_added_at_root",
+          "observed_bits": 0,
+          "observed_value": 0.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        }
+      },
+      "fixture": 3,
+      "input_sha256": "8a561c8a599c39bbd7c1b5600c9d4d41219a79727f9e7a093f738e4bd9cf5456",
+      "n": 4,
+      "observed": {
+        "ordered_bits": 0,
+        "ordered_matches_scalar": true,
+        "ordered_value": 0.0,
+        "policies_agree": true,
+        "scalar_bits": 0,
+        "unordered_bits": 0,
+        "unordered_value": 0.0
+      },
+      "primary": {
+        "ordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 0.0,
+            "maximum_bits": 0,
+            "minimum": 0.0,
+            "minimum_bits": 0
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 0,
+          "observed_value": 0.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        },
+        "unordered": {
+          "chunks": 1,
+          "contained": true,
+          "interval": {
+            "maximum": 0.0,
+            "maximum_bits": 0,
+            "minimum": 0.0,
+            "minimum_bits": 0
+          },
+          "model": "seed_and_elements_are_leaves",
+          "observed_bits": 0,
+          "observed_value": 0.0,
+          "other_legal_examples": [],
+          "precisions": [
+            32,
+            64
+          ],
+          "reduction_executions": 1,
+          "support_size": 1
+        }
+      }
+    }
+  ],
+  "schema_version": 1,
+  "source_records": "/Users/anshumanagrawal/codes/workplace/2026_projects/vfred-gate/runs/mechanism/stdout.json",
+  "source_records_sha256": "02c890752c847c5d21bd692637c212aac3cb69d44f40c5d65568d892350a3d85",
+  "summary": {
+    "all_observed_contained": true,
+    "independent_equal": true,
+    "independent_records": 16,
+    "maximum_support_size": 25,
+    "ordered_matches_scalar": true,
+    "policies_agree_on_qemu": true,
+    "random_maximum_support_size": 152139,
+    "random_samples": 24,
+    "random_samples_with_multiple_results": 24,
+    "records": 24,
+    "records_with_one_legal_result": 14,
+    "records_with_other_legal_examples": 10
+  }
+}

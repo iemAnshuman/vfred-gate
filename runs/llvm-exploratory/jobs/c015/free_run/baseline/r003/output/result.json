@@ -1,0 +1,199 @@
+{
+  "model": {
+    "vocab_size": 49152,
+    "chat_template": "{% for message in messages %}{% if loop.first and messages[0]['role'] != 'system' %}{{ '<|im_start|>system\nYou are a helpful AI assistant named SmolLM, trained by Hugging Face<|im_end|>\n' }}{% endif %}{{'<|im_start|>' + message['role'] + '\n' + message['content'] + '<|im_end|>' + '\n'}}{% endfor %}{% if add_generation_prompt %}{{ '<|im_start|>assistant\n' }}{% endif %}",
+    "chat_template_sha256": "872be49dbb638044ad01b60388f48d469ff2980e5f0dccdc22ec907db54d0788",
+    "model_sha256": "48ab3034d0dd401fbc721eb1df3217902fee7dab9078992d66431f09b7750201",
+    "backend": "cpu",
+    "diagnostic_build": true
+  },
+  "case_id": "c022",
+  "mode": "free_run",
+  "generated_text": "The C++ header for std::vector is <vector>.",
+  "prompt_tokens": [
+    1,
+    4093,
+    198,
+    5820,
+    260,
+    340,
+    11444,
+    11511,
+    327,
+    17226,
+    9533,
+    16714,
+    30,
+    2,
+    198,
+    1,
+    520,
+    9531,
+    198
+  ],
+  "forced_tokens": [],
+  "selected_tokens": [
+    504,
+    340,
+    11444,
+    11511,
+    327,
+    17226,
+    9533,
+    16714,
+    314,
+    2067,
+    16714,
+    19369,
+    2
+  ],
+  "stop_reason": "eos",
+  "steps": [
+    {
+      "step": 0,
+      "history_sha256": "b4d513981fed8ccc5f3ecf0d9fa6c3204f503d5770fb2bfa2ebde3be2ba3efd3",
+      "selected_token": 504,
+      "offset_bytes": 0,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 1,
+      "history_sha256": "9ed39d53aed88d76d576f8f3cfc98a72bdf04de5217dfa062c917d75294b284e",
+      "selected_token": 340,
+      "offset_bytes": 196608,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 2,
+      "history_sha256": "1b5346c1c059a98be939dc9df235d383a113ad1d65ae140eb803b2be02c0165f",
+      "selected_token": 11444,
+      "offset_bytes": 393216,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 3,
+      "history_sha256": "2c44f3e44b3c705ad2ef10bb95f3ca304749632b5687b5afed2a7950e1b71b45",
+      "selected_token": 11511,
+      "offset_bytes": 589824,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 4,
+      "history_sha256": "45375b160ae08ddbce1bed078200e31c64a463090f6a1d5b209e7aa05dce3c52",
+      "selected_token": 327,
+      "offset_bytes": 786432,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 5,
+      "history_sha256": "e15631cc7f1ffec81d9d8d28bff4c5e5ac96e37666557fbccf069c35b542f6a8",
+      "selected_token": 17226,
+      "offset_bytes": 983040,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 6,
+      "history_sha256": "e0f6be8eb4beff696e7849559b80991bebbcdc5754630779ab840e8322dbb888",
+      "selected_token": 9533,
+      "offset_bytes": 1179648,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 7,
+      "history_sha256": "b26b7e071dcb108709843870208c850013e14bd6113bc5177d595051fe5e1a29",
+      "selected_token": 16714,
+      "offset_bytes": 1376256,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 8,
+      "history_sha256": "89f71a8c22d7df81c40eb94c188078774d930ec87b12927989fb7fcfc7a41015",
+      "selected_token": 314,
+      "offset_bytes": 1572864,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 9,
+      "history_sha256": "af081d90ce81695e2d668b90fb8dc89a671c8e579b5ea396ba1d6bec1cab0131",
+      "selected_token": 2067,
+      "offset_bytes": 1769472,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 10,
+      "history_sha256": "b0153f77cb0b41d0cc6771d71ee652645d1ceac4d8dc9ac7a90e85aa385c6808",
+      "selected_token": 16714,
+      "offset_bytes": 1966080,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 11,
+      "history_sha256": "331793a8d5967800725c18cb3dbb6f6b80ca1a22a4daf94779242622d74bbb63",
+      "selected_token": 19369,
+      "offset_bytes": 2162688,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 12,
+      "history_sha256": "a465f60ef90f081afaac9e3b8c409cce87398bdae61adff845147358238704fd",
+      "selected_token": 2,
+      "offset_bytes": 2359296,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    }
+  ],
+  "logits_file": "logits.f32",
+  "logits_sha256": "e815cd8c13546fca620269c461301f98b295acb0881df6794c6d643c53986b36",
+  "logits_shape": [
+    13,
+    49152
+  ],
+  "injection_count": 0,
+  "load_seconds": 0.483597,
+  "prefill_seconds": 0.28134825,
+  "generation_seconds": 0.197267166,
+  "capture_events": 0,
+  "context": 512,
+  "threads": 1,
+  "kv_type": "f32",
+  "schema_version": 1,
+  "complete": true
+}

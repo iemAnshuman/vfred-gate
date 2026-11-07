@@ -1,0 +1,122 @@
+{
+  "model": {
+    "vocab_size": 49152,
+    "chat_template": "{% for message in messages %}{% if loop.first and messages[0]['role'] != 'system' %}{{ '<|im_start|>system\nYou are a helpful AI assistant named SmolLM, trained by Hugging Face<|im_end|>\n' }}{% endif %}{{'<|im_start|>' + message['role'] + '\n' + message['content'] + '<|im_end|>' + '\n'}}{% endfor %}{% if add_generation_prompt %}{{ '<|im_start|>assistant\n' }}{% endif %}",
+    "chat_template_sha256": "872be49dbb638044ad01b60388f48d469ff2980e5f0dccdc22ec907db54d0788",
+    "model_sha256": "48ab3034d0dd401fbc721eb1df3217902fee7dab9078992d66431f09b7750201",
+    "backend": "cpu",
+    "diagnostic_build": true
+  },
+  "case_id": "c039",
+  "mode": "free_run",
+  "generated_text": "A-B-C",
+  "prompt_tokens": [
+    1,
+    4093,
+    198,
+    48010,
+    260,
+    4928,
+    330,
+    29,
+    50,
+    79,
+    51,
+    3869,
+    30,
+    2,
+    198,
+    1,
+    520,
+    9531,
+    198
+  ],
+  "forced_tokens": [],
+  "selected_tokens": [
+    49,
+    29,
+    50,
+    29,
+    51,
+    2
+  ],
+  "stop_reason": "eos",
+  "steps": [
+    {
+      "step": 0,
+      "history_sha256": "8c6081e735c10d541f33f856ec934a70340be6372fbe9b5dcf9932001373efd6",
+      "selected_token": 49,
+      "offset_bytes": 0,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 1,
+      "history_sha256": "e3eac64f94e7af9551456b6e6cb2fbd1b5fb60d81531a4bea6464f2eda83627f",
+      "selected_token": 29,
+      "offset_bytes": 196608,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 2,
+      "history_sha256": "76a4a3b9fb6c5f307dba44722f5d862c70a3f4321e0a751151cdf1da4d276fce",
+      "selected_token": 50,
+      "offset_bytes": 393216,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 3,
+      "history_sha256": "fde780d5409262cebe25cda1cdf43571dbe7c1eeda139f43188fae864d38e891",
+      "selected_token": 29,
+      "offset_bytes": 589824,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 4,
+      "history_sha256": "71159bf30abc02d515e61bd0126be9934c3442dfcddc060b47a3b02580b91a1d",
+      "selected_token": 51,
+      "offset_bytes": 786432,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 5,
+      "history_sha256": "cccdb907a0c38c42add27e6aa2c8dd6b16cc9019fd8c4e75440ecbe63c61e2a3",
+      "selected_token": 2,
+      "offset_bytes": 983040,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    }
+  ],
+  "logits_file": "logits.f32",
+  "logits_sha256": "9e7223bb183c7cd06f131560b3f35d4f4d48ef9e232db13a73ff0c276570e550",
+  "logits_shape": [
+    6,
+    49152
+  ],
+  "injection_count": 0,
+  "load_seconds": 0.350976792,
+  "prefill_seconds": 0.208627,
+  "generation_seconds": 0.066547959,
+  "capture_events": 0,
+  "context": 512,
+  "threads": 1,
+  "kv_type": "f32",
+  "schema_version": 1,
+  "complete": true
+}

@@ -1,0 +1,16 @@
+{"step":0,"history_sha256":"80c51097954069d5c1b4881fe2537baa624eab5c86216500842f438db8071a94","selected_token":504,"offset_bytes":0,"shape":[49152],"dtype":"<f4"}
+{"step":1,"history_sha256":"017c663069703a460d9abc6ee0d6986b360479783ce4346a5225f88516078aae","selected_token":2988,"offset_bytes":196608,"shape":[49152],"dtype":"<f4"}
+{"step":2,"history_sha256":"f548cb0cfd70733800a58432a6432271677c725228dcac0b3655c93eb6b6dc8c","selected_token":288,"offset_bytes":393216,"shape":[49152],"dtype":"<f4"}
+{"step":3,"history_sha256":"f15649c958f7c8dbeabcf445c21143c010a36314fdfb5969d1b7160ba7bfff69","selected_token":260,"offset_bytes":589824,"shape":[49152],"dtype":"<f4"}
+{"step":4,"history_sha256":"9c9a5649201976250f9e344ef2fb66a99b69aea17a960ad5e595a28a40712f71","selected_token":8345,"offset_bytes":786432,"shape":[49152],"dtype":"<f4"}
+{"step":5,"history_sha256":"d43501e2d3fddd5c684ca8d7ae2a70ada788fe4fd393af57b4ebbbeec18843ee","selected_token":476,"offset_bytes":983040,"shape":[49152],"dtype":"<f4"}
+{"step":6,"history_sha256":"8d8741a29467e490700a6316c665bb97fafd0c01309997ab83b9e476ca2cbf6b","selected_token":34,"offset_bytes":1179648,"shape":[49152],"dtype":"<f4"}
+{"step":7,"history_sha256":"e93c45d86b405ff57868ce6942e2dd9e694611ca60f15c356f99e54ddc445963","selected_token":1232,"offset_bytes":1376256,"shape":[49152],"dtype":"<f4"}
+{"step":8,"history_sha256":"2ca7c1e45e17eed733aca055de532614bccf69bd50e29c0cdafb7a82a73e2131","selected_token":216,"offset_bytes":1572864,"shape":[49152],"dtype":"<f4"}
+{"step":9,"history_sha256":"4a067fdb923760c10548ca41974b0ae09673529abe1b6a977f2bd6bde45b309d","selected_token":34,"offset_bytes":1769472,"shape":[49152],"dtype":"<f4"}
+{"step":10,"history_sha256":"6622c8a52dc8d173b275b4f0cc6470f09dcbf53ccda194ae48eea85aaaeeaeae","selected_token":18,"offset_bytes":1966080,"shape":[49152],"dtype":"<f4"}
+{"step":11,"history_sha256":"70985c4bbab0e2854396764d6c683c06e2126284cef446c1813a7dc07d7033c4","selected_token":314,"offset_bytes":2162688,"shape":[49152],"dtype":"<f4"}
+{"step":12,"history_sha256":"6ca21e8f58300ab3e14f0b8399e4034b882795b4453b672d23ddda17efa7a036","selected_token":216,"offset_bytes":2359296,"shape":[49152],"dtype":"<f4"}
+{"step":13,"history_sha256":"2eb68725228f606110d0cdc36248b90bbae2c32e040cd5e3775d81d5ec6b5aaf","selected_token":36,"offset_bytes":2555904,"shape":[49152],"dtype":"<f4"}
+{"step":14,"history_sha256":"cb17ccd92d4f471df2ec56320125dc9a46044405b0d1dba9bc9e7dee33613b00","selected_token":30,"offset_bytes":2752512,"shape":[49152],"dtype":"<f4"}
+{"step":15,"history_sha256":"0dbe2d7de99675b1ce652743e2ad9d3125e77db2934941ededba96fddf684332","selected_token":2,"offset_bytes":2949120,"shape":[49152],"dtype":"<f4"}

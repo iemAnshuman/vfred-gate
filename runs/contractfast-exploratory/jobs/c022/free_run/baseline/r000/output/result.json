@@ -1,0 +1,189 @@
+{
+  "model": {
+    "vocab_size": 49152,
+    "chat_template": "{% for message in messages %}{% if loop.first and messages[0]['role'] != 'system' %}{{ '<|im_start|>system\nYou are a helpful AI assistant named SmolLM, trained by Hugging Face<|im_end|>\n' }}{% endif %}{{'<|im_start|>' + message['role'] + '\n' + message['content'] + '<|im_end|>' + '\n'}}{% endfor %}{% if add_generation_prompt %}{{ '<|im_start|>assistant\n' }}{% endif %}",
+    "chat_template_sha256": "872be49dbb638044ad01b60388f48d469ff2980e5f0dccdc22ec907db54d0788",
+    "model_sha256": "48ab3034d0dd401fbc721eb1df3217902fee7dab9078992d66431f09b7750201",
+    "backend": "cpu",
+    "diagnostic_build": true
+  },
+  "case_id": "c033",
+  "mode": "free_run",
+  "generated_text": "Tea is a great choice for a short reason.",
+  "prompt_tokens": [
+    1,
+    4093,
+    198,
+    21197,
+    2267,
+    7188,
+    355,
+    6728,
+    284,
+    1928,
+    582,
+    1890,
+    2166,
+    30,
+    2,
+    198,
+    1,
+    520,
+    9531,
+    198
+  ],
+  "forced_tokens": [],
+  "selected_tokens": [
+    6732,
+    81,
+    314,
+    253,
+    1109,
+    4187,
+    327,
+    253,
+    1890,
+    2166,
+    30,
+    2
+  ],
+  "stop_reason": "eos",
+  "steps": [
+    {
+      "step": 0,
+      "history_sha256": "9e81f7ee6af03ef23c7d3be58e468679cf4a4ab6a18850ef943b088b57619e25",
+      "selected_token": 6732,
+      "offset_bytes": 0,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 1,
+      "history_sha256": "3d2b5b4abda69074fca7eb7c47693a8c76431d3898cba262b33f0967f52949ef",
+      "selected_token": 81,
+      "offset_bytes": 196608,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 2,
+      "history_sha256": "197213d8e107d597b4231d2e5bbc855e131edc15ee132f5f9aebee7073263b83",
+      "selected_token": 314,
+      "offset_bytes": 393216,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 3,
+      "history_sha256": "1ca9fb15dca9d45ff2c06add03f4dac02b340d84b8baa11ee47194421c73ec80",
+      "selected_token": 253,
+      "offset_bytes": 589824,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 4,
+      "history_sha256": "16ed87183bb7a115d3455d3529c2a50aad1c04ac50f11608be73c215f7efdbd0",
+      "selected_token": 1109,
+      "offset_bytes": 786432,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 5,
+      "history_sha256": "658c85d6e13f9a00dfa83ecc657ce910523e46660c828ecb1739abd2edd396be",
+      "selected_token": 4187,
+      "offset_bytes": 983040,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 6,
+      "history_sha256": "b84694f528e7d203a752f8d4bf78928bc6b8838b10359b2d55e4577a330b0a90",
+      "selected_token": 327,
+      "offset_bytes": 1179648,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 7,
+      "history_sha256": "49551964e6d64006ecb8cc51732582f39cfef317b2ce343a006ac230c9c8793b",
+      "selected_token": 253,
+      "offset_bytes": 1376256,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 8,
+      "history_sha256": "92d58e8ab4edb56eeb6723494efc05e3a44a8b1182a8eb5eb9a6ade1cbf520b6",
+      "selected_token": 1890,
+      "offset_bytes": 1572864,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 9,
+      "history_sha256": "8dd7131a38ffcdce7d6c305e1c9c23f91f64c1cca158105d2fc6c241d3a57be3",
+      "selected_token": 2166,
+      "offset_bytes": 1769472,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 10,
+      "history_sha256": "5a774f1e752f07676d692156ff8b6fdc58704c0171ba8d44bf4ca5adcc01236d",
+      "selected_token": 30,
+      "offset_bytes": 1966080,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 11,
+      "history_sha256": "b2d2aff790f3e9f7282952fddeb0cbbbbef33ed07d0011429cc697f9dfc8b261",
+      "selected_token": 2,
+      "offset_bytes": 2162688,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    }
+  ],
+  "logits_file": "logits.f32",
+  "logits_sha256": "0052db39c40c350b13711b4b0eb668ad94856b4f59e45c3d0d505161fac42bbc",
+  "logits_shape": [
+    12,
+    49152
+  ],
+  "injection_count": 0,
+  "load_seconds": 0.410486833,
+  "prefill_seconds": 0.250275958,
+  "generation_seconds": 0.168653542,
+  "capture_events": 0,
+  "context": 512,
+  "threads": 1,
+  "kv_type": "f32",
+  "schema_version": 1,
+  "complete": true
+}

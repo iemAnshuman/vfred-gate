@@ -1,0 +1,333 @@
+{
+  "model": {
+    "vocab_size": 49152,
+    "chat_template": "{% for message in messages %}{% if loop.first and messages[0]['role'] != 'system' %}{{ '<|im_start|>system\nYou are a helpful AI assistant named SmolLM, trained by Hugging Face<|im_end|>\n' }}{% endif %}{{'<|im_start|>' + message['role'] + '\n' + message['content'] + '<|im_end|>' + '\n'}}{% endfor %}{% if add_generation_prompt %}{{ '<|im_start|>assistant\n' }}{% endif %}",
+    "chat_template_sha256": "872be49dbb638044ad01b60388f48d469ff2980e5f0dccdc22ec907db54d0788",
+    "model_sha256": "48ab3034d0dd401fbc721eb1df3217902fee7dab9078992d66431f09b7750201",
+    "backend": "cpu",
+    "diagnostic_build": true
+  },
+  "case_id": "c032",
+  "mode": "free_run",
+  "generated_text": "The best part of the morning is waking up to the sound of birds chirping and the sun rising over the mountains.",
+  "prompt_tokens": [
+    1,
+    4093,
+    198,
+    20558,
+    621,
+    260,
+    6330,
+    42,
+    378,
+    1450,
+    599,
+    282,
+    260,
+    5738,
+    314,
+    2,
+    198,
+    1,
+    520,
+    9531,
+    198
+  ],
+  "forced_tokens": [],
+  "selected_tokens": [
+    504,
+    1450,
+    599,
+    282,
+    260,
+    5738,
+    314,
+    22360,
+    614,
+    288,
+    260,
+    2139,
+    282,
+    4255,
+    36536,
+    4200,
+    284,
+    260,
+    2388,
+    7551,
+    690,
+    260,
+    8718,
+    30,
+    2
+  ],
+  "stop_reason": "eos",
+  "steps": [
+    {
+      "step": 0,
+      "history_sha256": "3af3980eb93dd1793df9a56a3a78fa7c50b80a99de22a4ddc99253cb816ed598",
+      "selected_token": 504,
+      "offset_bytes": 0,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 1,
+      "history_sha256": "13bde1a42249edcf315b5260b26b1c6f773e195b594c0fa96f054a6065b8c3c0",
+      "selected_token": 1450,
+      "offset_bytes": 196608,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 2,
+      "history_sha256": "74ea60c5c8756efe52eb494e4cc5a47d01fae029ea3955168fcc3c91531fca9c",
+      "selected_token": 599,
+      "offset_bytes": 393216,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 3,
+      "history_sha256": "9a235e0e839a0e1c019c5e4c29baa4a0eff4ee0db917244adc268aeadc617608",
+      "selected_token": 282,
+      "offset_bytes": 589824,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 4,
+      "history_sha256": "1bd8908b44adad30652e681818b57c5fc2bf44126e4073e9f73ccf7ffdab45ef",
+      "selected_token": 260,
+      "offset_bytes": 786432,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 5,
+      "history_sha256": "79dc5d0eef69bb34e90fbb21a1368d73658a7901f7fc482aa72a92fb8c9889ea",
+      "selected_token": 5738,
+      "offset_bytes": 983040,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 6,
+      "history_sha256": "27b8efedcca85f4ef05eafc22295957d97e56e8097ba3db62c3ca512e7174a53",
+      "selected_token": 314,
+      "offset_bytes": 1179648,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 7,
+      "history_sha256": "7741fd2469d722e6e1ab18c14e2fa94fd3e9d83e1d7e82980624d380be210377",
+      "selected_token": 22360,
+      "offset_bytes": 1376256,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 8,
+      "history_sha256": "658b78ffac0000e5433a895c70c5af435e88c0285aac545024633b695d1c24fb",
+      "selected_token": 614,
+      "offset_bytes": 1572864,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 9,
+      "history_sha256": "5094932d689e925250e4262a13f642a453069727f21ef54008b341551019c66c",
+      "selected_token": 288,
+      "offset_bytes": 1769472,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 10,
+      "history_sha256": "97d1cf0c81b0404bb7b7d69b36e8269f3b7a786625541a31e983a99a27c2b72f",
+      "selected_token": 260,
+      "offset_bytes": 1966080,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 11,
+      "history_sha256": "ad8da0d5408c691f1dde977951c1ef1e1dfdcbaa26ad3deff3b7fb4f2082c170",
+      "selected_token": 2139,
+      "offset_bytes": 2162688,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 12,
+      "history_sha256": "ca3258afdacc67f131398628f69a2fb8e65f8bb743d935e5abb5352b53d972a1",
+      "selected_token": 282,
+      "offset_bytes": 2359296,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 13,
+      "history_sha256": "cb3c049814910a1253f3cce4c20d6df20e0557199840332fec1ab518e292fc5d",
+      "selected_token": 4255,
+      "offset_bytes": 2555904,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 14,
+      "history_sha256": "59938fe4d41d06968ac29c283a16d2ea183a700d1d64514510ed93e75cb0e704",
+      "selected_token": 36536,
+      "offset_bytes": 2752512,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 15,
+      "history_sha256": "79f3d35721d55de8f6e97df4dbfc69e1a16f67859bb2418e4fdb2376e23d6f3a",
+      "selected_token": 4200,
+      "offset_bytes": 2949120,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 16,
+      "history_sha256": "9eba1b319408bb3a9a1e3549aeefad4798c24e17068ffcbd6305c4a7664f27ef",
+      "selected_token": 284,
+      "offset_bytes": 3145728,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 17,
+      "history_sha256": "e00e7a765a1795e0370701096e1c34ab1e51a4c8c4cd5939dded098fca5888a3",
+      "selected_token": 260,
+      "offset_bytes": 3342336,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 18,
+      "history_sha256": "397d194b759edf46cbd26a391d9e9bc1442fcd1e50827d0670a7c967f2362439",
+      "selected_token": 2388,
+      "offset_bytes": 3538944,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 19,
+      "history_sha256": "fd65b714b20612824aa6ad625ff2d3f701b0b398017d9967e96143a5cde717af",
+      "selected_token": 7551,
+      "offset_bytes": 3735552,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 20,
+      "history_sha256": "ff0493371d5adecd0932971d0e1a36338f835251124a9e5ac5031058dcdc6cd9",
+      "selected_token": 690,
+      "offset_bytes": 3932160,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 21,
+      "history_sha256": "10e93fbcb16cf0119b853896ab7ae61f6c25721d685d6a7b5fb7ec0c500a4292",
+      "selected_token": 260,
+      "offset_bytes": 4128768,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 22,
+      "history_sha256": "65eb1495a54d1fc3b91f19a7fe74f1c96a51c7f2cf1780520f1ff164f4d16ae5",
+      "selected_token": 8718,
+      "offset_bytes": 4325376,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 23,
+      "history_sha256": "38bbd1539d35c310e7daf713c0d130c54cee7f182f2fcec5cb49f3db56ccdcab",
+      "selected_token": 30,
+      "offset_bytes": 4521984,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    },
+    {
+      "step": 24,
+      "history_sha256": "6a616e3e4cae5417ac349ff3d6673abd60e185a44d31574d8c01b09ad33cc8f9",
+      "selected_token": 2,
+      "offset_bytes": 4718592,
+      "shape": [
+        49152
+      ],
+      "dtype": "<f4"
+    }
+  ],
+  "logits_file": "logits.f32",
+  "logits_sha256": "2ec438b4943bf1f28bf4904212c4fa5eff9f26af2ab055ce64e34b5a3b40f9e6",
+  "logits_shape": [
+    25,
+    49152
+  ],
+  "injection_count": 0,
+  "load_seconds": 0.413526833,
+  "prefill_seconds": 0.299746084,
+  "generation_seconds": 0.392041541,
+  "capture_events": 0,
+  "context": 512,
+  "threads": 1,
+  "kv_type": "f32",
+  "schema_version": 1,
+  "complete": true
+}
