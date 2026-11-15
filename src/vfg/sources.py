@@ -60,16 +60,25 @@ def _download(url, path):
 def _verify_tree(tree, archive):
     """Every regular file of the archive must exist in the tree with the same bytes."""
     checked = 0
+    expected_files = set()
     with tarfile.open(archive) as tf:
         for member in tf:
             if not member.isfile():
                 continue
             relative = Path(*Path(member.name).parts[1:])
+            expected_files.add(relative.as_posix())
             path = tree / relative
             expected = hashlib.sha256(tf.extractfile(member).read()).digest()
             if not path.is_file() or hashlib.sha256(path.read_bytes()).digest() != expected:
                 raise VFGError(f"cached llama.cpp source was modified: {relative}; delete {tree} to re-extract")
             checked += 1
+    extra = sorted(
+        p.relative_to(tree).as_posix()
+        for p in tree.rglob("*")
+        if (p.is_file() or p.is_symlink()) and p.relative_to(tree).as_posix() not in expected_files
+    )
+    if extra:
+        raise VFGError(f"cached llama.cpp source has extra files ({extra[0]}, ...); delete {tree} to re-extract")
     return checked
 
 

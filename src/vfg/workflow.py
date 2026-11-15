@@ -287,6 +287,8 @@ def compare(
     context=512,
     run_explain=True,
     progress=print,
+    a_compiler=None,
+    b_compiler=None,
 ):
     if repetitions < 2:
         raise VFGError("repetitions must be at least 2 to detect nondeterminism")
@@ -299,8 +301,8 @@ def compare(
     setup.mkdir(parents=True, exist_ok=True)
     lock = model_lock(model)
     atomic_json(setup / "model.lock.json", lock.model_dump())
-    base, base_info = build_side(a, a_cmake, a_cflags, label="baseline", progress=progress)
-    cand, cand_info = build_side(b, b_cmake, b_cflags, label="candidate", progress=progress)
+    base, base_info = build_side(a, a_cmake, a_cflags, a_compiler, label="baseline", progress=progress)
+    cand, cand_info = build_side(b, b_cmake, b_cflags, b_compiler, label="candidate", progress=progress)
     atomic_json(setup / "baseline.json", base.model_dump())
     atomic_json(setup / "candidate.json", cand.model_dump())
     source = setup / "prompts.jsonl"

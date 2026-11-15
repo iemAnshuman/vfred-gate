@@ -10,7 +10,7 @@ re-derives offline with `vfg verify`. Localisation needs both binaries on one ma
 import json
 from pathlib import Path
 import platform
-import shutil
+import re
 
 from .controller.qualification import ResolvedPlan, assess, runner_request
 from .errors import InsufficientEvidence, VFGError
@@ -60,6 +60,8 @@ def record(
     """Run the baseline side only and seal a portable reference bundle."""
     if repetitions < 2:
         raise VFGError("repetitions must be at least 2 to detect nondeterminism")
+    if max_tokens >= context:
+        raise VFGError(f"--max-tokens ({max_tokens}) must be smaller than --context ({context})")
     output = Path(output or "runs/reference").resolve()
     if output.exists() and any(output.iterdir()):
         raise VFGError(f"output directory is not empty: {output}")
@@ -72,6 +74,11 @@ def record(
     (setup / "prompts.jsonl").write_text("".join(json.dumps(r) + "\n" for r in rows))
     freeze_corpus(setup / "prompts.jsonl", setup / "model.lock.json", Path(stack.binary), setup / "corpus.jsonl")
     corpus = read_corpus(setup / "corpus.jsonl")
+    over = [c.id for c in corpus if len(c.tokens) + max_tokens > context]
+    if over:
+        raise VFGError(f"context budget exceeded for {', '.join(over[:5])}; raise --context or lower --max-tokens")
+    # Keep the baseline's build record as evidence; machine B cannot rebuild it.
+    (setup / "build-manifest.json").write_bytes(Path(stack.build_manifest).read_bytes())
     settings = Settings(context=context, max_tokens=max_tokens)
     target = host_target()
     plan = Plan(
@@ -122,10 +129,14 @@ def check(
     b_cflags=(),
     contract="decision",
     progress=print,
+    reference_sha256=None,
 ):
-    """Run the candidate locally and judge it against a sealed reference."""
+    """Run the candidate locally and judge it against a sealed reference.
+
+    The reference is trusted as given unless `reference_sha256` pins its bundle index.
+    """
     reference = Path(reference).resolve()
-    verify_bundle(reference)
+    index = verify_bundle(reference, reference_sha256)["index"]["files"]
     ref = load_document(reference / "reference.json")
     lock = ModelLock.model_validate(ref["model"])
     local = model_lock(model)
@@ -152,10 +163,23 @@ def check(
         ["teacher_forced_baseline"] if any(r.alignment == "teacher_forced_baseline" for r in rules.rules) else []
     )
     jobs = []
+    pattern = re.compile(r"^jobs/c\d{3}/(free_run|teacher_forced_baseline)/baseline/r\d{3}$")
     for job in ref["jobs"]:
-        if job["mode"] in modes:
-            shutil.copytree(safe_child(reference, job["path"]), output / job["path"])
-            jobs.append(job)
+        if job["mode"] not in modes:
+            continue
+        if job["role"] != "baseline" or not pattern.match(job["path"]) or job["mode"] not in job["path"]:
+            raise VFGError(f"unexpected job in reference: {job.get('path')}")
+        prefix = job["path"] + "/"
+        # Copy only indexed regular files; verify_bundle already checked their bytes.
+        for name in index:
+            if name.startswith(prefix):
+                source = safe_child(reference, name)
+                if source.is_symlink():
+                    raise VFGError(f"symlink in reference: {name}")
+                target_path = output / name
+                target_path.parent.mkdir(parents=True, exist_ok=True)
+                target_path.write_bytes(source.read_bytes())
+        jobs.append(job)
     resolved = _resolved(plan, lock, rules, target, {"baseline": base, "candidate": cand}, cases)
     paths = {(j["case_id"], j["mode"], j["repetition"]): j["path"] for j in jobs}
     for n, case in enumerate(cases):

@@ -172,6 +172,17 @@ def canary(
     typer.echo(json.dumps(result["selection"], indent=2))
 
 
+def _which(compiler):
+    import shutil
+
+    if compiler is None:
+        return None
+    found = shutil.which(str(compiler))
+    if found is None:
+        fail(f"compiler not found: {compiler}")
+    return Path(found)
+
+
 def _split(value):
     import shlex
 
@@ -183,10 +194,12 @@ def compare(
     model: Path = typer.Option(..., help="GGUF model file."),
     a: str = typer.Option("pinned", help="Baseline: pinned, llama.cpp@<tag|commit>, or a local checkout."),
     b: str = typer.Option("pinned", help="Candidate: pinned, llama.cpp@<tag|commit>, or a local checkout."),
-    a_cmake: Optional[str] = typer.Option(None, help='Baseline CMake options, e.g. "-DGGML_AVX512=OFF".'),
+    a_cmake: Optional[str] = typer.Option(None, help='Baseline CMake options, e.g. "-DGGML_AVX512=ON".'),
     b_cmake: Optional[str] = typer.Option(None, help="Candidate CMake options."),
     a_cflags: Optional[str] = typer.Option(None, help='Baseline compiler flags, e.g. "-ffp-contract=fast".'),
     b_cflags: Optional[str] = typer.Option(None, help="Candidate compiler flags."),
+    a_compiler: Optional[Path] = typer.Option(None, help="Baseline C++ compiler, e.g. g++-14 or clang++."),
+    b_compiler: Optional[Path] = typer.Option(None, help="Candidate C++ compiler."),
     contract: str = typer.Option("decision", help="bit, decision or sequence."),
     prompts: Optional[Path] = typer.Option(None, help="Text file (one prompt per line) or JSONL with text."),
     cases: int = typer.Option(16, min=1, help="Number of prompts to use."),
@@ -217,6 +230,8 @@ def compare(
         context,
         run_explain=explain,
         progress=lambda message: typer.echo(message, err=True),
+        a_compiler=_which(a_compiler),
+        b_compiler=_which(b_compiler),
     )
     from .workflow import format_summary
 
@@ -247,13 +262,14 @@ def record(
     cases: int = typer.Option(16, min=1),
     repetitions: int = typer.Option(3, min=2),
     max_tokens: int = typer.Option(32, min=1, max=1024),
+    context: int = typer.Option(512, min=16, max=65536, help="Context size; prompt plus output must fit."),
     output: Path = typer.Option(Path("runs/reference"), help="New, empty directory for the reference bundle."),
 ):
     """Record a portable reference on this machine, for `vfg check` on another machine."""
     from .reference import record as run
 
     result = guarded(
-        run, model, a, output, _split(a_cmake), _split(a_cflags), prompts, cases, repetitions, max_tokens,
+        run, model, a, output, _split(a_cmake), _split(a_cflags), prompts, cases, repetitions, max_tokens, context,
         progress=lambda message: typer.echo(message, err=True),
     )
     typer.echo(json.dumps(result, indent=2))
@@ -268,6 +284,7 @@ def check(
     b_cflags: Optional[str] = typer.Option(None, help="Extra compiler flags."),
     contract: str = typer.Option("decision", help="bit, decision or sequence."),
     output: Path = typer.Option(Path("runs/check"), help="New, empty directory for the qualification bundle."),
+    reference_sha256: Optional[str] = typer.Option(None, help="Expected SHA-256 of the reference bundle.json."),
 ):
     """Check a build on this machine against a reference recorded elsewhere."""
     from .reference import check as run
@@ -275,6 +292,7 @@ def check(
     result = guarded(
         run, reference, model, b, output, _split(b_cmake), _split(b_cflags), contract,
         progress=lambda message: typer.echo(message, err=True),
+        reference_sha256=reference_sha256,
     )
     typer.echo(json.dumps(result, indent=2))
     raise typer.Exit(result["exit_code"])

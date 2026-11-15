@@ -117,6 +117,14 @@ def build_native(
     return manifest
 
 
+def c_compiler_name(cxx):
+    """The C compiler that belongs to a C++ compiler name: clang++-18 -> clang-18, g++-16 -> gcc-16."""
+    for cpp, c in (("clang++", "clang"), ("g++", "gcc"), ("c++", "cc")):
+        if cxx.startswith(cpp) or cxx.endswith(cpp) or cpp + "-" in cxx:
+            return cxx.replace(cpp, c, 1)
+    return "clang" if "clang" in cxx else "gcc"
+
+
 def build_runner(
     build_dir,
     llama_dir,
@@ -159,10 +167,10 @@ def build_runner(
     ]
     if llama_source is not None:
         # Fetched trees may sit inside another git repository; never embed its HEAD.
-        configure.append("-DGIT_EXE=GIT_EXE-NOTFOUND")
+        configure.append("-DVFG_FETCHED_TREE=ON")
     if compiler is not None:
         compiler = Path(compiler).absolute()
-        c_compiler = compiler.with_name("clang") if "clang" in compiler.name else compiler.with_name("gcc")
+        c_compiler = compiler.with_name(c_compiler_name(compiler.name))
         configure.extend([f"-DCMAKE_CXX_COMPILER={compiler}", f"-DCMAKE_C_COMPILER={c_compiler}"])
     if extra_flags:
         configure.append("-DVFG_EXTRA_FLAGS=" + " ".join(extra_flags))

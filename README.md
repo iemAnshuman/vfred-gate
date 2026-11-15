@@ -59,8 +59,8 @@ vfg compare --model m.gguf --a llama.cpp@b6500 --b llama.cpp@b6600
 # Your local branch, with uncommitted edits, against a release
 vfg compare --model m.gguf --a llama.cpp@b6600 --b ~/src/llama.cpp
 
-# AVX2 against AVX-512 on the same x86 machine
-vfg compare --model m.gguf --a-cmake "-DGGML_NATIVE=ON -DGGML_AVX512=OFF" --b-cmake "-DGGML_NATIVE=ON"
+# AVX2 against AVX-512 on the same x86 machine (GGML_NATIVE stays OFF on both sides)
+vfg compare --model m.gguf --b-cmake "-DGGML_AVX512=ON"
 
 # Your own prompts and a stricter contract
 vfg compare --model m.gguf --b ~/src/llama.cpp --prompts prompts.txt --contract bit
@@ -96,7 +96,7 @@ vfg record --model m.gguf --output ref/            # machine A
 vfg check --reference ref/ --model m.gguf          # machine B, same model file
 ```
 
-`check` judges machine B's build against the recorded outputs with the same contract. It cannot localise, because the two binaries are not on one machine.
+`check` judges machine B's build against the recorded outputs with the same contract. It cannot localise, because the two binaries are not on one machine. The reference is trusted as given; pass `--reference-sha256 <hash of ref/bundle.json>` to pin a reference you received from someone else.
 
 ### In CI
 
