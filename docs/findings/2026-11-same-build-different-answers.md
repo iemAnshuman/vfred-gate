@@ -21,9 +21,9 @@ Reference: `vfg record` on an Apple M4, macOS, Apple Clang 17. Candidates: `vfg 
 |---|---|---:|---:|---|---|
 | Apple M4 | macOS / Apple Clang 17 | 1.0 | 16/16 | none | `cde8a89e…` (local) |
 | Apple M4 (Docker) | Debian 12, glibc 2.36 / GCC 12 | 0.980 | 10/16 | c001 (0), c004 (15), c006 (14), c007 (7), c008 (27), c013 (9) | `cc1d4d35…` (local) |
-| ARM Cortex-A725, Rostam `spark-00` | Ubuntu 24.04 / GCC 13 | 0.980 | 10/16 | c001 (0), c004 (15), c006 (14), c007 (7), c008 (27), c013 (9) | `7c484523…` (Rostam) |
-| AMD EPYC 7352, Rostam `buran00` | RHEL 9 / GCC 11 | 0.980 | 10/16 | c001 (0), c002 (13), c005 (14), c006 (14), c007 (7), c013 (9) | `3227b394…` (Rostam) |
-| Intel Xeon Gold 6148, Rostam `medusa` | RHEL 9, glibc 2.34 / GCC 11 | 0.980 | 10/16 | c001 (0), c002 (13), c005 (14), c006 (14), c007 (7), c013 (9) | `1a1ccee6…` (Rostam) |
+| ARM Cortex-A725, Rostam `spark-00` | Ubuntu 24.04, glibc 2.39 / GCC 13.3 | 0.980 | 10/16 | c001 (0), c004 (15), c006 (14), c007 (7), c008 (27), c013 (9) | `7c484523…` (Rostam) |
+| AMD EPYC 7352, Rostam `buran00` | RHEL 9, glibc 2.34 / GCC 11.5 | 0.980 | 10/16 | c001 (0), c002 (13), c005 (14), c006 (14), c007 (7), c013 (9) | `3227b394…` (Rostam) |
+| Intel Xeon Gold 6148, Rostam `medusa` | RHEL 9, glibc 2.34 / GCC 11.5 | 0.980 | 10/16 | c001 (0), c002 (13), c005 (14), c006 (14), c007 (7), c013 (9) | `1a1ccee6…` (Rostam) |
 | T-Head C920 (RVV 0.7.1), Rostam `sven0`, scalar `rv64gc` build | Fedora 38 / GCC 13 | running | | | |
 
 The M4 under Linux and the Cortex-A725 under Linux diverge on the same six prompts at the same steps. Two different ARM CPUs on Linux agree; one ARM CPU on two operating systems does not. The AMD and Intel x86 machines also agree with each other, on a pattern that shares four of six prompts with ARM Linux.
