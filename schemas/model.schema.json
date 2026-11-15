@@ -12,9 +12,17 @@
       "type": "string"
     },
     "revision": {
-      "pattern": "^[0-9a-f]{40}$",
-      "title": "Revision",
-      "type": "string"
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{40}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Revision"
     },
     "filename": {
       "title": "Filename",
@@ -26,7 +34,7 @@
       "type": "string"
     },
     "quantisation": {
-      "const": "Q8_0",
+      "minLength": 1,
       "title": "Quantisation",
       "type": "string"
     },
@@ -36,18 +44,24 @@
       "type": "integer"
     },
     "url": {
-      "title": "Url",
-      "type": "string"
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Url"
     }
   },
   "required": [
     "repository",
-    "revision",
     "filename",
     "sha256",
     "quantisation",
-    "size_bytes",
-    "url"
+    "size_bytes"
   ],
   "title": "ModelLock",
   "type": "object"

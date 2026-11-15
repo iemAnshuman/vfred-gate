@@ -89,8 +89,9 @@ def resolve_plan(path):
         cases = [mapping[c] for c in plan.cases]
     if any(c.model_sha256 != model.sha256 for c in cases):
         raise VFGError("corpus/model identity mismatch")
-    if any(len(c.tokens) + plan.settings.max_tokens > plan.settings.context for c in cases):
-        raise VFGError("context budget exceeded")
+    over = [c.id for c in cases if len(c.tokens) + plan.settings.max_tokens > plan.settings.context]
+    if over:
+        raise VFGError(f"context budget exceeded for {', '.join(over[:5])}; raise --context or lower --max-tokens")
     inputs["selected_cases"] = [c.model_dump() for c in cases]
     inputs["binaries"] = {k: str(v) for k, v in binaries.items()}
     return ResolvedPlan(plan, model, model_path, contract, target, stacks, binaries, cases, inputs)

@@ -38,12 +38,12 @@ class Settings(Record):
 
 class ModelLock(Record):
     repository: str
-    revision: Revision
+    revision: Revision | None = None
     filename: str
     sha256: Digest
-    quantisation: Literal["Q8_0"]
+    quantisation: str = Field(min_length=1)
     size_bytes: int = Field(gt=0)
-    url: str
+    url: str | None = None
 
 
 class Target(Record):
@@ -172,7 +172,7 @@ class CorpusCase(Record):
     group_id: str
     category: str
     split: Literal["exploratory", "holdout"]
-    tokens: list[int] = Field(min_length=1, max_length=128)
+    tokens: list[int] = Field(min_length=1, max_length=8192)
     model_sha256: Digest
     tokenizer_sha256: Digest
     formatted_text_sha256: Digest

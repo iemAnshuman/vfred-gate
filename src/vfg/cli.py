@@ -172,6 +172,122 @@ def canary(
     typer.echo(json.dumps(result["selection"], indent=2))
 
 
+def _split(value):
+    import shlex
+
+    return shlex.split(value) if value else []
+
+
+@app.command()
+def compare(
+    model: Path = typer.Option(..., help="GGUF model file."),
+    a: str = typer.Option("pinned", help="Baseline: pinned, llama.cpp@<tag|commit>, or a local checkout."),
+    b: str = typer.Option("pinned", help="Candidate: pinned, llama.cpp@<tag|commit>, or a local checkout."),
+    a_cmake: Optional[str] = typer.Option(None, help='Baseline CMake options, e.g. "-DGGML_AVX512=OFF".'),
+    b_cmake: Optional[str] = typer.Option(None, help="Candidate CMake options."),
+    a_cflags: Optional[str] = typer.Option(None, help='Baseline compiler flags, e.g. "-ffp-contract=fast".'),
+    b_cflags: Optional[str] = typer.Option(None, help="Candidate compiler flags."),
+    contract: str = typer.Option("decision", help="bit, decision or sequence."),
+    prompts: Optional[Path] = typer.Option(None, help="Text file (one prompt per line) or JSONL with text."),
+    cases: int = typer.Option(16, min=1, help="Number of prompts to use."),
+    repetitions: int = typer.Option(3, min=2, help="Runs per prompt and build."),
+    max_tokens: int = typer.Option(32, min=1, max=1024),
+    context: int = typer.Option(512, min=16, max=65536, help="Context size; prompt plus output must fit."),
+    output: Optional[Path] = typer.Option(None, help="New, empty run directory."),
+    explain: bool = typer.Option(True, help="Localise the first difference after a FAIL."),
+):
+    """Compare two llama.cpp builds on one model: verdict, first difference, report."""
+    from .workflow import compare as run
+
+    summary = guarded(
+        run,
+        model,
+        a,
+        b,
+        output,
+        _split(a_cmake),
+        _split(b_cmake),
+        _split(a_cflags),
+        _split(b_cflags),
+        contract,
+        prompts,
+        cases,
+        repetitions,
+        max_tokens,
+        context,
+        run_explain=explain,
+        progress=lambda message: typer.echo(message, err=True),
+    )
+    from .workflow import format_summary
+
+    typer.echo(format_summary(summary), err=True)
+    typer.echo(json.dumps(summary, indent=2))
+    raise typer.Exit(summary["exit_code"])
+
+
+@app.command()
+def explain(
+    run: Path = typer.Option(..., help="Qualification bundle with a FAIL verdict."),
+    output: Path = typer.Option(..., help="New directory for the localisation bundle."),
+):
+    """Localise the first observed difference of a qualification to a layer and ggml op."""
+    from .workflow import explain as run_explain
+
+    result = guarded(run_explain, run, output, lambda message: typer.echo(message, err=True))
+    typer.echo(json.dumps(result, indent=2))
+
+
+@app.command()
+def record(
+    model: Path = typer.Option(..., help="GGUF model file."),
+    a: str = typer.Option("pinned", help="Build to record: pinned, llama.cpp@<tag|commit>, or a local checkout."),
+    a_cmake: Optional[str] = typer.Option(None, help="Extra CMake options."),
+    a_cflags: Optional[str] = typer.Option(None, help="Extra compiler flags."),
+    prompts: Optional[Path] = typer.Option(None, help="Text file (one prompt per line) or JSONL with text."),
+    cases: int = typer.Option(16, min=1),
+    repetitions: int = typer.Option(3, min=2),
+    max_tokens: int = typer.Option(32, min=1, max=1024),
+    output: Path = typer.Option(Path("runs/reference"), help="New, empty directory for the reference bundle."),
+):
+    """Record a portable reference on this machine, for `vfg check` on another machine."""
+    from .reference import record as run
+
+    result = guarded(
+        run, model, a, output, _split(a_cmake), _split(a_cflags), prompts, cases, repetitions, max_tokens,
+        progress=lambda message: typer.echo(message, err=True),
+    )
+    typer.echo(json.dumps(result, indent=2))
+
+
+@app.command()
+def check(
+    reference: Path = typer.Option(..., help="Reference bundle from `vfg record`."),
+    model: Path = typer.Option(..., help="The same GGUF model file (checked by hash)."),
+    b: str = typer.Option("pinned", help="Build to check: pinned, llama.cpp@<tag|commit>, or a local checkout."),
+    b_cmake: Optional[str] = typer.Option(None, help="Extra CMake options."),
+    b_cflags: Optional[str] = typer.Option(None, help="Extra compiler flags."),
+    contract: str = typer.Option("decision", help="bit, decision or sequence."),
+    output: Path = typer.Option(Path("runs/check"), help="New, empty directory for the qualification bundle."),
+):
+    """Check a build on this machine against a reference recorded elsewhere."""
+    from .reference import check as run
+
+    result = guarded(
+        run, reference, model, b, output, _split(b_cmake), _split(b_cflags), contract,
+        progress=lambda message: typer.echo(message, err=True),
+    )
+    typer.echo(json.dumps(result, indent=2))
+    raise typer.Exit(result["exit_code"])
+
+
+@app.command("fetch-model")
+def fetch_model(output: Optional[Path] = typer.Option(None, help="Directory for the model file.")):
+    """Download the pinned demo model (SmolLM2-360M-Instruct Q8_0, 386 MB) and check its hash."""
+    from .models import fetch_pinned
+
+    typer.echo(str(guarded(fetch_pinned, output)))
+
+
 @app.command()
 def progress(ledger: Path = typer.Option(Path("docs/progress.yaml"))):
     from .progress import check_progress

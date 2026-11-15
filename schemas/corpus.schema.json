@@ -31,7 +31,7 @@
       "items": {
         "type": "integer"
       },
-      "maxItems": 128,
+      "maxItems": 8192,
       "minItems": 1,
       "title": "Tokens",
       "type": "array"

@@ -9,8 +9,22 @@ import hashlib
 from .errors import VFGError
 from .manifest import atomic_json, digest, file_digest, load_document, now
 from .schema import Stack
+from .assets import native_root
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = native_root()
+
+
+def find_tool(name):
+    """A tool on PATH, or one installed next to this Python (the `ninja` PyPI package)."""
+    import sys
+
+    path = shutil.which(name)
+    if path is None:
+        candidate = Path(sys.executable).parent / name
+        path = str(candidate) if candidate.is_file() else None
+    if path is None:
+        raise VFGError(f"{name} not found; install it or run `pip install {name}`")
+    return path
 
 
 def apply_snapshot_patch(root):
@@ -67,18 +81,85 @@ def build_native(
                 raise VFGError(f"downloaded source modified: {relative}")
             checked += 1
     apply_snapshot_patch(root)
+    manifest = build_runner(
+        build_dir,
+        root / "third_party/llama.cpp",
+        lock["revision"],
+        root=root,
+        compiler=compiler,
+        extra_flags=extra_flags,
+        candidate_flags=candidate_flags,
+        strict_sources=strict_sources,
+        reduction_policy=reduction_policy,
+    )
+    manifest["verified_upstream_files"] = checked
+    atomic_json(build_dir / "build-manifest.json", manifest)
+    binary = build_dir / "runner/vfg-llama-runner"
+    compiler = manifest["compiler"]
+    source_hash = manifest["source_digest"]
+    if stack_path:
+        stack_path = Path(stack_path).resolve()
+        stack = Stack(
+            id="baseline" if reduction_policy == "native" else reduction_policy,
+            source_revision=lock["revision"],
+            source_digest=source_hash,
+            binary=os.path.relpath(binary, stack_path.parent),
+            binary_sha256=file_digest(binary),
+            compiler=compiler,
+            flags=["-O2", "-g", "-fno-fast-math", "-ffp-contract=off"]
+            + extra_flags
+            + candidate_flags,
+            reduction_policy=reduction_policy,
+            build_manifest=os.path.relpath(build_dir / "build-manifest.json", stack_path.parent),
+            build_manifest_sha256=file_digest(build_dir / "build-manifest.json"),
+        )
+        atomic_json(stack_path, stack.model_dump())
+    return manifest
+
+
+def build_runner(
+    build_dir,
+    llama_dir,
+    revision,
+    root=ROOT,
+    compiler=None,
+    extra_flags=None,
+    candidate_flags=None,
+    strict_sources=None,
+    reduction_policy="native",
+    cmake_args=None,
+    llama_source=None,
+):
+    """Configure and build the runner against one llama.cpp tree; write build-manifest.json."""
+    root = Path(root).resolve()
+    build_dir = Path(build_dir).resolve()
+    llama_dir = Path(llama_dir).resolve()
+    extra_flags = list(extra_flags or [])
+    candidate_flags = list(candidate_flags or [])
+    strict_sources = list(strict_sources or [])
+    cmake_args = list(cmake_args or [])
+    if any(not a.startswith("-D") for a in cmake_args):
+        raise VFGError("CMake arguments must have the form -DNAME=VALUE")
     build_dir.mkdir(parents=True, exist_ok=True)
+    ninja = find_tool("ninja")
     configure = [
-        "cmake",
+        find_tool("cmake"),
         "-S",
         str(root),
         "-B",
         str(build_dir),
         "-G",
         "Ninja",
+        f"-DCMAKE_MAKE_PROGRAM={ninja}",
         "-DCMAKE_BUILD_TYPE=Release",
         "-DVFG_BUILD_RUNNER=ON",
+        f"-DVFG_LLAMA_DIR={llama_dir}",
+        f"-DVFG_LLAMA_COMMIT={revision}",
+        *cmake_args,
     ]
+    if llama_source is not None:
+        # Fetched trees may sit inside another git repository; never embed its HEAD.
+        configure.append("-DGIT_EXE=GIT_EXE-NOTFOUND")
     if compiler is not None:
         compiler = Path(compiler).absolute()
         c_compiler = compiler.with_name("clang") if "clang" in compiler.name else compiler.with_name("gcc")
@@ -109,7 +190,7 @@ def build_native(
                 f"-DCMAKE_CXX_COMPILER_LAUNCHER={launcher};{config_path}",
             ]
         )
-    build = ["cmake", "--build", str(build_dir), "-j", "4"]
+    build = [configure[0], "--build", str(build_dir), "-j", str(os.cpu_count() or 4)]
     for name, command in (("configure", configure), ("build", build)):
         p = subprocess.run(command, text=True, capture_output=True)
         (build_dir / f"{name}.log").write_text(p.stdout + p.stderr)
@@ -136,13 +217,17 @@ def build_native(
                 source_files[p.relative_to(root).as_posix()] = file_digest(p)
     for name in ("CMakeLists.txt", "CMakePresets.json", "third_party/llama.lock.json"):
         source_files[name] = file_digest(root / name)
+    if llama_source is not None:
+        source_files["llama.cpp"] = digest(llama_source)
     source_hash = digest(source_files)
     commands = build_dir / "compile_commands.json"
     manifest = {
         "schema_version": 1,
         "built_at": now(),
-        "source_revision": lock["revision"],
-        "verified_upstream_files": checked,
+        "source_revision": revision,
+        "llama_dir": str(llama_dir),
+        "llama_source": llama_source,
+        "cmake_args": cmake_args,
         "source_files": source_files,
         "source_digest": source_hash,
         "compiler": compiler,
@@ -155,7 +240,7 @@ def build_native(
         "compile_commands_sha256": file_digest(commands),
         "effective_compile_commands": load_document(commands),
         "effective_build_commands": subprocess.check_output(
-            ["ninja", "-C", str(build_dir), "-t", "commands", "vfg-llama-runner"], text=True
+            [ninja, "-C", str(build_dir), "-t", "commands", "vfg-llama-runner"], text=True
         ),
         "cmake_cache_sha256": file_digest(build_dir / "CMakeCache.txt"),
         "source_patch_sha256": file_digest(root / "third_party/patches/0001-snapshot-version.patch"),
@@ -163,21 +248,4 @@ def build_native(
     if shutil.which("otool"):
         manifest["dynamic_libraries"] = subprocess.check_output(["otool", "-L", str(binary)], text=True)
     atomic_json(build_dir / "build-manifest.json", manifest)
-    if stack_path:
-        stack_path = Path(stack_path).resolve()
-        stack = Stack(
-            id="baseline" if reduction_policy == "native" else reduction_policy,
-            source_revision=lock["revision"],
-            source_digest=source_hash,
-            binary=os.path.relpath(binary, stack_path.parent),
-            binary_sha256=file_digest(binary),
-            compiler=compiler,
-            flags=["-O2", "-g", "-fno-fast-math", "-ffp-contract=off"]
-            + extra_flags
-            + candidate_flags,
-            reduction_policy=reduction_policy,
-            build_manifest=os.path.relpath(build_dir / "build-manifest.json", stack_path.parent),
-            build_manifest_sha256=file_digest(build_dir / "build-manifest.json"),
-        )
-        atomic_json(stack_path, stack.model_dump())
     return manifest
