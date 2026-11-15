@@ -71,7 +71,10 @@ def _verify_tree(tree, archive):
             if member.issym():
                 ok = path.is_symlink() and os.readlink(path) == member.linkname
             elif member.islnk():
-                ok = path.is_file()  # the link target is checked as its own entry
+                target = tree / Path(*Path(member.linkname).parts[1:])
+                ok = path.is_file() and not path.is_symlink() and target.is_file() and (
+                    path.read_bytes() == target.read_bytes()
+                )
             else:
                 expected = hashlib.sha256(tf.extractfile(member).read()).digest()
                 ok = path.is_file() and not path.is_symlink() and hashlib.sha256(path.read_bytes()).digest() == expected

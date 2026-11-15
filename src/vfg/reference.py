@@ -147,9 +147,12 @@ def check(
         raise VFGError(f"output directory is not empty: {output}")
     output.mkdir(parents=True, exist_ok=True)
     base = Stack.model_validate(ref["baseline"])
-    manifest = reference / "setup/build-manifest.json"
-    if "setup/build-manifest.json" not in index or file_digest(manifest) != base.build_manifest_sha256:
-        raise VFGError("reference build manifest is missing or does not match the baseline stack")
+    # References recorded before the manifest was copied have none; verify it when present.
+    manifest_state = "absent"
+    if "setup/build-manifest.json" in index:
+        if file_digest(reference / "setup/build-manifest.json") != base.build_manifest_sha256:
+            raise VFGError("reference build manifest does not match the baseline stack")
+        manifest_state = "verified"
     cand, info = build_side(b, b_cmake, b_cflags, label="candidate", progress=progress)
     cases = [CorpusCase.model_validate(c) for c in ref["cases"]]
     repetitions = ref["repetitions"]
@@ -166,6 +169,8 @@ def check(
     )
     jobs = []
     case_index = {c.id: n for n, c in enumerate(cases)}
+    if len(case_index) != len(cases):
+        raise VFGError("reference has duplicate case ids")
     expected_jobs = {
         f"jobs/c{n:03d}/{mode}/baseline/r{r:03d}": (c.id, mode, r)
         for n, c in enumerate(cases)
@@ -200,6 +205,8 @@ def check(
     resolved = _resolved(plan, lock, rules, target, {"baseline": base, "candidate": cand}, cases)
     paths = {(j["case_id"], j["mode"], j["repetition"]): j["path"] for j in jobs}
     for n, case in enumerate(cases):
+        if (case.id, "free_run", 0) not in paths:
+            raise VFGError(f"reference has no free_run r000 job for {case.id}")
         base_result = output / paths[(case.id, "free_run", 0)] / "output/result.json"
         forced = load_document(base_result)["selected_tokens"] if base_result.exists() else None
         for mode in modes:
@@ -226,6 +233,7 @@ def check(
             "platform": ref["platform"],
             "target": ref["target"],
             "baseline_source": ref["baseline_source"],
+            "build_manifest": manifest_state,
         },
         "candidate_source": info,
         "candidate_platform": platform.platform(),
