@@ -10,7 +10,6 @@ re-derives offline with `vfg verify`. Localisation needs both binaries on one ma
 import json
 from pathlib import Path
 import platform
-import re
 
 from .controller.qualification import ResolvedPlan, assess, runner_request
 from .errors import InsufficientEvidence, VFGError
@@ -148,6 +147,9 @@ def check(
         raise VFGError(f"output directory is not empty: {output}")
     output.mkdir(parents=True, exist_ok=True)
     base = Stack.model_validate(ref["baseline"])
+    manifest = reference / "setup/build-manifest.json"
+    if "setup/build-manifest.json" not in index or file_digest(manifest) != base.build_manifest_sha256:
+        raise VFGError("reference build manifest is missing or does not match the baseline stack")
     cand, info = build_side(b, b_cmake, b_cflags, label="candidate", progress=progress)
     cases = [CorpusCase.model_validate(c) for c in ref["cases"]]
     repetitions = ref["repetitions"]
@@ -163,12 +165,27 @@ def check(
         ["teacher_forced_baseline"] if any(r.alignment == "teacher_forced_baseline" for r in rules.rules) else []
     )
     jobs = []
-    pattern = re.compile(r"^jobs/c\d{3}/(free_run|teacher_forced_baseline)/baseline/r\d{3}$")
+    case_index = {c.id: n for n, c in enumerate(cases)}
+    expected_jobs = {
+        f"jobs/c{n:03d}/{mode}/baseline/r{r:03d}": (c.id, mode, r)
+        for n, c in enumerate(cases)
+        for mode in MODES
+        for r in range(repetitions)
+    }
+    seen = set()
     for job in ref["jobs"]:
+        key = (job.get("case_id"), job.get("mode"), job.get("repetition"))
+        # Each job path must be the one record() writes for its case, mode and repetition, once.
+        if (
+            job.get("role") != "baseline"
+            or job.get("case_id") not in case_index
+            or expected_jobs.get(job.get("path")) != key
+            or job["path"] in seen
+        ):
+            raise VFGError(f"unexpected job in reference: {job.get('path')}")
+        seen.add(job["path"])
         if job["mode"] not in modes:
             continue
-        if job["role"] != "baseline" or not pattern.match(job["path"]) or job["mode"] not in job["path"]:
-            raise VFGError(f"unexpected job in reference: {job.get('path')}")
         prefix = job["path"] + "/"
         # Copy only indexed regular files; verify_bundle already checked their bytes.
         for name in index:

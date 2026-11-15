@@ -32,7 +32,10 @@ add_compile_options("-ffile-prefix-map=${PROJECT_SOURCE_DIR}=." "-ffile-prefix-m
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE}")
 option(VFG_FETCHED_TREE "llama.cpp tree outside this repository; never read git metadata" OFF)
 if(VFG_FETCHED_TREE)
-  set(GIT_EXE GIT_EXE-NOTFOUND CACHE FILEPATH "" FORCE)
+  set(GIT_EXE IGNORE CACHE FILEPATH "" FORCE)  # IGNORE stops find_program; NOTFOUND would search again
+  string(SUBSTRING "${VFG_LLAMA_COMMIT}" 0 7 VFG_SHORT_COMMIT)
+  set(LLAMA_BUILD_COMMIT "${VFG_SHORT_COMMIT}")  # build-info.cmake would ask git otherwise
+  set(LLAMA_BUILD_NUMBER 0)
 endif()
 add_subdirectory(${VFG_LLAMA_DIR} ${PROJECT_BINARY_DIR}/llama)
 set(VFG_SHA256_SOURCE "${VFG_LLAMA_DIR}/vendor/hash/sha256/sha256.c")

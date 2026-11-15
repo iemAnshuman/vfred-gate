@@ -10,7 +10,7 @@ import shutil
 import subprocess
 
 from .assets import native_root
-from .build import build_runner
+from .build import build_runner, c_compiler_name
 from .canary.corpus import freeze_corpus
 from .controller import qualify, rederive
 from .errors import InsufficientEvidence, VFGError
@@ -125,21 +125,27 @@ def _locked(path):
             fcntl.flock(handle, fcntl.LOCK_UN)
 
 
-def toolchain():
+def _tool(path):
+    version = subprocess.run([path, "--version"], capture_output=True, text=True, timeout=30)
+    return {
+        "path": str(path),
+        "version": (version.stdout or version.stderr).strip(),
+        "sha256": file_digest(Path(path).resolve()),
+    }
+
+
+def toolchain(compiler=None):
     """Identity of the tools a build would use; part of the build cache key."""
     env = {k: os.environ.get(k) for k in ("CC", "CXX", "CFLAGS", "CXXFLAGS", "LDFLAGS", "SDKROOT")}
     ident = {"env": env}
-    for name, command in (("cxx", env["CXX"] or "c++"), ("cc", env["CC"] or "cc"), ("cmake", "cmake")):
+    commands = [("cxx", env["CXX"] or "c++"), ("cc", env["CC"] or "cc"), ("cmake", "cmake")]
+    if compiler is not None:
+        # An explicit compiler replaces CC/CXX; fingerprint it so an upgrade in place rebuilds.
+        cxx = Path(compiler).absolute()
+        commands[:2] = [("cxx", str(cxx)), ("cc", str(cxx.with_name(c_compiler_name(cxx.name))))]
+    for name, command in commands:
         path = shutil.which(command)
-        if path is None:
-            ident[name] = None
-            continue
-        version = subprocess.run([path, "--version"], capture_output=True, text=True, timeout=30)
-        ident[name] = {
-            "path": path,
-            "version": (version.stdout or version.stderr).strip(),
-            "sha256": file_digest(Path(path).resolve()),
-        }
+        ident[name] = _tool(path) if path else None
     return ident
 
 
@@ -152,8 +158,7 @@ def build_side(spec, cmake_args=(), cflags=(), compiler=None, label="side", prog
             "identity": identity,
             "cmake_args": list(cmake_args),
             "cflags": list(cflags),
-            "compiler": str(compiler) if compiler else None,
-            "toolchain": toolchain(),
+            "toolchain": toolchain(compiler),
             # A dirty checkout is rebuilt every run, in its own directory per side.
             "dirty_label": label if identity.get("dirty") else None,
             "native": {

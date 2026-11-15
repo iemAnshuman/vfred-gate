@@ -58,27 +58,34 @@ def _download(url, path):
 
 
 def _verify_tree(tree, archive):
-    """Every regular file of the archive must exist in the tree with the same bytes."""
+    """Every file and link of the archive must exist in the tree unchanged, and nothing else."""
     checked = 0
     expected_files = set()
     with tarfile.open(archive) as tf:
         for member in tf:
-            if not member.isfile():
+            if not (member.isfile() or member.issym() or member.islnk()):
                 continue
             relative = Path(*Path(member.name).parts[1:])
             expected_files.add(relative.as_posix())
             path = tree / relative
-            expected = hashlib.sha256(tf.extractfile(member).read()).digest()
-            if not path.is_file() or hashlib.sha256(path.read_bytes()).digest() != expected:
+            if member.issym():
+                ok = path.is_symlink() and os.readlink(path) == member.linkname
+            elif member.islnk():
+                ok = path.is_file()  # the link target is checked as its own entry
+            else:
+                expected = hashlib.sha256(tf.extractfile(member).read()).digest()
+                ok = path.is_file() and not path.is_symlink() and hashlib.sha256(path.read_bytes()).digest() == expected
+            if not ok:
                 raise VFGError(f"cached llama.cpp source was modified: {relative}; delete {tree} to re-extract")
             checked += 1
-    extra = sorted(
-        p.relative_to(tree).as_posix()
-        for p in tree.rglob("*")
-        if (p.is_file() or p.is_symlink()) and p.relative_to(tree).as_posix() not in expected_files
-    )
+    extra = []
+    for directory, dirs, files in os.walk(tree):
+        for name in files + [d for d in dirs if (Path(directory) / d).is_symlink()]:
+            relative = (Path(directory) / name).relative_to(tree).as_posix()
+            if relative not in expected_files:
+                extra.append(relative)
     if extra:
-        raise VFGError(f"cached llama.cpp source has extra files ({extra[0]}, ...); delete {tree} to re-extract")
+        raise VFGError(f"cached llama.cpp source has extra files ({sorted(extra)[0]}, ...); delete {tree} to re-extract")
     return checked
 
 
