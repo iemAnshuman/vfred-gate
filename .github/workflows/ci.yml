@@ -1,0 +1,89 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm, macos-15]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - name: Install native tools (Linux)
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y cmake ninja-build g++
+      - name: Install native tools (macOS)
+        if: runner.os == 'macOS'
+        run: brew install ninja
+      - run: uv sync --frozen
+      - run: uv run ruff check .
+      - run: uv run pytest -q
+      - run: uv run vfg doctor
+
+  end-to-end:
+    needs: test
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm, macos-15]
+    runs-on: ${{ matrix.os }}
+    env:
+      VFG_CACHE: ${{ github.workspace }}/.vfg-cache
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - name: Install native tools (Linux)
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y cmake ninja-build g++
+      - name: Install native tools (macOS)
+        if: runner.os == 'macOS'
+        run: brew install ninja
+      - uses: actions/cache@v4
+        with:
+          path: .vfg-cache/models
+          key: vfg-model-${{ hashFiles('models/model.lock.json') }}
+      - run: uv sync --frozen
+      - name: Fetch the pinned demo model
+        run: |
+          model=$(uv run vfg fetch-model)
+          echo "MODEL=$model" >> "$GITHUB_ENV"
+      - name: Self-comparison must PASS
+        run: uv run vfg compare --model "$MODEL" --cases 4 --repetitions 2 --max-tokens 16 --output runs/self
+      - name: Re-derive the verdict offline
+        run: uv run vfg verify --run runs/self/qualification
+      - name: Fast contraction candidate gives a verdict
+        run: |
+          set +e
+          uv run vfg compare --model "$MODEL" --b-cflags "-ffp-contract=fast" --cases 4 --repetitions 2 --max-tokens 16 --output runs/fast
+          code=$?
+          test "$code" -eq 0 -o "$code" -eq 2
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reports-${{ matrix.os }}
+          path: |
+            runs/*/summary.json
+            runs/*/report/
+          if-no-files-found: ignore
+
+  package:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv build
+      - name: Installed wheel finds its native build files
+        run: |
+          uv venv /tmp/wheel-env
+          uv pip install --python /tmp/wheel-env dist/*.whl
+          cd /tmp && /tmp/wheel-env/bin/python -c "from vfg.assets import native_root; print(native_root())"
+          /tmp/wheel-env/bin/vfg compare --help

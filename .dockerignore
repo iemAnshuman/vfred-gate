@@ -1,0 +1,9 @@
+.git
+.venv
+runs
+build
+dist
+models/*.gguf
+third_party/llama.cpp
+third_party/*.tar.gz
+**/__pycache__

@@ -133,7 +133,7 @@ def main():
         "W9.docs": [
             tests(pytest_xml, "W9.docs tests", ["test_detached_offline_bundle"]),
             file_evidence(ROOT / "docs/final-report.md", "final report"),
-            file_evidence(ROOT / "README.md", "project overview"),
+            file_evidence(ROOT / "docs/research/README.md", "project overview"),
             file_evidence(ROOT / "docs/demo.md", "working walkthrough"),
             file_evidence(ROOT / "docs/requirements-traceability.csv", "traceability table"),
         ],
