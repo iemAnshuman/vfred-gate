@@ -21,11 +21,12 @@ Reference: `vfg record` on an Apple M4, macOS, Apple Clang 17. Candidates: `vfg 
 |---|---|---:|---:|---|---|
 | Apple M4 | macOS / Apple Clang 17 | 1.0 | 16/16 | none | `cde8a89e…` (local) |
 | Apple M4 (Docker) | Debian 12, glibc 2.36 / GCC 12 | 0.980 | 10/16 | c001 (0), c004 (15), c006 (14), c007 (7), c008 (27), c013 (9) | `cc1d4d35…` (local) |
-| ARM Cortex-A725, Rostam `spark-00` | Ubuntu 24.04 / GCC 13 | 0.980 | 10/16 | c001 (0), c004 (15), c006 (14), c007 (7), c008 (27), c013 (9) | on Rostam |
-| AMD EPYC 7352, Rostam `buran00` | RHEL / GCC 11 | 0.980 | 10/16 | c001 (0), c002 (13), c005 (14), c006 (14), c007 (7), c013 (9) | on Rostam |
-| Intel Xeon Gold 6148, Rostam `medusa` | RHEL / GCC 11 | pending (job queued) | | | |
+| ARM Cortex-A725, Rostam `spark-00` | Ubuntu 24.04 / GCC 13 | 0.980 | 10/16 | c001 (0), c004 (15), c006 (14), c007 (7), c008 (27), c013 (9) | `7c484523…` (Rostam) |
+| AMD EPYC 7352, Rostam `buran00` | RHEL 9 / GCC 11 | 0.980 | 10/16 | c001 (0), c002 (13), c005 (14), c006 (14), c007 (7), c013 (9) | `3227b394…` (Rostam) |
+| Intel Xeon Gold 6148, Rostam `medusa` | RHEL 9, glibc 2.34 / GCC 11 | 0.980 | 10/16 | c001 (0), c002 (13), c005 (14), c006 (14), c007 (7), c013 (9) | `1a1ccee6…` (Rostam) |
+| T-Head C920 (RVV 0.7.1), Rostam `sven0`, scalar `rv64gc` build | Fedora 38 / GCC 13 | running | | | |
 
-The M4 under Linux and the Cortex-A725 under Linux diverge on the same six prompts at the same steps. Two different ARM CPUs on Linux agree; one ARM CPU on two operating systems does not.
+The M4 under Linux and the Cortex-A725 under Linux diverge on the same six prompts at the same steps. Two different ARM CPUs on Linux agree; one ARM CPU on two operating systems does not. The AMD and Intel x86 machines also agree with each other, on a pattern that shares four of six prompts with ARM Linux.
 
 ## Result 2: controls
 
@@ -33,7 +34,7 @@ The M4 under Linux and the Cortex-A725 under Linux diverge on the same six promp
 |---|---|---|
 | macOS: Apple Clang 17 vs GCC 16 | PASS (16/16, all 346 token choices agree) | `df2bb436…` (local) |
 | Linux (Docker on M4): GCC 12 vs Clang 14 | PASS (16/16) | `23fac7bf…` (local) |
-| Cortex-A725: `GGML_NATIVE=OFF` vs `ON` (SVE2, i8mm, dotprod) | PASS (16/16) | on Rostam |
+| Cortex-A725: `GGML_NATIVE=OFF` vs `ON` (SVE2, i8mm, dotprod) | PASS (16/16) | `77cd5f81…` (Rostam) |
 | llama.cpp pinned commit vs release `b12423` (macOS) | PASS (16/16) | local |
 
 The compiler does not change the answers on either OS. Native SIMD flags do not change them on the A725.
@@ -63,6 +64,6 @@ Candidate adds `-ffp-contract=fast` (fused multiply-add allowed).
 ## Open questions
 
 1. Confirm the op on Linux: replace `sinf`/`cosf` with a correctly rounded implementation in a local llama.cpp checkout and check whether macOS and Linux then agree (`vfg check --b <checkout>`).
-2. The x86 EPYC pattern differs from the ARM Linux pattern on two prompts (c002, c005 instead of c004, c008). x86 and ARM use different ggml SIMD kernels; this needs its own controls.
-3. The Intel Xeon result and the AVX2-vs-AVX-512 comparison are queued on Rostam.
+2. The x86 pattern (EPYC and Xeon agree) differs from the ARM Linux pattern on two prompts (c002, c005 instead of c004, c008). x86 and ARM use different ggml SIMD kernels; this needs its own controls.
+3. The AVX-512 comparisons on the Xeon are running on Rostam.
 4. One model, one quantisation, 16 prompts. Other models may be more or less sensitive.
