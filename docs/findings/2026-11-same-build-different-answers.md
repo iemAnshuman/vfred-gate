@@ -61,9 +61,19 @@ Candidate adds `-ffp-contract=fast` (fused multiply-add allowed).
 | macOS, Apple Clang 17 | 342/346 (0.988) | 12/16 | `ROPE` (`Qcur-17`), max 15 ULP | `44e96167…` |
 | Linux arm64 (Docker), GCC 12 | 0.987 | 11/16 | `ROPE` (`Qcur-1`) | `a739b682…` |
 
+## Result 4: AVX2 against AVX-512 (same machine)
+
+Intel Xeon Gold 6148 (Rostam `medusa00`), RHEL 9, GCC 11.5, same commit and model. Baseline: default x86 build (`GGML_NATIVE=OFF`, AVX2 and FMA).
+
+| Candidate | Token choice | Same text | First differing op (`vfg explain`) | Bundle |
+|---|---:|---:|---|---|
+| `-DGGML_AVX512=ON` | 0.985 | 11/16 | `MUL_MAT` (`kq-19`, attention scores), prompt c001, first different token at step 4 | `ed217b9c…` (Rostam) |
+| `-DGGML_NATIVE=ON` (includes AVX-512) | 0.985 | 11/16 | `MUL_MAT` (`kq-19`), same case and step | `45e36289…` (Rostam) |
+
+Turning on the AVX-512 kernels changes 5 of 16 answers on the same CPU. The first divergent value is in the attention dot products, where wider vectors change the summation order. On the ARM Cortex-A725, the native build (SVE2, i8mm) did not change any answer.
+
 ## Open questions
 
 1. Confirm the op on Linux: replace `sinf`/`cosf` with a correctly rounded implementation in a local llama.cpp checkout and check whether macOS and Linux then agree (`vfg check --b <checkout>`).
 2. The x86 pattern (EPYC and Xeon agree) differs from the ARM Linux pattern on two prompts (c002, c005 instead of c004, c008). x86 and ARM use different ggml SIMD kernels; this needs its own controls.
-3. The AVX-512 comparisons on the Xeon are running on Rostam.
 4. One model, one quantisation, 16 prompts. Other models may be more or less sensitive.
