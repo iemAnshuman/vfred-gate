@@ -18,6 +18,10 @@ def _archive(path):
         link.type = tarfile.SYMTYPE
         link.linkname = "a.c"
         tf.addfile(link)
+        hard = tarfile.TarInfo("llama.cpp-c/src/h.c")
+        hard.type = tarfile.LNKTYPE
+        hard.linkname = "llama.cpp-c/src/a.c"
+        tf.addfile(hard)
 
 
 def _tree(tmp_path):
@@ -30,7 +34,7 @@ def _tree(tmp_path):
 
 def test_symlinks_in_archive_pass(tmp_path):
     tree, archive = _tree(tmp_path)
-    assert _verify_tree(tree, archive) == 2
+    assert _verify_tree(tree, archive) == 3
 
 
 def test_retargeted_symlink_fails(tmp_path):
@@ -46,4 +50,20 @@ def test_extra_file_fails(tmp_path):
     tree, archive = _tree(tmp_path)
     (tree / "src/new.c").write_text("x")
     with pytest.raises(VFGError, match="extra files"):
+        _verify_tree(tree, archive)
+
+
+def test_changed_hardlink_fails(tmp_path):
+    tree, archive = _tree(tmp_path)
+    os.remove(tree / "src/h.c")
+    (tree / "src/h.c").write_text("int y;\n")
+    with pytest.raises(VFGError, match="modified"):
+        _verify_tree(tree, archive)
+
+
+def test_hardlink_replaced_by_symlink_fails(tmp_path):
+    tree, archive = _tree(tmp_path)
+    os.remove(tree / "src/h.c")
+    os.symlink("a.c", tree / "src/h.c")
+    with pytest.raises(VFGError, match="modified"):
         _verify_tree(tree, archive)

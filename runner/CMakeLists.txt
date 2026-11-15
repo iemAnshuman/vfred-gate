@@ -30,7 +30,7 @@ set(CMAKE_C_FLAGS_RELEASE "-O2 -g -DNDEBUG")
 add_compile_options("-ffile-prefix-map=${PROJECT_SOURCE_DIR}=." "-ffile-prefix-map=${VFG_LLAMA_DIR}=llama.cpp"
   "-fdebug-prefix-map=${PROJECT_BINARY_DIR}=build")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE}")
-option(VFG_FETCHED_TREE "llama.cpp tree outside this repository; never read git metadata" OFF)
+option(VFG_FETCHED_TREE "llama.cpp tree outside this repository; never embed git metadata" OFF)
 if(VFG_FETCHED_TREE)
   # IGNORE stops ggml's find_program (NOTFOUND would search again). build-info.cmake still
   # runs git, but LLAMA_BUILD_COMMIT/NUMBER above already override its result.

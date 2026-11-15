@@ -119,6 +119,29 @@ def record(
     return {"reference": str(output), "cases": len(corpus), "jobs": len(jobs)}
 
 
+def reference_jobs(jobs, cases, repetitions):
+    """Return the reference's jobs after checking that each is the one record() writes, once."""
+    case_index = {c.id: n for n, c in enumerate(cases)}
+    if len(case_index) != len(cases):
+        raise VFGError("reference has duplicate case ids")
+    expected = {
+        f"jobs/c{n:03d}/{mode}/baseline/r{r:03d}": (c.id, mode, r)
+        for n, c in enumerate(cases)
+        for mode in MODES
+        for r in range(repetitions)
+    }
+    seen = set()
+    for job in jobs:
+        key = (job.get("case_id"), job.get("mode"), job.get("repetition"))
+        if job.get("role") != "baseline" or expected.get(job.get("path")) != key or job["path"] in seen:
+            raise VFGError(f"unexpected job in reference: {job.get('path')}")
+        seen.add(job["path"])
+    missing = [c.id for n, c in enumerate(cases) if f"jobs/c{n:03d}/free_run/baseline/r000" not in seen]
+    if missing:
+        raise VFGError(f"reference has no free_run r000 job for {', '.join(missing[:5])}")
+    return list(jobs)
+
+
 def check(
     reference,
     model,
@@ -145,7 +168,6 @@ def check(
     output = Path(output or "runs/check").resolve()
     if output.exists() and any(output.iterdir()):
         raise VFGError(f"output directory is not empty: {output}")
-    output.mkdir(parents=True, exist_ok=True)
     base = Stack.model_validate(ref["baseline"])
     # References recorded before the manifest was copied have none; verify it when present.
     manifest_state = "absent"
@@ -153,44 +175,26 @@ def check(
         if file_digest(reference / "setup/build-manifest.json") != base.build_manifest_sha256:
             raise VFGError("reference build manifest does not match the baseline stack")
         manifest_state = "verified"
-    cand, info = build_side(b, b_cmake, b_cflags, label="candidate", progress=progress)
+    else:
+        progress("reference has no build manifest (recorded by an older vfg); not checked")
     cases = [CorpusCase.model_validate(c) for c in ref["cases"]]
     repetitions = ref["repetitions"]
     settings = Settings.model_validate(ref["settings"])
     rules = make_contract(contract, len(cases), repetitions)
+    modes = ["free_run"] + (
+        ["teacher_forced_baseline"] if any(r.alignment == "teacher_forced_baseline" for r in rules.rules) else []
+    )
+    # Validate the reference before the (slow) candidate build.
+    jobs = [job for job in reference_jobs(ref["jobs"], cases, repetitions) if job["mode"] in modes]
+    output.mkdir(parents=True, exist_ok=True)
+    cand, info = build_side(b, b_cmake, b_cflags, label="candidate", progress=progress)
     target = host_target()
     plan = Plan(
         id=output.name, model="-", corpus="-", contract="-", baseline="-", candidate="-", target="-",
         settings=settings,
         allowed_stack_differences=[k for k in ALLOWED if base.model_dump()[k] != cand.model_dump()[k]],
     )
-    modes = ["free_run"] + (
-        ["teacher_forced_baseline"] if any(r.alignment == "teacher_forced_baseline" for r in rules.rules) else []
-    )
-    jobs = []
-    case_index = {c.id: n for n, c in enumerate(cases)}
-    if len(case_index) != len(cases):
-        raise VFGError("reference has duplicate case ids")
-    expected_jobs = {
-        f"jobs/c{n:03d}/{mode}/baseline/r{r:03d}": (c.id, mode, r)
-        for n, c in enumerate(cases)
-        for mode in MODES
-        for r in range(repetitions)
-    }
-    seen = set()
-    for job in ref["jobs"]:
-        key = (job.get("case_id"), job.get("mode"), job.get("repetition"))
-        # Each job path must be the one record() writes for its case, mode and repetition, once.
-        if (
-            job.get("role") != "baseline"
-            or job.get("case_id") not in case_index
-            or expected_jobs.get(job.get("path")) != key
-            or job["path"] in seen
-        ):
-            raise VFGError(f"unexpected job in reference: {job.get('path')}")
-        seen.add(job["path"])
-        if job["mode"] not in modes:
-            continue
+    for job in jobs:
         prefix = job["path"] + "/"
         # Copy only indexed regular files; verify_bundle already checked their bytes.
         for name in index:
@@ -201,12 +205,9 @@ def check(
                 target_path = output / name
                 target_path.parent.mkdir(parents=True, exist_ok=True)
                 target_path.write_bytes(source.read_bytes())
-        jobs.append(job)
     resolved = _resolved(plan, lock, rules, target, {"baseline": base, "candidate": cand}, cases)
     paths = {(j["case_id"], j["mode"], j["repetition"]): j["path"] for j in jobs}
     for n, case in enumerate(cases):
-        if (case.id, "free_run", 0) not in paths:
-            raise VFGError(f"reference has no free_run r000 job for {case.id}")
         base_result = output / paths[(case.id, "free_run", 0)] / "output/result.json"
         forced = load_document(base_result)["selected_tokens"] if base_result.exists() else None
         for mode in modes:

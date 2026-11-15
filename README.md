@@ -32,7 +32,7 @@ One flag changed four of sixteen answers (342 of 346 teacher-forced token choice
 
 The terminal shows this summary; standard output carries the full JSON summary for scripts.
 
-**First finding:** the same llama.cpp commit, model and strict flags give different answers on macOS and Linux (6 of 16 prompts). On an Apple M4, the compiler does not change the answers, and an M4 and a Cortex-A725 under Linux diverge on the same prompts. The cause is not yet known; tests exclude libm `sinf`/`cosf` in RoPE and `expf` in softmax. On an Intel Xeon, turning on AVX-512 changes 5 of 16 answers, starting in the attention `MUL_MAT`. See [the draft write-up](docs/findings/2026-11-same-build-different-answers.md).
+**First finding:** the same llama.cpp commit, model and strict flags give different answers on macOS and Linux (6 of 16 prompts). On an Apple M4, the compiler does not change the answers, and an M4 and a Cortex-A725 under Linux diverge from the macOS reference on the same prompts. The cause is not yet known; tests exclude libm `sin`/`cos` in RoPE and `expf` in softmax. On an Intel Xeon, turning on AVX-512 changes 5 of 16 answers, starting in the attention `MUL_MAT`. See [the draft write-up](docs/findings/2026-11-same-build-different-answers.md).
 
 ## Install
 
