@@ -4,7 +4,7 @@ Status: DRAFT, 16 November 2026. Verdicts come from sealed VFRED-Gate bundles. T
 
 ## Summary
 
-The same llama.cpp commit, model, prompts and strict floating-point flags gave different greedy answers on macOS and on Linux: 6 of 16 answers changed. On one ARM CPU, the compiler does not cause it, and two different ARM CPUs under Linux give the same answers. The most likely cause is the C math library. A direct test shows that macOS libm and glibc return different `sinf`/`cosf` bits for the exact angles that ggml computes for this model's RoPE. Other differences between the two operating systems are not yet excluded.
+The same llama.cpp commit, model, prompts and strict floating-point flags gave different greedy answers on macOS and on Linux: 6 of 16 answers changed. On one ARM CPU (Apple M4), the compiler does not cause it. An Apple M4 under Linux and an ARM Cortex-A725 under Linux diverge from the macOS reference on the same prompts at the same first steps. The cause is not yet known. Two tests exclude the first candidates: libm `sinf`/`cosf` in RoPE and libm `expf` in softmax.
 
 ## Setup
 
@@ -26,7 +26,7 @@ Reference: `vfg record` on an Apple M4, macOS, Apple Clang 17. Candidates: `vfg 
 | Intel Xeon Gold 6148, Rostam `medusa00` | RHEL 9, glibc 2.34 / GCC 11.5 | 0.980 | 10/16 | c001 (0), c002 (13), c005 (14), c006 (14), c007 (7), c013 (9) | `1a1ccee6…` (Rostam) |
 | T-Head C920 (RVV 0.7.1), Rostam `sven0`, scalar `rv64gc` build | Fedora 38 / GCC 13 | running | | | |
 
-The M4 under Linux and the Cortex-A725 under Linux diverge on the same six prompts at the same steps. Two different ARM CPUs on Linux agree; one ARM CPU on two operating systems does not. The AMD and Intel x86 machines also agree with each other, on a pattern that shares four of six prompts with ARM Linux.
+The M4 under Linux and the Cortex-A725 under Linux diverge on the same six prompts at the same steps. Two different ARM CPUs under Linux diverge from the reference in the same way; one ARM CPU on two operating systems does not give the same answers. The AMD and Intel x86 machines also diverge in the same way as each other, on a pattern that shares four of six prompts with ARM Linux.
 
 ## Result 2: controls
 
@@ -39,21 +39,21 @@ The M4 under Linux and the Cortex-A725 under Linux diverge on the same six promp
 
 The compiler does not change the answers on either OS. Native SIMD flags do not change them on the A725.
 
-## Mechanism: `sinf`/`cosf` in RoPE
+## Cause: not yet known
 
-`ggml-cpu/ops.cpp:6200-6201` (pinned commit) computes the rotary embedding with the C library:
+The difference follows the operating system, not the CPU or the compiler. Two C math library (libm) candidates were tested and excluded. Neither test is part of a bundle, except where a bundle is named.
 
-```c
-*cos_theta = cosf(theta) * mscale;
-*sin_theta = sinf(theta) * mscale;
-```
-
-A small C program ([`code/rope_libm.c`](code/rope_libm.c), not part of a bundle) computes this model's RoPE angles the way ggml does: `theta_scale = powf(100000, -2/64)` (the model's `rope.freq_base` and head size), then `theta = pos` and `theta *= theta_scale` for each of the 32 pairs, for `pos < 512`. It was compiled with `-O2 -ffp-contract=off -fno-builtin` on the M4 under macOS and under Debian 12 (glibc 2.36, arm64, Docker).
+**`sinf`/`cosf` in RoPE: excluded for this run.** `ggml-cpu/ops.cpp:6200-6201` (pinned commit) computes the rotary embedding with `cosf(theta)` and `sinf(theta)`. A small C program ([`code/rope_libm.c`](code/rope_libm.c)) computes this model's RoPE angles the way ggml does: `theta_scale = powf(100000, -2/64)` (the model's `rope.freq_base` and head size), then `theta = pos` and `theta *= theta_scale` for each of the 32 pairs, for `pos < 512`. It ran on the M4 under macOS and under Debian 12 (glibc 2.36, arm64, Docker), compiled with `-O2 -ffp-contract=off -fno-builtin`.
 
 - `theta_scale` and all 16,384 angles are bit-identical on both systems.
-- `sinf` differs on 190 angles and `cosf` on 213 angles. Example: angle 76.06353, `sinf` = 0.61730009 (macOS) and 0.61730015 (glibc).
+- `sinf` differs on 190 angles and `cosf` on 213 angles, but only at positions 93 and above.
+- This run uses positions 0 to 59 (prompts of 15 to 28 tokens plus 32 generated tokens). For these positions, both libraries return the same bits, so the RoPE tables are identical.
 
-This fits the macOS/Linux split, but it is not yet proven to be the only cause. Other C library calls on the model path (for example `expf` in scalar tails) and other runtime differences (C++ standard library, floating-point environment) have not been checked.
+**`expf` in softmax: excluded.** An exhaustive scan ([`code/expf_scan.c`](code/expf_scan.c)) shows that macOS libm and glibc `expf` differ somewhere in 41,489 of 273,152 blocks of 4,096 inputs in [-88, 0]. ggml's softmax (`ggml-cpu/vec.cpp:595`) calls libm `expf` for the elements left over after the NEON loop. A local llama.cpp checkout with this one call replaced by ggml's own NEON `expf` ([`code/softmax-no-libm-expf.patch`](code/softmax-no-libm-expf.patch)) was recorded on macOS and checked under Linux (Docker on the M4). The verdict was unchanged: FAIL, token choice 0.980, 10/16, the same six prompts at the same steps (bundle `a803b9ad…`, local; reference `bc19ef80…`).
+
+**Not the cause:** `GGML_ACCELERATE` and `GGML_BLAS` are off in all builds, so Apple's Accelerate framework is not used.
+
+**Not yet checked:** other libm calls, the C++ standard library (libc++ against libstdc++), the floating-point environment and memory alignment. The direct way to find the cause is to capture the tensors of one prompt on both systems and compare them op by op. `vfg check` cannot do this yet.
 
 ## Result 3: one compiler flag (same machine)
 
@@ -77,6 +77,6 @@ Turning on the AVX-512 kernels changes 5 of 16 answers on the same CPU. The firs
 
 ## Open questions
 
-1. Confirm the op on Linux: replace `sinf`/`cosf` with a correctly rounded implementation in a local llama.cpp checkout and check whether macOS and Linux then agree (`vfg check --b <checkout>`).
+1. Find the first differing op between macOS and Linux with a tensor capture on both systems (see "Cause: not yet known").
 2. The x86 pattern (EPYC and Xeon agree) differs from the ARM Linux pattern on two prompts (c002, c005 instead of c004, c008). x86 and ARM use different ggml SIMD kernels; this needs its own controls.
 3. One model, one quantisation, 16 prompts. Other models may be more or less sensitive.
