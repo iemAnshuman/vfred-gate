@@ -32,7 +32,7 @@ One flag changed four of sixteen answers (342 of 346 teacher-forced token choice
 
 The terminal shows this summary; standard output carries the full JSON summary for scripts.
 
-**First finding:** the same llama.cpp commit, model and strict flags give different answers on macOS and Linux (6 of 16 prompts), while the CPU and the compiler do not matter. The likely cause is `sinf`/`cosf` in RoPE, which macOS libm and glibc round differently. On an Intel Xeon, turning on AVX-512 changes 5 of 16 answers, starting in the attention `MUL_MAT`. See [the draft write-up](docs/findings/2026-11-same-build-different-answers.md).
+**First finding:** the same llama.cpp commit, model and strict flags give different answers on macOS and Linux (6 of 16 prompts). On ARM, the compiler and the CPU model do not change the answers. The likely cause is `sinf`/`cosf` in RoPE: macOS libm and glibc return different bits for the model's exact RoPE angles. On an Intel Xeon, turning on AVX-512 changes 5 of 16 answers, starting in the attention `MUL_MAT`. See [the draft write-up](docs/findings/2026-11-same-build-different-answers.md).
 
 ## Install
 

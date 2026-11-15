@@ -4,7 +4,7 @@ Status: DRAFT, 16 November 2026. Verdicts come from sealed VFRED-Gate bundles. T
 
 ## Summary
 
-The same llama.cpp commit, model, prompts and strict floating-point flags gave different greedy answers on macOS and on Linux: 6 of 16 answers changed. Controls show that the CPU and the compiler do not cause it. The remaining difference is the operating system's C math library. A direct test shows that macOS libm and glibc return different `sinf`/`cosf` bits for the same angles, and ggml computes RoPE with exactly these two functions.
+The same llama.cpp commit, model, prompts and strict floating-point flags gave different greedy answers on macOS and on Linux: 6 of 16 answers changed. On one ARM CPU, the compiler does not cause it, and two different ARM CPUs under Linux give the same answers. The most likely cause is the C math library. A direct test shows that macOS libm and glibc return different `sinf`/`cosf` bits for the exact angles that ggml computes for this model's RoPE. Other differences between the two operating systems are not yet excluded.
 
 ## Setup
 
@@ -23,7 +23,7 @@ Reference: `vfg record` on an Apple M4, macOS, Apple Clang 17. Candidates: `vfg 
 | Apple M4 (Docker) | Debian 12, glibc 2.36 / GCC 12 | 0.980 | 10/16 | c001 (0), c004 (15), c006 (14), c007 (7), c008 (27), c013 (9) | `cc1d4d35…` (local) |
 | ARM Cortex-A725, Rostam `spark-00` | Ubuntu 24.04, glibc 2.39 / GCC 13.3 | 0.980 | 10/16 | c001 (0), c004 (15), c006 (14), c007 (7), c008 (27), c013 (9) | `7c484523…` (Rostam) |
 | AMD EPYC 7352, Rostam `buran00` | RHEL 9, glibc 2.34 / GCC 11.5 | 0.980 | 10/16 | c001 (0), c002 (13), c005 (14), c006 (14), c007 (7), c013 (9) | `3227b394…` (Rostam) |
-| Intel Xeon Gold 6148, Rostam `medusa` | RHEL 9, glibc 2.34 / GCC 11.5 | 0.980 | 10/16 | c001 (0), c002 (13), c005 (14), c006 (14), c007 (7), c013 (9) | `1a1ccee6…` (Rostam) |
+| Intel Xeon Gold 6148, Rostam `medusa00` | RHEL 9, glibc 2.34 / GCC 11.5 | 0.980 | 10/16 | c001 (0), c002 (13), c005 (14), c006 (14), c007 (7), c013 (9) | `1a1ccee6…` (Rostam) |
 | T-Head C920 (RVV 0.7.1), Rostam `sven0`, scalar `rv64gc` build | Fedora 38 / GCC 13 | running | | | |
 
 The M4 under Linux and the Cortex-A725 under Linux diverge on the same six prompts at the same steps. Two different ARM CPUs on Linux agree; one ARM CPU on two operating systems does not. The AMD and Intel x86 machines also agree with each other, on a pattern that shares four of six prompts with ARM Linux.
@@ -48,9 +48,12 @@ The compiler does not change the answers on either OS. Native SIMD flags do not 
 *sin_theta = sinf(theta) * mscale;
 ```
 
-A small C program (`runs/libm/t.c`, not part of a bundle) evaluated `sinf`/`cosf` on 16,384 RoPE angles (`pos < 512`, 32 frequencies, base 10000), compiled with `-O2 -ffp-contract=off`. With bit-identical angles, macOS libm and glibc 2.36 returned different `sinf` on 225 angles and different `cosf` on 141 angles. Example: angle 0.29995769, `sinf` = 0.29547977 (macOS) and 0.29547980 (glibc).
+A small C program ([`code/rope_libm.c`](code/rope_libm.c), not part of a bundle) computes this model's RoPE angles the way ggml does: `theta_scale = powf(100000, -2/64)` (the model's `rope.freq_base` and head size), then `theta = pos` and `theta *= theta_scale` for each of the 32 pairs, for `pos < 512`. It was compiled with `-O2 -ffp-contract=off -fno-builtin` on the M4 under macOS and under Debian 12 (glibc 2.36, arm64, Docker).
 
-This fits the macOS/Linux split, but it is not yet proven to be the only cause. Other C library calls on the model path (for example `expf` in scalar tails) have not been checked.
+- `theta_scale` and all 16,384 angles are bit-identical on both systems.
+- `sinf` differs on 190 angles and `cosf` on 213 angles. Example: angle 76.06353, `sinf` = 0.61730009 (macOS) and 0.61730015 (glibc).
+
+This fits the macOS/Linux split, but it is not yet proven to be the only cause. Other C library calls on the model path (for example `expf` in scalar tails) and other runtime differences (C++ standard library, floating-point environment) have not been checked.
 
 ## Result 3: one compiler flag (same machine)
 
@@ -70,10 +73,10 @@ Intel Xeon Gold 6148 (Rostam `medusa00`), RHEL 9, GCC 11.5, same commit and mode
 | `-DGGML_AVX512=ON` | 0.985 | 11/16 | `MUL_MAT` (`kq-19`, attention scores), prompt c001, first different token at step 4 | `ed217b9c…` (Rostam) |
 | `-DGGML_NATIVE=ON` (includes AVX-512) | 0.985 | 11/16 | `MUL_MAT` (`kq-19`), same case and step | `45e36289…` (Rostam) |
 
-Turning on the AVX-512 kernels changes 5 of 16 answers on the same CPU. The first divergent value is in the attention dot products, where wider vectors change the summation order. On the ARM Cortex-A725, the native build (SVE2, i8mm) did not change any answer.
+Turning on the AVX-512 kernels changes 5 of 16 answers on the same CPU. The first divergent value is in the attention dot products. The likely mechanism is that wider vectors change the summation order; this was not measured. On the ARM Cortex-A725, the native build (SVE2, i8mm) did not change any answer.
 
 ## Open questions
 
 1. Confirm the op on Linux: replace `sinf`/`cosf` with a correctly rounded implementation in a local llama.cpp checkout and check whether macOS and Linux then agree (`vfg check --b <checkout>`).
 2. The x86 pattern (EPYC and Xeon agree) differs from the ARM Linux pattern on two prompts (c002, c005 instead of c004, c008). x86 and ARM use different ggml SIMD kernels; this needs its own controls.
-4. One model, one quantisation, 16 prompts. Other models may be more or less sensitive.
+3. One model, one quantisation, 16 prompts. Other models may be more or less sensitive.
