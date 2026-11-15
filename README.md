@@ -32,6 +32,8 @@ One flag changed four of sixteen answers (342 of 346 teacher-forced token choice
 
 The terminal shows this summary; standard output carries the full JSON summary for scripts.
 
+**First finding:** the same llama.cpp commit, model and strict flags give different answers on macOS and Linux (6 of 16 prompts), while the CPU and the compiler do not matter. The likely cause is `sinf`/`cosf` in RoPE, which macOS libm and glibc round differently. See [the draft write-up](docs/findings/2026-11-same-build-different-answers.md).
+
 ## Install
 
 You need Python 3.11.4+, CMake 3.20+, Ninja and a C/C++17 compiler (Clang or GCC). The tool builds llama.cpp itself.
