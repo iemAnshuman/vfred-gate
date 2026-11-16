@@ -54,7 +54,7 @@ The label has three values: `inside_envelope`, `outside_envelope`, `not_assessed
 ## D10. Name and licence
 
 - Keep the name VFRED-Gate and the CLI `vfg`. The tagline carries the meaning.
-- Licence: MIT, the same as llama.cpp. **Needs Anshuman and the team to confirm before any release.**
+- Licence: MIT, the same as llama.cpp. Confirmed by Anshuman on 16 Nov 2026: "let it be mit."
 
 ## D11. Launch rule
 
