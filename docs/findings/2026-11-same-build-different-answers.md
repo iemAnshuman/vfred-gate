@@ -10,7 +10,7 @@ The same llama.cpp commit, model, prompts and strict floating-point flags gave d
 - With this macro, ggml repacks Q8_0 weights at load time into an interleaved layout and multiplies with a different kernel (`ggml_gemv_q8_0_4x4_q8_0` instead of `ggml_vec_dot_q8_0_q8_0`). The two kernels round differently (grouping, order and fused multiply-add).
 - A Linux build with `-march=armv8.2-a+dotprod` gives the same answers as macOS on all 16 prompts. The same build with the repack turned off does not. A second, smaller difference (Apple Clang merges `sinf` and `cosf` into `__sincosf_stret` in RoPE) changes some logit bits but no answer. With both removed, all free-run logits are bit-identical.
 
-The same holds on a second ARM machine (NVIDIA GB10 under Linux): with `+dotprod` or `+dotprod+i8mm`, it gives the macOS answers. The x86 and RISC-V differences have a related cause: each platform's Q8_0 dot-product kernel adds the same exact integer block sums in a different floating-point order (lane layout, fused multiply-add or not). A numpy emulation of the three kernels reproduces the first differing tensor of each platform bit for bit.
+The same holds on a second ARM machine (NVIDIA GB10 under Linux): with `+dotprod` or `+dotprod+i8mm`, it gives the macOS answers. The x86 and RISC-V differences have a related cause: each platform's Q8_0 dot-product kernel adds the same exact integer block sums in a different floating-point order (lane layout, fused multiply-add or not). A numpy emulation of the three kernels reproduces the first differing tensor of each platform bit for bit. Later ops with their own vector kernels, such as the F32 attention dot product, add further differences, so the full divergence patterns are not explained by the Q8_0 kernel alone.
 
 ## Setup
 
@@ -108,11 +108,11 @@ The x86 machines and the RISC-V board do not repack Q8_0 weights either: their r
 | x86 AVX2 (`arch/x86/quants.c:1308`) | 8 lanes of 4-product integer sums, `_mm256_fmadd_ps` per block (`:1339`), then `hsum_float_8` (`:43`) | 0 of 960 (Xeon) |
 | ARM NEON without dot product (`arch/arm/quants.c:1150`) | two 4-lane accumulators (even and odd blocks), unfused multiply-add, then a lane sum | 0 of 960 (ARM Linux) |
 
-The same NEON emulation with a fused multiply-add leaves 474 values different from the ARM Linux capture, so the FMA choice alone changes the bits. Each kernel is a valid rounding of the same exact products. As on ARM, every flip in Result 1 is at a step where the top two logits are close. That each kernel's rounding also explains its platform's divergence pattern is an inference: the control below tests it.
+The same NEON emulation with a fused multiply-add leaves 474 values different from the ARM Linux capture, so the FMA choice alone changes the bits. Each kernel is a valid rounding of the same exact products. As on ARM, every flip in Result 1 is at a step where the top two logits are close.
 
 **Second-order effect, not needed for `Qcur-0`.** The x86 activation quantiser uses `id = 127/amax` with round-to-even; the reference uses `id = 1/d` with `roundf` (`ggml-quants.c:276`). Over 1,935 captured activations (2.6 million values) of the c001 run, these give different 8-bit values in 10 places; `roundf` and round-to-even differ in 9 places, all exact ties.
 
-A `vfg check` control (an x86 build with AVX, AVX2, FMA and F16C off, so that it uses the generic scalar kernel, checked against the macOS reference) was submitted on Rostam; its result is not yet read.
+**Control: the Q8_0 kernel is not the whole pattern.** An x86 build with `-DGGML_AVX=OFF -DGGML_AVX2=OFF -DGGML_FMA=OFF -DGGML_F16C=OFF -DGGML_BMI2=OFF -DGGML_AVX512=OFF` falls through to the same scalar Q8_0 loop as the RISC-V build (`arch/x86/quants.c`, after the `__AVX2__` and `__AVX__` branches). Its c001 capture is bit-identical to the RISC-V capture for the first 23 tensors, including `Qcur-0`. The first difference is `kq-0`, the attention-score `MUL_MAT` on the F32 KV cache: there `ggml_vec_dot_f32` is vectorised with SSE on this x86 build (`GGML_SIMD` from `__SSE3__`, `simd-mappings.h:900`) and scalar on `rv64gc`. Checked against the macOS reference, this build diverges on 2 prompts (c001 at step 0, c006 at step 14; token choice 0.994, 14/16 same text; bundle `1f8121be…`, Rostam), not on the six RISC-V prompts. So the Q8_0 kernel explains the first differing tensor on each platform, and the token-level patterns also depend on other kernels.
 
 ## Result 3: one compiler flag (same machine)
 
