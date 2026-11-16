@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "vfred-gate"
-version = "0.1.0"
+version = "1.0.0"
 description = "Numerical compatibility gate for llama.cpp builds: verdict, first differing op, offline evidence"
 readme = "README.md"
 license = "MIT"
