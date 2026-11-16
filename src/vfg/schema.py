@@ -188,7 +188,7 @@ class Verdict(Record):
     verdict: Literal["PASS", "FAIL", "INCONCLUSIVE", "ERROR"]
     exit_code: Literal[0, 2, 3, 4]
     contract_sha256: Digest | None = None
-    legality_status: Literal["not_assessed"] = "not_assessed"
+    legality_status: Literal["inside_envelope", "outside_envelope", "not_assessed"] = "not_assessed"
     reasons: list[str] = Field(default_factory=list)
     rules: list[dict] = Field(default_factory=list)
     evidence: dict = Field(default_factory=dict)

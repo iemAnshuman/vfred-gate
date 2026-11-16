@@ -41,8 +41,12 @@
       "title": "Contract Sha256"
     },
     "legality_status": {
-      "const": "not_assessed",
       "default": "not_assessed",
+      "enum": [
+        "inside_envelope",
+        "outside_envelope",
+        "not_assessed"
+      ],
       "title": "Legality Status",
       "type": "string"
     },

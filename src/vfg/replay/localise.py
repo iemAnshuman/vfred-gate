@@ -28,6 +28,8 @@ def compare_captures(left, right, left_root, right_root):
             raise InsufficientEvidence("capture keys/history are not aligned")
         if a["sha256"] != b["sha256"]:
             item = {k: a[k] for k in keys}
+            if "src" in a:
+                item["src"] = a["src"]
             item.update(baseline_sha256=a["sha256"], candidate_sha256=b["sha256"], injected=b["injected"])
             if "payload" in a and "payload" in b:
                 item["numeric"] = numeric_errors(

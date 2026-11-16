@@ -236,6 +236,7 @@ def differing_case(qualification):
 
 def explain(qualification, output, progress=print):
     """Localise the first observed difference to a layer and ggml op; never guess."""
+    from .legal.matmul import assess_difference
     from .replay import localise
 
     qualification = Path(qualification).resolve()
@@ -260,6 +261,13 @@ def explain(qualification, output, progress=print):
     except (VFGError, OSError, KeyError, ValueError) as exc:
         return {"status": "error", "case_id": case_id, "first_token_difference": token_step, "reason": str(exc)}
     first = result["earliest_difference"]
+    bundle = Path(output).resolve()
+    try:
+        legality = assess_difference(
+            first, bundle / "baseline-before/output", bundle / "candidate/output", load_document(qualification / "inputs.json")["model_path"]
+        )
+    except (VFGError, OSError, KeyError, ValueError) as exc:
+        legality = {"status": "not_assessed", "reason": str(exc)}
     return {
         "status": "localised",
         "case_id": case_id,
@@ -270,7 +278,7 @@ def explain(qualification, output, progress=print):
         "position": first["position"],
         "numeric": first.get("numeric"),
         "difference_count": result["difference_count"],
-        "legality": "not_assessed",
+        "legality": legality,
         "bundle": str(Path(output).resolve()),
     }
 

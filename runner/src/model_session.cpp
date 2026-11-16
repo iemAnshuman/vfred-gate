@@ -58,6 +58,9 @@ struct Capture {
               {"shape",{t->ne[0],t->ne[1],t->ne[2],t->ne[3]}},{"dtype","<f4"},
               {"strides",{t->nb[0],t->nb[1],t->nb[2],t->nb[3]}},{"sha256",digest(b.data(),b.size())},
               {"injected",injected}};
+            json sources=json::array();
+            for(int i=0;i<GGML_MAX_SRC;++i)if(t->src[i])sources.push_back(t->src[i]->name);
+            event["src"]=sources;
             if(config.value("payloads",false)){
                 std::string name="tensor-"+std::to_string(event["ordinal"].get<size_t>())+".f32";
                 std::ofstream f(out/name,std::ios::binary);f.write(b.data(),b.size());f.close();
