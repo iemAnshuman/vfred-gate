@@ -32,7 +32,7 @@ One flag changed four of sixteen answers (342 of 346 teacher-forced token choice
 
 The terminal shows this summary; standard output carries the full JSON summary for scripts.
 
-**First finding:** the same llama.cpp commit, model and strict flags give different answers on macOS and Linux (6 of 16 prompts). On an Apple M4, the cause is the compiler's default CPU target: Apple Clang enables the Arm dot-product extension, so ggml repacks Q8_0 weights and uses a different matmul kernel. A Linux build with `-march=armv8.2-a+dotprod` gives the same answers as macOS; with macOS also built with `-fmath-errno` (for RoPE), all free-run logits are bit-identical. An NVIDIA GB10 under Linux confirms it: with `+dotprod`, it also gives the macOS answers. On an Intel Xeon, turning on AVX-512 changes 5 of 16 answers, starting in the attention `MUL_MAT`. See [the draft write-up](docs/findings/2026-11-same-build-different-answers.md).
+**First finding:** the same llama.cpp commit, model and strict flags give different answers on macOS and Linux (6 of 16 prompts). On an Apple M4, the cause is the compiler's default CPU target: Apple Clang enables the Arm dot-product extension, so ggml repacks Q8_0 weights and uses a different matmul kernel. A Linux build with `-march=armv8.2-a+dotprod` gives the same answers as macOS; with macOS also built with `-fmath-errno` (for RoPE), all free-run logits are bit-identical. On an NVIDIA GB10 under Linux, a `+dotprod` build also gives the macOS answers. On an Intel Xeon, turning on AVX-512 changes 5 of 16 answers, starting in the attention `MUL_MAT`. See [the draft write-up](docs/findings/2026-11-same-build-different-answers.md).
 
 ## Install
 
