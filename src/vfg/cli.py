@@ -11,7 +11,22 @@ from .manifest import atomic_json, load_document
 
 app = typer.Typer(no_args_is_help=True, pretty_exceptions_enable=False)
 corpus_app = typer.Typer(no_args_is_help=True)
-app.add_typer(corpus_app, name="corpus")
+app.add_typer(corpus_app, name="corpus", rich_help_panel="Research record", help="Manage the research prompt corpus.")
+
+
+def _version(value: bool):
+    if value:
+        from . import __version__
+
+        typer.echo(f"vfg {__version__}")
+        raise typer.Exit()
+
+
+@app.callback()
+def _main(
+    version: bool = typer.Option(False, "--version", callback=_version, is_eager=True, help="Show the version and exit."),
+):
+    """Numerical compatibility gate for llama.cpp builds: verdict, first differing op, offline evidence."""
 
 
 def fail(exc):
@@ -29,7 +44,7 @@ def guarded(fn, *args, **kwargs):
         fail(exc)
 
 
-@app.command()
+@app.command(rich_help_panel="Main", help="Check that the build tools (CMake, Ninja, a C/C++ compiler) are available.")
 def doctor(output: Optional[Path] = typer.Option(None)):
     from .doctor import doctor as inventory
 
@@ -39,7 +54,7 @@ def doctor(output: Optional[Path] = typer.Option(None)):
     typer.echo(json.dumps(data, indent=2))
 
 
-@app.command()
+@app.command(rich_help_panel="Research record", help="Validate a research plan file.")
 def validate(plan: Path = typer.Option(...)):
     from .controller import resolve_plan
 
@@ -47,7 +62,7 @@ def validate(plan: Path = typer.Option(...)):
     typer.echo(f"valid: {resolved.plan.id} / {len(resolved.cases)} cases")
 
 
-@app.command()
+@app.command(rich_help_panel="Research record", help="Build one stack of a research plan.")
 def build(
     stack: Path = typer.Option(Path("stacks/baseline.json")),
     build_dir: Path = typer.Option(Path("build/host-release")),
@@ -73,7 +88,7 @@ def build(
     typer.echo(json.dumps({"binary_sha256": data["binary_sha256"], "stack": str(stack)}))
 
 
-@app.command()
+@app.command(rich_help_panel="Research record", help="List the RVV reduction instructions in a binary.")
 def scan(binary: Path = typer.Option(...), output: Path = typer.Option(...)):
     from .scan.elf import scan_binary
 
@@ -82,7 +97,7 @@ def scan(binary: Path = typer.Option(...), output: Path = typer.Option(...)):
     typer.echo(json.dumps(data, indent=2))
 
 
-@app.command()
+@app.command(rich_help_panel="Research record", help="Run the reduction microbenchmark.")
 def microbench(
     output: Path = typer.Option(Path("runs/mechanism")), target: Optional[Path] = typer.Option(None)
 ):
@@ -109,7 +124,7 @@ def freeze(
     typer.echo(json.dumps(data, indent=2))
 
 
-@app.command()
+@app.command(rich_help_panel="Research record", help="Run a research qualification plan.")
 def qualify(plan: Path = typer.Option(...), output: Path = typer.Option(...)):
     from .controller import qualify as run
 
@@ -118,7 +133,7 @@ def qualify(plan: Path = typer.Option(...), output: Path = typer.Option(...)):
     raise typer.Exit(verdict.exit_code)
 
 
-@app.command()
+@app.command(rich_help_panel="Main", help="Recompute the verdict of an evidence bundle offline and check its hashes.")
 def verify(run: Path = typer.Option(...)):
     from .controller import rederive
 
@@ -134,7 +149,7 @@ def verify(run: Path = typer.Option(...)):
     )
 
 
-@app.command()
+@app.command(rich_help_panel="Research record", help="Write the HTML report of a run.")
 def report(
     run: Path = typer.Option(...),
     output: Path = typer.Option(...),
@@ -147,7 +162,7 @@ def report(
     typer.echo(str(guarded(render_report, run, output, localisation, inventory)))
 
 
-@app.command()
+@app.command(rich_help_panel="Research record", help="Localise a difference in a research qualification.")
 def localise(
     qualification: Path = typer.Option(...),
     case: str = typer.Option(...),
@@ -160,7 +175,7 @@ def localise(
     typer.echo(json.dumps(result, indent=2))
 
 
-@app.command()
+@app.command(rich_help_panel="Research record", help="Run the canary prompt study.")
 def canary(
     exploratory: Path = typer.Option(...),
     holdout: Path = typer.Option(...),
@@ -189,7 +204,7 @@ def _split(value):
     return shlex.split(value) if value else []
 
 
-@app.command()
+@app.command(rich_help_panel="Main")
 def compare(
     model: Path = typer.Option(..., help="GGUF model file."),
     a: str = typer.Option("pinned", help="Baseline: pinned, llama.cpp@<tag|commit>, or a local checkout."),
@@ -240,7 +255,7 @@ def compare(
     raise typer.Exit(summary["exit_code"])
 
 
-@app.command()
+@app.command(rich_help_panel="Main")
 def explain(
     run: Path = typer.Option(..., help="Qualification bundle with a FAIL verdict."),
     output: Path = typer.Option(..., help="New directory for the localisation bundle."),
@@ -252,7 +267,7 @@ def explain(
     typer.echo(json.dumps(result, indent=2))
 
 
-@app.command()
+@app.command(rich_help_panel="Main")
 def record(
     model: Path = typer.Option(..., help="GGUF model file."),
     a: str = typer.Option("pinned", help="Build to record: pinned, llama.cpp@<tag|commit>, or a local checkout."),
@@ -275,7 +290,7 @@ def record(
     typer.echo(json.dumps(result, indent=2))
 
 
-@app.command()
+@app.command(rich_help_panel="Main")
 def check(
     reference: Path = typer.Option(..., help="Reference bundle from `vfg record`."),
     model: Path = typer.Option(..., help="The same GGUF model file (checked by hash)."),
@@ -298,7 +313,7 @@ def check(
     raise typer.Exit(result["exit_code"])
 
 
-@app.command("fetch-model")
+@app.command("fetch-model", rich_help_panel="Main")
 def fetch_model(output: Optional[Path] = typer.Option(None, help="Directory for the model file.")):
     """Download the pinned demo model (SmolLM2-360M-Instruct Q8_0, 386 MB) and check its hash."""
     from .models import fetch_pinned
@@ -306,7 +321,7 @@ def fetch_model(output: Optional[Path] = typer.Option(None, help="Directory for 
     typer.echo(str(guarded(fetch_pinned, output)))
 
 
-@app.command()
+@app.command(rich_help_panel="Research record", help="Check the research ledger.")
 def progress(ledger: Path = typer.Option(Path("docs/progress.yaml"))):
     from .progress import check_progress
 
