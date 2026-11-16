@@ -10,7 +10,7 @@ The same llama.cpp commit, model, prompts and strict floating-point flags gave d
 - With this macro, ggml repacks Q8_0 weights at load time into an interleaved layout and multiplies with a different kernel (`ggml_gemv_q8_0_4x4_q8_0` instead of `ggml_vec_dot_q8_0_q8_0`). The two kernels round differently (grouping, order and fused multiply-add).
 - A Linux build with `-march=armv8.2-a+dotprod` gives the same answers as macOS on all 16 prompts. The same build with the repack turned off does not. A second, smaller difference (Apple Clang merges `sinf` and `cosf` into `__sincosf_stret` in RoPE) changes some logit bits but no answer. With both removed, all free-run logits are bit-identical.
 
-Not explained yet: on an ARM Cortex-A725, a native build (which should also repack) gave the same answers as the generic build. The x86 and RISC-V differences in Result 1 use other kernels and are not explained either.
+The same holds on a second ARM machine (NVIDIA GB10 under Linux): with `+dotprod` or `+dotprod+i8mm`, it gives the macOS answers. The x86 and RISC-V differences in Result 1 use other kernels and are not explained yet.
 
 ## Setup
 
@@ -27,12 +27,12 @@ Reference: `vfg record` on an Apple M4, macOS, Apple Clang 17. Candidates: `vfg 
 |---|---|---:|---:|---|---|
 | Apple M4 | macOS / Apple Clang 17 | 1.0 | 16/16 | none | `cde8a89e…` (local) |
 | Apple M4 (Docker) | Debian 12, glibc 2.36 / GCC 12 | 0.980 | 10/16 | c001 (0), c004 (15), c006 (14), c007 (7), c008 (27), c013 (9) | `cc1d4d35…` (local) |
-| ARM Cortex-A725, Rostam `spark-00` | Ubuntu 24.04, glibc 2.39 / GCC 13.3 | 0.980 | 10/16 | c001 (0), c004 (15), c006 (14), c007 (7), c008 (27), c013 (9) | `7c484523…` (Rostam) |
+| NVIDIA GB10 (Cortex-X925 and Cortex-A725 cores), Rostam `spark-00` | Ubuntu 24.04, glibc 2.39 / GCC 13.3 | 0.980 | 10/16 | c001 (0), c004 (15), c006 (14), c007 (7), c008 (27), c013 (9) | `7c484523…` (Rostam) |
 | AMD EPYC 7352, Rostam `buran00` | RHEL 9, glibc 2.34 / GCC 11.5 | 0.980 | 10/16 | c001 (0), c002 (13), c005 (14), c006 (14), c007 (7), c013 (9) | `3227b394…` (Rostam) |
 | Intel Xeon Gold 6148, Rostam `medusa00` | RHEL 9, glibc 2.34 / GCC 11.5 | 0.980 | 10/16 | c001 (0), c002 (13), c005 (14), c006 (14), c007 (7), c013 (9) | `1a1ccee6…` (Rostam) |
 | T-Head C920 (RVV 0.7.1), Rostam `sven0`, scalar `rv64gc` build | Fedora 38, glibc 2.37 / GCC 13.2 | 0.977 | 10/16 | c001 (0), c005 (14), c006 (5), c007 (7), c011 (0), c013 (9) | `346b8fd9…` (Rostam) |
 
-The M4 under Linux and the Cortex-A725 under Linux diverge on the same six prompts at the same steps. Two different ARM CPUs under Linux diverge from the reference in the same way; one ARM CPU on two operating systems does not give the same answers. The AMD and Intel x86 machines also diverge in the same way as each other, on a pattern that shares four of six prompts with ARM Linux. The RISC-V board (scalar build, no vector kernels) has a third pattern. Prompts c001, c007 and c013 diverge at the same steps on every Linux machine.
+The M4 under Linux and the GB10 under Linux diverge on the same six prompts at the same steps. Two different ARM CPUs under Linux diverge from the reference in the same way; one ARM CPU on two operating systems does not give the same answers. The AMD and Intel x86 machines also diverge in the same way as each other, on a pattern that shares four of six prompts with ARM Linux. The RISC-V board (scalar build, no vector kernels) has a third pattern. Prompts c001, c007 and c013 diverge at the same steps on every Linux machine.
 
 ## Result 2: controls
 
@@ -40,10 +40,10 @@ The M4 under Linux and the Cortex-A725 under Linux diverge on the same six promp
 |---|---|---|
 | macOS: Apple Clang 17 vs GCC 16 | PASS (16/16, all 346 token choices agree) | `df2bb436…` (local) |
 | Linux (Docker on M4): GCC 12 vs Clang 14 | PASS (16/16) | `23fac7bf…` (local) |
-| Cortex-A725: `GGML_NATIVE=OFF` vs `ON` (SVE2, i8mm, dotprod) | PASS (16/16) | `77cd5f81…` (Rostam) |
+| GB10: `GGML_NATIVE=OFF` vs `ON` (GCC 13.3 `-mcpu=native` enables no extra features here, see below) | PASS (16/16) | `77cd5f81…` (Rostam) |
 | llama.cpp pinned commit vs release `b12423` (macOS) | PASS (16/16) | local |
 
-Within one OS, the two compilers give the same answers. Both macOS compilers (Apple Clang 17, Homebrew GCC 16) define `__ARM_FEATURE_DOTPROD` by default; GCC 12 on Linux aarch64 and Clang with `--target=aarch64-linux-gnu` do not (`-dM -E`). See the cause below. On the A725, native SIMD flags did not change the answers; this conflicts with the cause below and is still open.
+Within one OS, the two compilers give the same answers. Both macOS compilers (Apple Clang 17, Homebrew GCC 16) define `__ARM_FEATURE_DOTPROD` by default; GCC 12 on Linux aarch64 and Clang with `--target=aarch64-linux-gnu` do not (`-dM -E`). See the cause below.
 
 ## Cause: the default CPU target selects the Q8_0 kernel
 
@@ -76,7 +76,15 @@ Turning the repack off brings the failure back, so the repacked kernel is the me
 
 **What this means.** On the M4, the answers depend on which CPU features the compiler assumes, even with the same CPU and strict floating-point flags. All divergences in Result 1 fall on steps where the top two logits of the reference differ by less than 0.1 (the reference has 18 of 346 steps with a gap below 0.13). Small rounding changes flip exactly these steps, so a shared divergence pattern shows which steps are fragile; it does not show that two machines compute the same values.
 
-**Open conflict: the A725 native build.** On the Cortex-A725, `GGML_NATIVE=ON` should define `DOTPROD` and `MATMUL_INT8` and repack Q8_0 weights to `q8_0_4x8`. On the M4, that layout gives the macOS answers (`aad90421…`). But on the A725 the native build gave the same answers as the generic build (`77cd5f81…`). The runner logs of that run were not checked for the repack. This must be resolved before the cause is called general.
+**Second ARM machine: NVIDIA GB10.** The CPU reports `asimddp` and `i8mm` (`lscpu`). But GCC 13.3 with `-mcpu=native` defines no `__ARM_FEATURE_*` macro on this node (`gcc -mcpu=native -dM -E`), so the `GGML_NATIVE=ON` build in Result 2 was a generic build: its runner log shows that none of the 291 tensors use `CPU_REPACK`. This explains why it matched the generic build. Builds with explicit flags, checked on the GB10 against the macOS reference (`2a012730…`):
+
+| GB10 candidate flags | Repack (runner log) | Verdict | Same text | Bundle |
+|---|---|---|---:|---|
+| default (`armv8-a`) | none | FAIL, token choice 0.980 | 10/16 | `7c484523…` |
+| `-march=armv8.2-a+dotprod` | `q8_0_4x4` | PASS, token choice 1.0 | 16/16 | `d807fb83…` |
+| `-march=armv8.2-a+dotprod+i8mm` | `q8_0_4x8` | PASS, token choice 1.0 | 16/16 | `a54b6cbc…` |
+
+All GB10 bundles are on Rostam.
 
 ## Result 3: one compiler flag (same machine)
 
@@ -96,10 +104,9 @@ Intel Xeon Gold 6148 (Rostam `medusa00`), RHEL 9, GCC 11.5, same commit and mode
 | `-DGGML_AVX512=ON` | 0.985 | 11/16 | `MUL_MAT` (`kq-19`, attention scores), prompt c001, first different token at step 4 | `ed217b9c…` (Rostam) |
 | `-DGGML_NATIVE=ON` (includes AVX-512) | 0.985 | 11/16 | `MUL_MAT` (`kq-19`), same case and step | `45e36289…` (Rostam) |
 
-Turning on the AVX-512 kernels changes 5 of 16 answers on the same CPU. The first divergent value is in the attention dot products. The likely mechanism is that wider vectors change the summation order; this was not measured. On the ARM Cortex-A725, the native build (SVE2, i8mm) did not change any answer.
+Turning on the AVX-512 kernels changes 5 of 16 answers on the same CPU. The first divergent value is in the attention dot products. The likely mechanism is that wider vectors change the summation order; this was not measured.
 
 ## Open questions
 
-1. The A725 conflict: check whether the native build repacked (runner log), and check an A725 build with `-march=armv8.2-a+dotprod` against the macOS reference.
-2. The x86 pattern (EPYC and Xeon agree) differs from the ARM Linux pattern on two prompts (c002, c005 instead of c004, c008). x86 and ARM use different ggml SIMD kernels; this needs its own controls.
-3. One model, one quantisation, 16 prompts. Other models may be more or less sensitive.
+1. The x86 pattern (EPYC and Xeon agree) differs from the ARM Linux pattern on two prompts (c002, c005 instead of c004, c008). x86 and ARM use different ggml SIMD kernels; this needs its own controls.
+2. One model, one quantisation, 16 prompts. Other models may be more or less sensitive.
