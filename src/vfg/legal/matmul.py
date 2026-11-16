@@ -1,7 +1,9 @@
 """A-priori legal-difference envelope for one ggml MUL_MAT output.
 
 The bound documents a difference explained by legal summation order, FMA contraction and the
-kernel's rounding of the activation to the weight type's vec_dot type. It is conservative and
+kernel's rounding of the activation to the weight type's vec_dot type, for F32 and Q8_0 weights
+(both accumulate in binary32 in ggml's CPU kernels). F16 weights are not assessed: on Arm targets
+with FP16 vector arithmetic, ggml_vec_dot_f16 accumulates in binary16, which this bound does not model. It is conservative and
 a-priori: a result inside it is consistent with those causes, never a proof of any ISA behaviour,
 and a result outside it does not claim an ISA defect.
 """
@@ -10,7 +12,7 @@ import json
 from pathlib import Path
 import numpy as np
 from ..errors import VFGError
-from ..gguf import BLOCK, F16, F32, Q8_0, TYPE_NAMES, find_tensor
+from ..gguf import BLOCK, F32, Q8_0, TYPE_NAMES, find_tensor, tensor_info
 
 U = 2.0**-24
 
@@ -19,8 +21,8 @@ def activation_error(x, weight_type):
     """Max rounding error of each x element when converted to the weight type's vec_dot type."""
     if weight_type == F32:
         return np.zeros_like(x)
-    if weight_type == F16:
-        return np.abs(x) * 2.0**-11
+    if weight_type != Q8_0:
+        raise VFGError(f"no envelope for weight type {TYPE_NAMES.get(weight_type, weight_type)}")
     blocks = np.abs(x).reshape(x.shape[0], -1, BLOCK).max(axis=2) / 127.0
     scale = blocks.astype(np.float32).astype(np.float16).astype(np.float64)
     return np.repeat(scale / 2.0, BLOCK, axis=1)
@@ -42,6 +44,8 @@ def envelope_bound(weights, x, weight_type):
 
 def assess(out_a, out_b, weights, x, weight_type):
     """Compare two builds' outputs (tokens, rows) against the envelope."""
+    if not (np.isfinite(out_a).all() and np.isfinite(out_b).all() and np.isfinite(x).all()):
+        return _not_assessed("non-finite values in the outputs or the activation")
     bound = envelope_bound(weights, x, weight_type)
     diff = np.abs(out_a.astype(np.float64) - out_b.astype(np.float64))
     with np.errstate(divide="ignore", invalid="ignore"):
@@ -76,13 +80,14 @@ def assess_difference(difference, baseline_root, candidate_root, model_path):
     if difference["shape"][2:] != [1, 1]:
         return _not_assessed("tensor is not 2-D")
     try:
-        found = find_tensor(model_path, src[0])
+        info = tensor_info(model_path, src[0])
     except VFGError as exc:
         return _not_assessed(str(exc))
-    if found is None:
+    if info is None:
         return _not_assessed(f"{src[0]} is not a model weight")
-    info, weights = found
-    if weights.ndim != 2:
+    if info.type not in (F32, Q8_0):
+        return _not_assessed(f"weight type {TYPE_NAMES.get(info.type, info.type)} is not modelled")
+    if len(info.ne) != 2:
         return _not_assessed(f"{src[0]} is not a 2-D weight")
     events = {r: _events(root) for r, root in (("a", baseline_root), ("b", candidate_root))}
     own = {r: next((e for e in events[r] if e["ordinal"] == difference["ordinal"]), None) for r in events}
@@ -107,11 +112,15 @@ def assess_difference(difference, baseline_root, candidate_root, model_path):
         return _not_assessed(f"activation {src[1]} differs between the builds")
     if left[-1]["shape"][2:] != [1, 1]:
         return _not_assessed("activation is not 2-D")
-    k, rows = weights.shape[1], weights.shape[0]
+    k, rows = info.ne[0], info.ne[1]
     tokens = difference["shape"][1]
-    x = _payload(baseline_root, left[-1]).astype(np.float64)
     if difference["shape"][0] != rows or left[-1]["shape"][:2] != [k, tokens]:
         return _not_assessed("shapes do not match a MUL_MAT of the weight and activation")
+    try:
+        _, weights = find_tensor(model_path, src[0])
+    except VFGError as exc:
+        return _not_assessed(str(exc))
+    x = _payload(baseline_root, left[-1]).astype(np.float64)
     a = _payload(baseline_root, own["a"]).reshape(tokens, rows)
     b = _payload(candidate_root, own["b"]).reshape(tokens, rows)
     result = assess(a, b, weights, x.reshape(tokens, k), info.type)

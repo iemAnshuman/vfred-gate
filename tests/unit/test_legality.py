@@ -94,13 +94,20 @@ def test_perturbation_is_outside():
     assert result["max_ratio"] > 1
 
 
-def test_q8_and_f16_rounding_widen_the_bound():
+def test_q8_rounding_widens_the_bound():
     w, x = _problem()
     out = x @ w.T
     tiny = out + 0.02
     assert assess(out, tiny, w, x, F32)["status"] == "outside_envelope"
     assert assess(out, tiny, w, x, Q8_0)["status"] == "inside_envelope"
-    assert assess(out, tiny, w, x, F16)["max_ratio"] < assess(out, tiny, w, x, F32)["max_ratio"]
+
+
+def test_non_finite_is_not_assessed():
+    w, x = _problem()
+    out = x @ w.T
+    bad = out.copy()
+    bad[0, 0] = np.nan
+    assert assess(out, bad, w, x, F32)["status"] == "not_assessed"
 
 
 def _capture(root, name, op, ordinal, values, src, shape):
@@ -172,4 +179,10 @@ def test_not_assessed_unsupported_weight_type(tmp_path):
     difference, roots, path = _bundle(tmp_path, perturb=1e-9)
     write_gguf(path, [("w", 12, (256, 8), b"\0" * 144)])
     result = assess_difference(difference, roots["a"], roots["b"], path)
-    assert result["status"] == "not_assessed" and "unsupported" in result["reason"]
+    assert result["status"] == "not_assessed" and "not modelled" in result["reason"]
+
+
+def test_f16_weight_is_not_assessed(tmp_path):
+    difference, roots, path = _bundle(tmp_path, perturb=1e-9, weight_type=F16)
+    result = assess_difference(difference, roots["a"], roots["b"], path)
+    assert result["status"] == "not_assessed" and "F16" in result["reason"]

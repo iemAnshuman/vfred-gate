@@ -76,6 +76,11 @@ def _index(path):
     return tensors, base
 
 
+def tensor_info(path, name):
+    """Return the GGUFTensor header of one tensor without reading its data, or None if absent."""
+    return _index(path)[0].get(name)
+
+
 def find_tensor(path, name):
     """Return (GGUFTensor, float64 array shaped (rows, ne0) for 2-D or (ne0,) for 1-D) or None if absent."""
     tensors, base = _index(path)

@@ -6,7 +6,7 @@ cd "$HOME/vfred-gate"
 export VFG_CACHE=$HOME/vfg-cache
 case "$(uname -m)" in
   # binutils 2.42 (system module) assembles the T-Head vector kernels; Fedora 38 ships 2.39
-  riscv64) module load binutils/2.42 2>/dev/null; . .venv-riscv64/bin/activate; run() { vfg "$@"; } ;;
+  riscv64) module load binutils/2.42 || exit 1; . .venv-riscv64/bin/activate; run() { vfg "$@"; } ;;
   aarch64) export PATH="$HOME/.local/uv-aarch64/bin:$PATH" ;&
   *) export UV_PROJECT_ENVIRONMENT=.venv-$(uname -m); uv sync -q --python 3.12; run() { uv run vfg "$@"; } ;;
 esac

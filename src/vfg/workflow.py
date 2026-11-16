@@ -390,6 +390,10 @@ def format_summary(summary):
         if e.get("numeric"):
             n = e["numeric"]
             lines.append(f"  max abs error {n['max_absolute_error']:.2g}, max {n['max_ulp_error']} ULP")
+        legality = e.get("legality")
+        if isinstance(legality, dict):
+            detail = legality.get("reason") or f"max ratio to the bound {legality.get('max_ratio', 0):.2g}"
+            lines.append(f"  legality {legality['status']} ({detail})")
     elif e:
         lines.append(f"first difference: prompt {e['case_id']}, token step {e.get('first_token_difference')}")
         lines.append(f"  localisation {e['status']}: {e.get('reason')}")

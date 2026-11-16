@@ -6,7 +6,7 @@
 - Automatic localisation after a FAIL: first differing token step, layer and ggml operator.
 - `vfg explain` and `vfg fetch-model` commands; `vfg doctor` reports missing build tools.
 - `vfg record` and `vfg check`: record a reference on one machine and check another machine's build against it, with an optional `--reference-sha256` pin.
-- Legality label after a FAIL: when the first differing op is a `MUL_MAT` with an F32, F16 or Q8_0 weight, the outputs are checked against a worst-case rounding bound (`inside_envelope`, `outside_envelope` or `not_assessed`).
+- Legality label after a FAIL: when the first differing op is a `MUL_MAT` with an F32 or Q8_0 weight, the outputs are checked against a worst-case rounding bound (`inside_envelope`, `outside_envelope` or `not_assessed`).
 - `vfg --version`; `vfg --help` groups the main commands apart from the research-record commands.
 - Build cache in `~/.cache/vfred-gate` (or `$VFG_CACHE`) with source identity checks and a lock for parallel runs.
 - The model lock accepts any quantisation; the runner builds against any llama.cpp tree from 2025 or later.

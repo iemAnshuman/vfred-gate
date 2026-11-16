@@ -108,7 +108,7 @@ The x86 machines and the RISC-V board do not repack Q8_0 weights either: their r
 | x86 AVX2 (`arch/x86/quants.c:1308`) | 8 lanes of 4-product integer sums, `_mm256_fmadd_ps` per block (`:1339`), then `hsum_float_8` (`:43`) | 0 of 960 (Xeon) |
 | ARM NEON without dot product (`arch/arm/quants.c:1150`) | two 4-lane accumulators (even and odd blocks), unfused multiply-add, then a lane sum | 0 of 960 (ARM Linux) |
 
-The same NEON emulation with a fused multiply-add leaves 474 values different from the ARM Linux capture, so the FMA choice alone changes the bits. Each kernel is a valid rounding of the same exact products. As on ARM, these differences flip only the steps where the top two logits are close, which is why each platform family has its own divergence pattern.
+The same NEON emulation with a fused multiply-add leaves 474 values different from the ARM Linux capture, so the FMA choice alone changes the bits. Each kernel is a valid rounding of the same exact products. As on ARM, every flip in Result 1 is at a step where the top two logits are close. That each kernel's rounding also explains its platform's divergence pattern is an inference: the control below tests it.
 
 **Second-order effect, not needed for `Qcur-0`.** The x86 activation quantiser uses `id = 127/amax` with round-to-even; the reference uses `id = 1/d` with `roundf` (`ggml-quants.c:276`). Over 1,935 captured activations (2.6 million values) of the c001 run, these give different 8-bit values in 10 places; `roundf` and round-to-even differ in 9 places, all exact ties.
 
