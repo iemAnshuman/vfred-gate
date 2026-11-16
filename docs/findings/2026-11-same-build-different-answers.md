@@ -10,7 +10,7 @@ The same llama.cpp commit, model, prompts and strict floating-point flags gave d
 - With this macro, ggml repacks Q8_0 weights at load time into an interleaved layout and multiplies with a different kernel (`ggml_gemv_q8_0_4x4_q8_0` instead of `ggml_vec_dot_q8_0_q8_0`). The two kernels round differently (grouping, order and fused multiply-add).
 - A Linux build with `-march=armv8.2-a+dotprod` gives the same answers as macOS on all 16 prompts. The same build with the repack turned off does not. A second, smaller difference (Apple Clang merges `sinf` and `cosf` into `__sincosf_stret` in RoPE) changes some logit bits but no answer. With both removed, all free-run logits are bit-identical.
 
-The same holds on a second ARM machine (NVIDIA GB10 under Linux): with `+dotprod` or `+dotprod+i8mm`, it gives the macOS answers. The x86 and RISC-V differences in Result 1 use other kernels and are not explained yet.
+The same holds on a second ARM machine (NVIDIA GB10 under Linux): with `+dotprod` or `+dotprod+i8mm`, it gives the macOS answers. The x86 and RISC-V differences have a related cause: each platform's Q8_0 dot-product kernel adds the same exact integer block sums in a different floating-point order (lane layout, fused multiply-add or not). A numpy emulation of the three kernels reproduces the first differing tensor of each platform bit for bit.
 
 ## Setup
 
@@ -86,6 +86,34 @@ Turning the repack off brings the failure back, so the repacked kernel is the me
 
 All GB10 bundles are on Rostam.
 
+## Cause on x86 and RISC-V: the summation order of the Q8_0 dot product
+
+The x86 machines and the RISC-V board do not repack Q8_0 weights either: their runner logs report `tensor 'token_embd.weight' (q8_0) (and 290 others) cannot be used with preferred buffer type CPU_REPACK`, and `n_batch = 1` rules out the llamafile kernel. They use the same `ggml_vec_dot_q8_0_q8_0` entry point as generic ARM Linux, but each architecture has its own implementation.
+
+**Where the values first differ.** The pinned c001 request was captured on the Xeon, the EPYC and `sven0`. The Xeon and the EPYC captures are identical (all 17,370 tensors have the same SHA-256). The first three tensors (`embd`, `norm-0`, `attn_norm-0`) are bit-identical on every platform. The first difference is again `Qcur-0`:
+
+| Captures compared | Differing values of `Qcur-0` (of 960) | Max abs difference |
+|---|---:|---:|
+| x86 vs ARM Linux | 796 | 3.8e-06 |
+| x86 vs macOS | 815 | 3.0e-06 |
+| RISC-V (scalar) vs ARM Linux | 817 | 2.9e-06 |
+| RISC-V (scalar) vs macOS | 596 | 9.5e-07 |
+| x86 vs RISC-V (scalar) | 822 | 2.9e-06 |
+
+**Emulation.** [`code/qcur0_kernels.py`](code/qcur0_kernels.py) reads `blk.0.attn_q.weight` from the GGUF file, quantises the captured `attn_norm-0` activation to Q8_0, and computes the 960 dot products in each kernel's order. All three kernels quantise this activation to the same values, so only the floating-point accumulation differs:
+
+| Kernel (llama.cpp `552f18f`, `ggml/src/ggml-cpu/`) | Accumulation | Differs from the capture of its own platform |
+|---|---|---:|
+| Generic scalar, used by the `rv64gc` build (`quants.c:451`, via `arch/riscv/quants.c:479`) | one float sum, `sumf += sumi * (dx * dy)`, no FMA | 0 of 960 (RISC-V) |
+| x86 AVX2 (`arch/x86/quants.c:1308`) | 8 lanes of 4-product integer sums, `_mm256_fmadd_ps` per block (`:1339`), then `hsum_float_8` (`:43`) | 0 of 960 (Xeon) |
+| ARM NEON without dot product (`arch/arm/quants.c:1150`) | two 4-lane accumulators (even and odd blocks), unfused multiply-add, then a lane sum | 0 of 960 (ARM Linux) |
+
+The same NEON emulation with a fused multiply-add leaves 474 values different from the ARM Linux capture, so the FMA choice alone changes the bits. Each kernel is a valid rounding of the same exact products. As on ARM, these differences flip only the steps where the top two logits are close, which is why each platform family has its own divergence pattern.
+
+**Second-order effect, not needed for `Qcur-0`.** The x86 activation quantiser uses `id = 127/amax` with round-to-even; the reference uses `id = 1/d` with `roundf` (`ggml-quants.c:276`). Over 1,935 captured activations (2.6 million values) of the c001 run, these give different 8-bit values in 10 places; `roundf` and round-to-even differ in 9 places, all exact ties.
+
+A `vfg check` control (an x86 build with AVX, AVX2, FMA and F16C off, so that it uses the generic scalar kernel, checked against the macOS reference) was submitted on Rostam; its result is not yet read.
+
 ## Result 3: one compiler flag (same machine)
 
 Candidate adds `-ffp-contract=fast` (fused multiply-add allowed).
@@ -108,5 +136,4 @@ Turning on the AVX-512 kernels changes 5 of 16 answers on the same CPU. The firs
 
 ## Open questions
 
-1. The x86 pattern (EPYC and Xeon agree) differs from the ARM Linux pattern on two prompts (c002, c005 instead of c004, c008). x86 and ARM use different ggml SIMD kernels; this needs its own controls.
-2. One model, one quantisation, 16 prompts. Other models may be more or less sensitive.
+1. One model, one quantisation, 16 prompts. Other models may be more or less sensitive.
