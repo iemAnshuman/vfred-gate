@@ -12,7 +12,7 @@ import json
 from pathlib import Path
 import numpy as np
 from ..errors import VFGError
-from ..gguf import BLOCK, F32, Q8_0, TYPE_NAMES, find_tensor, tensor_info
+from ..gguf import BLOCK, F32, Q8_0, find_tensor, tensor_info, type_name
 
 U = 2.0**-24
 
@@ -22,7 +22,7 @@ def activation_error(x, weight_type):
     if weight_type == F32:
         return np.zeros_like(x)
     if weight_type != Q8_0:
-        raise VFGError(f"no envelope for weight type {TYPE_NAMES.get(weight_type, weight_type)}")
+        raise VFGError(f"no envelope for weight type {type_name(weight_type)}")
     blocks = np.abs(x).reshape(x.shape[0], -1, BLOCK).max(axis=2) / 127.0
     scale = blocks.astype(np.float32).astype(np.float16).astype(np.float64)
     return np.repeat(scale / 2.0, BLOCK, axis=1)
@@ -86,7 +86,7 @@ def assess_difference(difference, baseline_root, candidate_root, model_path):
     if info is None:
         return _not_assessed(f"{src[0]} is not a model weight")
     if info.type not in (F32, Q8_0):
-        return _not_assessed(f"weight type {TYPE_NAMES.get(info.type, info.type)} is not modelled")
+        return _not_assessed(f"weight type {type_name(info.type)} is not modelled")
     if len(info.ne) != 2:
         return _not_assessed(f"{src[0]} is not a 2-D weight")
     events = {r: _events(root) for r, root in (("a", baseline_root), ("b", candidate_root))}
@@ -125,6 +125,5 @@ def assess_difference(difference, baseline_root, candidate_root, model_path):
     b = _payload(candidate_root, own["b"]).reshape(tokens, rows)
     result = assess(a, b, weights, x.reshape(tokens, k), info.type)
     result["weight"] = src[0]
-    result["weight_type"] = TYPE_NAMES[info.type]
+    result["weight_type"] = type_name(info.type)
     return result
-

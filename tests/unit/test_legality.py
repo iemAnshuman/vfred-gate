@@ -3,7 +3,7 @@ import struct
 import numpy as np
 import pytest
 from vfg.errors import VFGError
-from vfg.gguf import F16, F32, Q8_0, find_tensor
+from vfg.gguf import F16, F32, Q8_0, find_tensor, type_name
 from vfg.legal.matmul import assess, assess_difference
 
 
@@ -179,7 +179,12 @@ def test_not_assessed_unsupported_weight_type(tmp_path):
     difference, roots, path = _bundle(tmp_path, perturb=1e-9)
     write_gguf(path, [("w", 12, (256, 8), b"\0" * 144)])
     result = assess_difference(difference, roots["a"], roots["b"], path)
-    assert result["status"] == "not_assessed" and "not modelled" in result["reason"]
+    assert result["status"] == "not_assessed" and result["reason"] == "weight type Q4_K is not modelled"
+
+
+def test_type_name_covers_ggml_enum():
+    assert [type_name(k) for k in (0, 8, 14, 30, 41)] == ["F32", "Q8_0", "Q6_K", "BF16", "Q1_0"]
+    assert type_name(4) == "type 4" and type_name(99) == "type 99"
 
 
 def test_f16_weight_is_not_assessed(tmp_path):

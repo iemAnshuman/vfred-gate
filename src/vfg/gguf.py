@@ -6,7 +6,11 @@ import numpy as np
 from .errors import VFGError
 
 F32, F16, Q8_0 = 0, 1, 8
-TYPE_NAMES = {F32: "F32", F16: "F16", Q8_0: "Q8_0"}
+TYPE_NAMES = {F32: "F32", F16: "F16", Q8_0: "Q8_0"}  # the types this reader decodes
+_GGML_TYPES = (
+    "F32 F16 Q4_0 Q4_1 - - Q5_0 Q5_1 Q8_0 Q8_1 Q2_K Q3_K Q4_K Q5_K Q6_K Q8_K IQ2_XXS IQ2_XS IQ3_XXS IQ1_S"
+    " IQ4_NL IQ3_S IQ2_S IQ4_XS I8 I16 I32 I64 F64 IQ1_M BF16 - - - TQ1_0 TQ2_0 - - - MXFP4 NVFP4 Q1_0 Q2_0"
+).split()  # enum ggml_type at llama.cpp 552f18f; "-" marks removed values
 BLOCK = 32
 _SCALAR = {0: "<B", 1: "<b", 2: "<H", 3: "<h", 4: "<I", 5: "<i", 6: "<f", 7: "<?", 10: "<Q", 11: "<q", 12: "<d"}
 _STRING, _ARRAY = 8, 9
@@ -76,6 +80,13 @@ def _index(path):
     return tensors, base
 
 
+def type_name(kind):
+    """ggml type name for messages, or the number when it is unknown."""
+    if 0 <= kind < len(_GGML_TYPES) and _GGML_TYPES[kind] != "-":
+        return _GGML_TYPES[kind]
+    return f"type {kind}"
+
+
 def tensor_info(path, name):
     """Return the GGUFTensor header of one tensor without reading its data, or None if absent."""
     return _index(path)[0].get(name)
@@ -88,7 +99,7 @@ def find_tensor(path, name):
     if info is None:
         return None
     if info.type not in TYPE_NAMES:
-        raise VFGError(f"unsupported GGUF tensor type {info.type} for {name}")
+        raise VFGError(f"unsupported GGUF tensor type {type_name(info.type)} for {name}")
     elements = int(np.prod(info.ne))
     start = base + info.offset
     if info.type == F32:
