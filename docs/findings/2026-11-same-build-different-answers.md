@@ -134,6 +134,16 @@ Intel Xeon Gold 6148 (Rostam `medusa00`), RHEL 9, GCC 11.5, same commit and mode
 
 Turning on the AVX-512 kernels changes 5 of 16 answers on the same CPU. The first divergent value is in the attention dot products. The likely mechanism is that wider vectors change the summation order; this was not measured.
 
+## Result 5: T-Head vector kernels on RISC-V (same machine)
+
+T-Head C920 with RVV 0.7.1 (Rostam `sven1`), Fedora, GCC 13.2.1 with binutils 2.42, same commit. Baseline: default scalar build (`rv64gc`). Candidate: `-DGGML_XTHEADVECTOR=ON`, which compiles every ggml-cpu file with `-march=rv64gc_xtheadvector`; its `libggml-cpu.a` contains 213 `th.v*` vector instructions and the baseline's none. ggml has no T-Head kernel for Q8_0, so this run uses a Q4_K_M model requantised from the Q8_0 file (`llama-quantize --allow-requantize`, SHA-256 `895bb090…`). 8 prompts, 3 repetitions per build.
+
+| Candidate | Token choice | Same text | First differing op (`vfg explain`) | Bundle |
+|---|---:|---:|---|---|
+| `-DGGML_XTHEADVECTOR=ON` | 200/203 (0.985) | 5/8 | `MUL_MAT` (`ffn_out-0`, weight `blk.0.ffn_down.weight`, Q6_K), prompt c004, first different token at step 17, max 400 ULP | `9faf0ddb…` (Rostam) |
+
+Turning on the T-Head vector kernels changes 3 of 8 answers on the same board. The first differing tensor is the first one that uses a T-Head kernel. In this model, the weights with 960-value rows (attention and FFN gate and up) cannot use K-quants, because 960 is not a multiple of the 256-value K-quant block: `llama-quantize` stores them as Q5_0 (fallback for Q4_K) or Q8_0 (fallback for Q6_K, the attention V weight). ggml's RISC-V Q5_0 and Q8_0 kernels need `__riscv_v`, and the candidate's compiler defines only `__riscv_xtheadvector`, so both builds run the same generic code for these weights. The FFN down weight (2,560 columns) is Q6_K, which has a T-Head kernel (`ggml_vec_dot_q6_K_q8_K_xtheadvector`). The legality label is `not_assessed`: the bound models only F32 and Q8_0 weights.
+
 ## Open questions
 
 1. One model, one quantisation, 16 prompts. Other models may be more or less sensitive.

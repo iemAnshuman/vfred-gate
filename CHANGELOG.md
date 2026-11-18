@@ -13,7 +13,7 @@
 - The wheel bundles the native runner sources, so `pip install vfred-gate` works outside a checkout.
 - CI on Linux x86-64, Linux arm64 and macOS arm64; Dockerfile.
 - The research record moved behind `docs/research/`; its ledger and evidence are unchanged.
-- Finding: the same llama.cpp build gives different greedy answers on macOS and Linux, and on x86 and RISC-V; see `docs/findings/`.
+- Finding: the same llama.cpp build gives different greedy answers on macOS and Linux, and on x86 and RISC-V; ggml's T-Head vector kernels change answers on a RISC-V RVV 0.7.1 board; see `docs/findings/`.
 
 ## 0.1.0 (12 November 2026)
 
