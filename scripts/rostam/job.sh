@@ -4,6 +4,7 @@
 set -u
 name=$1; cmd=$2; shift 2
 cd "${SLURM_SUBMIT_DIR:-.}" || exit 1
+mkdir -p runs
 export VFG_CACHE=${VFG_CACHE:-$(dirname "$PWD")/vfg-cache}
 case "$(uname -m)" in
   # binutils 2.42 (system module) assembles the T-Head vector kernels; Fedora 38 ships 2.39
