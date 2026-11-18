@@ -63,7 +63,7 @@ def test_reader_rejects_bad_files(tmp_path):
     with pytest.raises(VFGError):
         find_tensor(path, "a")
     write_gguf(path, [("q", 12, (256,), b"\0" * 144)])
-    with pytest.raises(VFGError, match="unsupported"):
+    with pytest.raises(VFGError, match="unsupported GGUF tensor type Q4_K for q"):
         find_tensor(path, "q")
 
 
@@ -184,7 +184,7 @@ def test_not_assessed_unsupported_weight_type(tmp_path):
 
 def test_type_name_covers_ggml_enum():
     assert [type_name(k) for k in (0, 8, 14, 30, 41)] == ["F32", "Q8_0", "Q6_K", "BF16", "Q1_0"]
-    assert type_name(4) == "type 4" and type_name(99) == "type 99"
+    assert type_name(4) == "4" and type_name(99) == "99"
 
 
 def test_f16_weight_is_not_assessed(tmp_path):

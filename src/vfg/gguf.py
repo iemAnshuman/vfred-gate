@@ -81,10 +81,10 @@ def _index(path):
 
 
 def type_name(kind):
-    """ggml type name for messages, or the number when it is unknown."""
+    """ggml type name for messages, or the number as text when it is unknown."""
     if 0 <= kind < len(_GGML_TYPES) and _GGML_TYPES[kind] != "-":
         return _GGML_TYPES[kind]
-    return f"type {kind}"
+    return str(kind)
 
 
 def tensor_info(path, name):
