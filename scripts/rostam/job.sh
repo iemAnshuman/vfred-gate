@@ -1,9 +1,10 @@
 #!/bin/bash
 # usage: sbatch scripts/rostam/job.sh NAME SUBCOMMAND [options...]   (SUBCOMMAND: compare | check)
+# Submit from the checkout; the build cache is the vfg-cache folder next to it.
 set -u
 name=$1; cmd=$2; shift 2
-cd "$HOME/vfred-gate"
-export VFG_CACHE=$HOME/vfg-cache
+cd "${SLURM_SUBMIT_DIR:-.}" || exit 1
+export VFG_CACHE=${VFG_CACHE:-$(dirname "$PWD")/vfg-cache}
 case "$(uname -m)" in
   # binutils 2.42 (system module) assembles the T-Head vector kernels; Fedora 38 ships 2.39
   riscv64) module load binutils/2.42 || exit 1; . .venv-riscv64/bin/activate; run() { vfg "$@"; } ;;

@@ -1,7 +1,7 @@
 #!/bin/bash
 # One-time setup on Rostam sven0 (riscv64): a Rust toolchain to build pydantic-core, then vfred-gate.
 set -eu
-cd "$HOME/vfred-gate"
+cd "$(dirname "$0")/../.."
 if [ ! -x "$HOME/.cargo/bin/cargo" ]; then
   curl -sSf https://sh.rustup.rs -o /tmp/rustup-init.sh
   sh /tmp/rustup-init.sh -y --profile minimal --no-modify-path
