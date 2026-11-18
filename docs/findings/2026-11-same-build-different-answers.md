@@ -136,7 +136,7 @@ Turning on the AVX-512 kernels changes 5 of 16 answers on the same CPU. The firs
 
 ## Result 5: T-Head vector kernels on RISC-V (same machine)
 
-T-Head C920 with RVV 0.7.1 (Rostam `sven1`), Fedora, GCC 13.2.1 with binutils 2.42, same commit. Baseline: scalar build with `-DGGML_RVV=OFF -DGGML_RV_ZFH=OFF -DGGML_RV_ZVFH=OFF -DGGML_RV_ZICBOP=OFF -DGGML_RV_ZIHINTPAUSE=OFF` (`-march=rv64gc`). Candidate: the same options plus `-DGGML_XTHEADVECTOR=ON`, which compiles every ggml-cpu file with `-march=rv64gc_xtheadvector`; its `libggml-cpu.a` contains 213 `th.v*` vector instructions and the baseline's none. ggml has no T-Head kernel for Q8_0, so this run uses a Q4_K_M model requantised from the Q8_0 file (`llama-quantize --allow-requantize`, SHA-256 `895bb090…`). Prompts c001–c008 of the built-in set, 3 repetitions per build.
+T-Head C920 with RVV 0.7.1 (Rostam `sven1`), Fedora, GCC 13.2.1 with binutils 2.42, same commit. Baseline: scalar build with `-DGGML_RVV=OFF -DGGML_RV_ZFH=OFF -DGGML_RV_ZVFH=OFF -DGGML_RV_ZICBOP=OFF -DGGML_RV_ZIHINTPAUSE=OFF` (`-march=rv64gc`). Candidate: the same options plus `-DGGML_XTHEADVECTOR=ON`, which compiles every ggml-cpu file with `-march=rv64gc_xtheadvector`; its `libggml-cpu.a` contains 213 `th.v*` vector instructions and the baseline's none. ggml has no T-Head kernel for Q8_0, so this run uses a Q4_K_M model requantised from the Q8_0 file (`llama-quantize --allow-requantize`, SHA-256 `895bb090…`). Prompts c001–c008 of `corpora/source/pilot.jsonl`, 3 repetitions per build.
 
 | Candidate | Token choice | Same text | First differing op (`vfg explain`) | Bundle |
 |---|---:|---:|---|---|

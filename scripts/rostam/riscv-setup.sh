@@ -1,7 +1,10 @@
 #!/bin/bash
 # One-time setup on Rostam sven0 (riscv64): a Rust toolchain to build pydantic-core, then vfred-gate.
 set -eu
-cd "${SLURM_SUBMIT_DIR:-$(dirname "$0")/../..}"
+# Under sbatch the script runs from a spool copy; then the submit directory is the checkout.
+here=$(cd "$(dirname "$0")/../.." && pwd)
+[ -f "$here/pyproject.toml" ] || here=${SLURM_SUBMIT_DIR:?}
+cd "$here"
 if [ ! -x "$HOME/.cargo/bin/cargo" ]; then
   curl -sSf https://sh.rustup.rs -o /tmp/rustup-init.sh
   sh /tmp/rustup-init.sh -y --profile minimal --no-modify-path
