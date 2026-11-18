@@ -1,6 +1,6 @@
 # Same llama.cpp build, different answers on macOS and Linux
 
-Status: DRAFT, 16 November 2026. Verdicts come from sealed VFRED-Gate bundles. The libm measurements and the tensor capture comparison are separate small programs in `code/`.
+Status: DRAFT, 18 November 2026. Verdicts come from sealed VFRED-Gate bundles. The libm measurements and the tensor capture comparison are separate small programs in `code/`.
 
 ## Summary
 
@@ -10,11 +10,11 @@ The same llama.cpp commit, model, prompts and strict floating-point flags gave d
 - With this macro, ggml repacks Q8_0 weights at load time into an interleaved layout and multiplies with a different kernel (`ggml_gemv_q8_0_4x4_q8_0` instead of `ggml_vec_dot_q8_0_q8_0`). The two kernels round differently (grouping, order and fused multiply-add).
 - A Linux build with `-march=armv8.2-a+dotprod` gives the same answers as macOS on all 16 prompts. The same build with the repack turned off does not. A second, smaller difference (Apple Clang merges `sinf` and `cosf` into `__sincosf_stret` in RoPE) changes some logit bits but no answer. With both removed, all free-run logits are bit-identical.
 
-The same holds on a second ARM machine (NVIDIA GB10 under Linux): with `+dotprod` or `+dotprod+i8mm`, it gives the macOS answers. The x86 and RISC-V differences have a related cause: each platform's Q8_0 dot-product kernel adds the same exact integer block sums in a different floating-point order (lane layout, fused multiply-add or not). A numpy emulation of the three kernels reproduces the first differing tensor of each platform bit for bit. Later ops with their own vector kernels, such as the F32 attention dot product, add further differences, so the full divergence patterns are not explained by the Q8_0 kernel alone.
+The same holds on a second ARM machine (NVIDIA GB10 under Linux): with `+dotprod` or `+dotprod+i8mm`, it gives the macOS answers. The x86 and RISC-V differences have a related cause: each platform's Q8_0 dot-product kernel adds the same exact integer block sums in a different floating-point order (lane layout, fused multiply-add or not). A numpy emulation of the three kernels reproduces the first differing tensor of each platform bit for bit. On x86, later ops with their own vector kernels, such as the F32 attention dot product, add further differences, so the full divergence patterns are not explained by the Q8_0 kernel alone.
 
 ## Setup
 
-- llama.cpp commit `552f18f912a32ea86edf82e2b76431cb7131538d`, CPU backend, built by `vfg` with `-O2 -fno-fast-math -ffp-contract=off`, `GGML_NATIVE=OFF`.
+- llama.cpp commit `552f18f912a32ea86edf82e2b76431cb7131538d`, CPU backend, built by `vfg` with `-O2 -fno-fast-math -ffp-contract=off`, `GGML_NATIVE=OFF`. On RISC-V, ggml's defaults target RVV 1.0, which the RVV 0.7.1 board cannot run, so the RISC-V builds also pass `-DGGML_RVV=OFF -DGGML_RV_ZFH=OFF -DGGML_RV_ZVFH=OFF -DGGML_RV_ZICBOP=OFF -DGGML_RV_ZIHINTPAUSE=OFF` (`-march=rv64gc`).
 - Model: SmolLM2-360M-Instruct Q8_0 (SHA-256 `48ab3034…0201`).
 - 16 prompts from `corpora/source/pilot.jsonl`, 32 generated tokens, greedy, one thread, F32 KV cache, 3 repetitions per build (every build was bitwise stable across its repetitions).
 - Contract `decision`: the candidate must choose the baseline's token at every teacher-forced step and produce the same text.
@@ -112,7 +112,7 @@ The same NEON emulation with a fused multiply-add leaves 474 values different fr
 
 **Second-order effect, not needed for `Qcur-0`.** The x86 activation quantiser uses `id = 127/amax` with round-to-even; the reference uses `id = 1/d` with `roundf` (`ggml-quants.c:276`). Over 1,935 captured activations (2.6 million values) of the c001 run, these give different 8-bit values in 10 places; `roundf` and round-to-even differ in 9 places, all exact ties.
 
-**Control: the Q8_0 kernel is not the whole pattern.** An x86 build with `-DGGML_AVX=OFF -DGGML_AVX2=OFF -DGGML_FMA=OFF -DGGML_F16C=OFF -DGGML_BMI2=OFF -DGGML_AVX512=OFF` falls through to the same scalar Q8_0 loop as the RISC-V build (`arch/x86/quants.c`, after the `__AVX2__` and `__AVX__` branches). Its c001 capture is bit-identical to the RISC-V capture for the first 23 tensors, including `Qcur-0`. The first difference is `kq-0`, the attention-score `MUL_MAT` on the F32 KV cache: there `ggml_vec_dot_f32` is vectorised with SSE on this x86 build (`GGML_SIMD` from `__SSE3__`, `simd-mappings.h:900`) and scalar on `rv64gc`. Checked against the macOS reference, this build diverges on 2 prompts (c001 at step 0, c006 at step 14; token choice 0.994, 14/16 same text; bundle `1f8121be…`, Rostam), not on the six RISC-V prompts. So the Q8_0 kernel explains the first differing tensor on each platform, and the token-level patterns also depend on other kernels.
+**Control: the Q8_0 kernel is not the whole pattern.** An x86 build with `-DGGML_AVX=OFF -DGGML_AVX2=OFF -DGGML_FMA=OFF -DGGML_F16C=OFF -DGGML_BMI2=OFF -DGGML_AVX512=OFF` falls through to the same scalar Q8_0 loop as the RISC-V build (`arch/x86/quants.c`, after the `__AVX2__` and `__AVX__` branches). SSE4.2 stays on, as by default. Its c001 capture is bit-identical to the RISC-V capture for the first 23 tensors, including `Qcur-0`. The first difference is `kq-0`, the attention-score `MUL_MAT` on the F32 KV cache: there `ggml_vec_dot_f32` is vectorised with SSE on this x86 build (`GGML_SIMD` from `__SSE3__`, `simd-mappings.h:900`) and scalar on `rv64gc`. Checked against the macOS reference, this build diverges on 2 prompts (c001 at step 0, c006 at step 14; token choice 0.994, 14/16 same text; bundle `1f8121be…`, Rostam), against six for RISC-V; only c001 at step 0 is shared. So the Q8_0 kernel explains the first differing tensor on each platform, and the token-level patterns also depend on other kernels.
 
 ## Result 3: one compiler flag (same machine)
 
@@ -136,14 +136,14 @@ Turning on the AVX-512 kernels changes 5 of 16 answers on the same CPU. The firs
 
 ## Result 5: T-Head vector kernels on RISC-V (same machine)
 
-T-Head C920 with RVV 0.7.1 (Rostam `sven1`), Fedora, GCC 13.2.1 with binutils 2.42, same commit. Baseline: default scalar build (`rv64gc`). Candidate: `-DGGML_XTHEADVECTOR=ON`, which compiles every ggml-cpu file with `-march=rv64gc_xtheadvector`; its `libggml-cpu.a` contains 213 `th.v*` vector instructions and the baseline's none. ggml has no T-Head kernel for Q8_0, so this run uses a Q4_K_M model requantised from the Q8_0 file (`llama-quantize --allow-requantize`, SHA-256 `895bb090…`). 8 prompts, 3 repetitions per build.
+T-Head C920 with RVV 0.7.1 (Rostam `sven1`), Fedora, GCC 13.2.1 with binutils 2.42, same commit. Baseline: scalar build with `-DGGML_RVV=OFF -DGGML_RV_ZFH=OFF -DGGML_RV_ZVFH=OFF -DGGML_RV_ZICBOP=OFF -DGGML_RV_ZIHINTPAUSE=OFF` (`-march=rv64gc`). Candidate: the same options plus `-DGGML_XTHEADVECTOR=ON`, which compiles every ggml-cpu file with `-march=rv64gc_xtheadvector`; its `libggml-cpu.a` contains 213 `th.v*` vector instructions and the baseline's none. ggml has no T-Head kernel for Q8_0, so this run uses a Q4_K_M model requantised from the Q8_0 file (`llama-quantize --allow-requantize`, SHA-256 `895bb090…`). Prompts c001–c008 of the built-in set, 3 repetitions per build.
 
 | Candidate | Token choice | Same text | First differing op (`vfg explain`) | Bundle |
 |---|---:|---:|---|---|
 | `-DGGML_XTHEADVECTOR=ON` | 200/203 (0.985) | 5/8 | `MUL_MAT` (`ffn_out-0`, weight `blk.0.ffn_down.weight`, Q6_K), prompt c004, first different token at step 17, max 400 ULP | `9faf0ddb…` (Rostam) |
 
-Turning on the T-Head vector kernels changes 3 of 8 answers on the same board. The first differing tensor is the first one that uses a T-Head kernel. In this model, the weights with 960-value rows (attention and FFN gate and up) cannot use K-quants, because 960 is not a multiple of the 256-value K-quant block: `llama-quantize` stores them as Q5_0 (fallback for Q4_K) or Q8_0 (fallback for Q6_K, the attention V weight). ggml's RISC-V Q5_0 and Q8_0 kernels need `__riscv_v`, and the candidate's compiler defines only `__riscv_xtheadvector`, so both builds run the same generic code for these weights. The FFN down weight (2,560 columns) is Q6_K, which has a T-Head kernel (`ggml_vec_dot_q6_K_q8_K_xtheadvector`). The legality label is `not_assessed`: the bound models only F32 and Q8_0 weights.
+Turning on the T-Head vector kernels changes 3 of 8 answers on the same board. The first differing tensor is the first one that uses a T-Head kernel. In this model, the weights with 960-value rows (attention and FFN gate and up) cannot use K-quants, because 960 is not a multiple of the 256-value K-quant block: `llama-quantize` stores them as Q5_0 (fallback for Q4_K) or Q8_0 (fallback for Q6_K, the attention V weight). ggml's RISC-V Q5_0 and Q8_0 kernels need `__riscv_v`, and the candidate's compiler defines `__riscv_xtheadvector` but neither `__riscv_v` nor `__riscv_v_intrinsic`, so both builds run the same generic code for these weights; `GGML_SIMD`, which vectorises the F32 ops such as `kq-0`, also stays off. The FFN down weight of layer 0 (2,560-value rows) is Q6_K, which has a T-Head kernel (`ggml_vec_dot_q6_K_q8_K_xtheadvector`). The legality label is `not_assessed`: the bound models only F32 and Q8_0 weights.
 
 ## Open questions
 
-1. One model, one quantisation, 16 prompts. Other models may be more or less sensitive.
+1. One model (Q8_0; Result 5 also uses Q4_K_M), 16 prompts. Other models may be more or less sensitive.

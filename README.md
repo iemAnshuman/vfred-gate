@@ -132,7 +132,7 @@ The name comes from the RISC-V Vector instruction `vfredusum.vs`. It sums a vect
 - QEMU 11.1.3 returns identical results for both instructions on 20,000 arrays, so emulation cannot show this effect.
 - A sensitivity-ranked canary set of 10 prompts caught all 5 holdout failures of a `-ffp-contract=fast` build.
 - A ddmin search reduced 9 candidate source files to one (`ggml-cpu/ops.cpp`) that restores bit-identical output.
-- On the same board type (`sven1`), a full llama.cpp build with ggml's T-Head vector kernels (`-DGGML_XTHEADVECTOR=ON`) changes 3 of 8 answers against the scalar build on a Q4_K_M model. `vfg compare` localises the first difference to the first `MUL_MAT` that uses a T-Head kernel (Q6_K weight); see Result 5 of [the write-up](docs/findings/2026-11-same-build-different-answers.md). This run came after the research record was frozen, so it adds no ledger points.
+- On the same board type (`sven1`), a full llama.cpp build with ggml's T-Head vector kernels (`-DGGML_XTHEADVECTOR=ON`) changes 3 of 8 answers against a scalar `rv64gc` build on a Q4_K_M model. `vfg compare` localises the first difference to the first `MUL_MAT` that uses a T-Head kernel (Q6_K weight); see Result 5 of [the write-up](docs/findings/2026-11-same-build-different-answers.md). This run came after the research record was frozen, so it adds no ledger points.
 
 The full research record, with its 100-point ledger and limitations, is in [docs/research](docs/research/index.md).
 
