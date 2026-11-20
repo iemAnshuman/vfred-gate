@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.0 (unreleased)
+## 1.0.0 (21 November 2026)
 
 - `vfg compare`: compare two llama.cpp builds on any GGUF model. A side can be `pinned`, `llama.cpp@<tag-or-commit>`, or a local git checkout, with extra CMake options and compiler flags.
 - Automatic localisation after a FAIL: first differing token step, layer and ggml operator.
